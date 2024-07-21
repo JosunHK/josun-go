@@ -1,0 +1,16 @@
+package templates 
+
+templ header() {
+	<head>
+		<title>bruh </title>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<script src="static/htmx.min.js"></script>
+		<link rel="stylesheet" href="static/style.css"/>
+	</head>
+}
+
+templ Layout(name string) {
+	@header()
+	<div class="bg-red-500">you already know { name }</div>
+}
