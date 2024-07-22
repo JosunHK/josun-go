@@ -3,7 +3,7 @@ tmp
 *.db
 tailwindcss
 .env
-.exe
+*.exe
 .gitignore
 .air.toml
 tailwind.config.js
