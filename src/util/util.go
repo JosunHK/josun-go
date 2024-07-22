@@ -9,3 +9,8 @@ func HTML(c echo.Context, cmp templ.Component) error {
 	c.Response().Header().Set(echo.HeaderContentType, echo.MIMETextHTML)
 	return cmp.Render(c.Request().Context(), c.Response().Writer)
 }
+
+// dummy for now
+func GetLocaleFromCookie(echo.Context) string {
+	return "en"
+}
