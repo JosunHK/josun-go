@@ -2,9 +2,9 @@ bin
 tmp
 *.db
 tailwindcss
-# .env
-# *.exe
-# .gitignore
+.env
+*.exe
+.gitignore
 # .air.toml
-# tailwind.config.js
+tailwind.config.js
 # Makefile
