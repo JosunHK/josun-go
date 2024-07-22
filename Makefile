@@ -1,4 +1,3 @@
-Makefile
 .PHONY: tailwind-watch
 tailwind-watch:
 	./tailwindcss -i ./static/input.css -o ./static/style.css --watch
