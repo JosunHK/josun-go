@@ -12,5 +12,5 @@ func HTML(c echo.Context, cmp templ.Component) error {
 
 // dummy for now
 func GetLocaleFromCookie(echo.Context) string {
-	return "en"
+	return "zh"
 }
