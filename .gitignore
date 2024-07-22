@@ -2,4 +2,5 @@ bin
 tmp
 *.db
 tailwindcss
-.env
+*.env
+*.exe
