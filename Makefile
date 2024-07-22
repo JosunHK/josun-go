@@ -1,11 +1,11 @@
 Makefile
 .PHONY: tailwind-watch
 tailwind-watch:
-	./tailwindcss.exe -i ./static/input.css -o ./static/style.css --watch
+	./tailwindcss -i ./static/input.css -o ./static/style.css --watch
 
 .PHONY: tailwind-build
 tailwind-build:
-	./tailwindcss.exe -i ./static/input.css -o ./static/style.min.css --minify
+	./tailwindcss -i ./static/input.css -o ./static/style.min.css --minify
 
 .PHONY: templ-generate
 templ-generate:
