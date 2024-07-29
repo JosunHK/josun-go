@@ -10,34 +10,27 @@ import (
 
 type Transl func(s string) string
 
+var T_LIST = []string{"en", "zh"}
+
 func InitI18n() (*goeasyi18n.I18n, error) {
 	i18n := goeasyi18n.NewI18n(goeasyi18n.Config{
 		FallbackLanguageName:    "en",
 		DisableConsistencyCheck: false,
 	})
 
-	enJSON, err := readJSON("en")
-	if err != nil {
-		return nil, fmt.Errorf("error loading en translations %v", err)
-	}
+	for _, t := range T_LIST {
+		translJSON, err := readJSON(t)
+		if err != nil {
+			return nil, fmt.Errorf("error loading %v translations %v", t, err)
+		}
 
-	zhJSON, err := readJSON("zh")
-	if err != nil {
-		return nil, fmt.Errorf("error loading zh translations %v", err)
-	}
+		transl, err := goeasyi18n.LoadFromJsonString(translJSON)
+		if err != nil {
+			return nil, fmt.Errorf("error loading %v translations %v", t, err)
+		}
 
-	enTranslations, err := goeasyi18n.LoadFromJsonString(enJSON)
-	if err != nil {
-		return nil, fmt.Errorf("error loading en translations %v", err)
+		i18n.AddLanguage(t, transl)
 	}
-
-	zhTranslations, err := goeasyi18n.LoadFromJsonString(zhJSON)
-	if err != nil {
-		return nil, fmt.Errorf("error loading zh translations %v", err)
-	}
-
-	i18n.AddLanguage("en", enTranslations)
-	i18n.AddLanguage("zh", zhTranslations)
 
 	return i18n, nil
 }
