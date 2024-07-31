@@ -5,4 +5,4 @@ tailwindcss
 *.env
 *.exe
 *.deb
-/logs/*
+./logs/*
