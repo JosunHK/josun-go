@@ -44,6 +44,7 @@ func main() {
 		log.Panic(err)
 		return
 	}
+
 	defer database.DB.Close()
 
 	//static files
@@ -52,9 +53,8 @@ func main() {
 
 	//end points
 	e.GET("/", middleware.Content(pages.Layout, cfg))
-
-	//end points
 	e.GET("/Users", middleware.Service(api.GetUsers, cfg))
+	e.POST("/Users", middleware.Service(api.PostUser, cfg))
 
 	//exit ->
 	e.Logger.Fatal(e.Start(PORT))

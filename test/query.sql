@@ -1,25 +1,18 @@
--- name: GetUsers :one
+-- name: GetUser :one
 SELECT * FROM users 
-WHERE id = $1 LIMIT 1;
+WHERE id = ? LIMIT 1;
 
 -- name: ListUsers :many
 SELECT * FROM users 
 ORDER BY name;
 
--- name: CreateUsers :exec
+-- name: CreateUser :execresult
 INSERT INTO users(
   name, email, password 
 ) VALUES (
-  $1, $2, $3
+  ?, ?, ?
 );
 
--- name: UpdateUsers :exec
-UPDATE users
-  set name = $2,
-  email = $3,
-  password = $3
-WHERE id = $1;
-
--- name: DeleteUsers :exec
+-- name: DeleteUser :exec
 DELETE FROM users 
-WHERE id = $1;
+WHERE id = ?;

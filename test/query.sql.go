@@ -7,38 +7,44 @@ package test
 
 import (
 	"context"
+	"database/sql"
 )
 
-const createUsers = `-- name: CreateUsers :exec
+const createUser = `-- name: CreateUser :execresult
 INSERT INTO users(
   name, email, password 
 ) VALUES (
-  $1, $2, $3
+  ?, ?, ?
 )
 `
 
-func (q *Queries) CreateUsers(ctx context.Context) error {
-	_, err := q.db.ExecContext(ctx, createUsers)
-	return err
+type CreateUserParams struct {
+	Name     string
+	Email    string
+	Password string
 }
 
-const deleteUsers = `-- name: DeleteUsers :exec
+func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (sql.Result, error) {
+	return q.db.ExecContext(ctx, createUser, arg.Name, arg.Email, arg.Password)
+}
+
+const deleteUser = `-- name: DeleteUser :exec
 DELETE FROM users 
-WHERE id = $1
+WHERE id = ?
 `
 
-func (q *Queries) DeleteUsers(ctx context.Context) error {
-	_, err := q.db.ExecContext(ctx, deleteUsers)
+func (q *Queries) DeleteUser(ctx context.Context, id int64) error {
+	_, err := q.db.ExecContext(ctx, deleteUser, id)
 	return err
 }
 
-const getUsers = `-- name: GetUsers :one
+const getUser = `-- name: GetUser :one
 SELECT id, name, email, password FROM users 
-WHERE id = $1 LIMIT 1
+WHERE id = ? LIMIT 1
 `
 
-func (q *Queries) GetUsers(ctx context.Context) (User, error) {
-	row := q.db.QueryRowContext(ctx, getUsers)
+func (q *Queries) GetUser(ctx context.Context, id int64) (User, error) {
+	row := q.db.QueryRowContext(ctx, getUser, id)
 	var i User
 	err := row.Scan(
 		&i.ID,
@@ -80,17 +86,4 @@ func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
 		return nil, err
 	}
 	return items, nil
-}
-
-const updateUsers = `-- name: UpdateUsers :exec
-UPDATE users
-  set name = $2,
-  email = $3,
-  password = $3
-WHERE id = $1
-`
-
-func (q *Queries) UpdateUsers(ctx context.Context) error {
-	_, err := q.db.ExecContext(ctx, updateUsers)
-	return err
 }
