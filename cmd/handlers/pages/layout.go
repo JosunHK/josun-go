@@ -1,9 +1,9 @@
 package pages
 
 import (
-	"github.com/JosunHK/josun-go.git/src/i18n"
-	"github.com/JosunHK/josun-go.git/src/util"
-	"github.com/JosunHK/josun-go.git/templates"
+	"github.com/JosunHK/josun-go.git/cmd/i18n"
+	"github.com/JosunHK/josun-go.git/cmd/util"
+	"github.com/JosunHK/josun-go.git/web/templates"
 	"github.com/labstack/echo/v4"
 )
 

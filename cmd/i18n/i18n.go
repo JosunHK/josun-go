@@ -36,7 +36,7 @@ func InitI18n() (*goeasyi18n.I18n, error) {
 }
 
 func readJSON(locale string) (string, error) {
-	path := fmt.Sprintf("./static/i18n/%s.json", locale)
+	path := fmt.Sprintf("./web/static/i18n/%s.json", locale)
 
 	jsonFile, err := os.Open(path)
 	if err != nil {

@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/JosunHK/josun-go.git/src/cfg"
-	"github.com/JosunHK/josun-go.git/src/handlers/pages"
-	"github.com/JosunHK/josun-go.git/src/middleware"
+	"github.com/JosunHK/josun-go.git/cmd/cfg"
+	"github.com/JosunHK/josun-go.git/cmd/database"
+	"github.com/JosunHK/josun-go.git/cmd/handlers/api"
+	"github.com/JosunHK/josun-go.git/cmd/handlers/pages"
+	"github.com/JosunHK/josun-go.git/cmd/middleware"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -30,23 +32,29 @@ func init() {
 }
 
 func main() {
-	//init
 	cfg, err := cfg.CfgInit()
 	PORT := os.Getenv("PORT")
 	if err != nil {
-		fmt.Println(err)
+		log.Panic(err)
 		return
 	}
 
+	log.Info("db cred ", os.Getenv("DB_CREDENTIALS"))
+	if err := database.InitDB(os.Getenv("DB_CREDENTIALS")); err != nil {
+		log.Panic(err)
+		return
+	}
+	defer database.DB.Close()
+
 	//static files
 	e := echo.New()
-	e.Static("/static", "static")
+	e.Static("/static", "web/static")
 
 	//end points
 	e.GET("/", middleware.Content(pages.Layout, cfg))
 
 	//end points
-	e.GET("/api", middleware.Content(pages.Layout, cfg))
+	e.GET("/Users", middleware.Service(api.GetUsers, cfg))
 
 	//exit ->
 	e.Logger.Fatal(e.Start(PORT))

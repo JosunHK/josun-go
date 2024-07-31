@@ -1,10 +1,10 @@
 .PHONY: tailwind-watch
 tailwind-watch:
-	./tailwindcss -i ./static/input.css -o ./static/style.css --watch
+	./tailwindcss -i ./web/static/input.css -o ./web/static/style.css --watch
 
 .PHONY: tailwind-build
 tailwind-build:
-	./tailwindcss -i ./static/input.css -o ./static/style.min.css --minify
+	./tailwindcss -i ./web/static/input.css -o ./web/static/style.min.css --minify
 
 .PHONY: templ-generate
 templ-generate:
@@ -14,15 +14,20 @@ templ-generate:
 templ-watch:
 	templ generate --watch
 
+.PHONY: sqlc-generate
+sqlc-watch:
+	sqlc generate 
+
 .PHONY: dev
 dev:
-	go build -o ./tmp/$(APP_NAME) ./src/$(APP_NAME)/main.go && air
+	go build -o ./tmp/$(APP_NAME) ./cmd/$(APP_NAME)/main.go && air
 
 .PHONY: build
 build:
 	make tailwind-build
 	make templ-generate
-	go build -ldflags "-X main.Environment=production" -o ./bin/$(APP_NAME) ./src/$(APP_NAME)/main.go
+	make sqlc-generate
+	go build -ldflags "-X main.Environment=production" -o ./bin/$(APP_NAME) ./cmd/$(APP_NAME)/main.go
 
 .PHONY: vet
 vet:

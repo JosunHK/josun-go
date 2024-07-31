@@ -1,7 +1,7 @@
 package cfg
 
 import (
-	"github.com/JosunHK/josun-go.git/src/i18n"
+	"github.com/JosunHK/josun-go.git/cmd/i18n"
 	"github.com/eduardolat/goeasyi18n"
 )
 

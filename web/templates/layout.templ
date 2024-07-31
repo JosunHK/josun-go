@@ -15,6 +15,6 @@ templ header() {
 
 templ Layout(name string, T func(string) string) {
 	@header() {
-		<div class="bg-green-500">{ T("go_watch") } { T(name) }</div>
+		<div class="bg-yellow-500">{ T("go_watch") } { T(name) }</div>
 	}
 }
