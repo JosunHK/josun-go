@@ -6,3 +6,4 @@ tailwindcss
 *.exe
 *.deb
 logs/
+db/generated/

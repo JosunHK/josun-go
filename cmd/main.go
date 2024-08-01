@@ -52,6 +52,8 @@ func main() {
 
 	//end points
 	e.GET("/", middleware.HTML(pages.Layout, cfg))
+
+	//dummy api
 	e.GET("/Users", middleware.JSON(api.GetUsers, cfg))
 	e.POST("/Users", middleware.JSON(api.PostUser, cfg))
 
