@@ -12,7 +12,7 @@ import (
 type contentHandler func(echo.Context, i18n.Transl) error
 type serviceHandler func(echo.Context) (err error, statusCode int, resObj interface{})
 
-func Content(next contentHandler, cfg cfg.Cfg) echo.HandlerFunc {
+func HTML(next contentHandler, cfg cfg.Cfg) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		log.Info("Fetching content from middleware...")
 		locale := util.GetLocaleFromCookie(c)
@@ -24,8 +24,7 @@ func Content(next contentHandler, cfg cfg.Cfg) echo.HandlerFunc {
 	}
 }
 
-func Service(handler serviceHandler, cfg cfg.Cfg) echo.HandlerFunc {
-	log.Info("Fetching users...")
+func JSON(handler serviceHandler, cfg cfg.Cfg) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		err, statusCode, resObj := handler(c)
 		if err != nil {

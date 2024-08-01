@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
-	"github.com/JosunHK/josun-go.git/test"
+	sqlc "github.com/JosunHK/josun-go.git/db/gen"
 	"github.com/labstack/echo/v4"
 
 	log "github.com/sirupsen/logrus"
@@ -16,9 +16,9 @@ func PostUser(ctx echo.Context) (err error, statusCode int, resObj interface{}) 
 	}
 
 	DB := database.DB
-	queries := test.New(DB)
+	queries := sqlc.New(DB)
 
-	result, err := queries.CreateUser(ctx.Request().Context(), test.CreateUserParams{
+	result, err := queries.CreateUser(ctx.Request().Context(), sqlc.CreateUserParams{
 		Name:     "test",
 		Email:    "bruh@bruh",
 		Password: "test",
@@ -49,7 +49,7 @@ func GetUsers(ctx echo.Context) (err error, statusCode int, resObj interface{}) 
 	}
 
 	DB := database.DB
-	queries := test.New(DB)
+	queries := sqlc.New(DB)
 
 	users, err := queries.ListUsers(ctx.Request().Context())
 	if err != nil {

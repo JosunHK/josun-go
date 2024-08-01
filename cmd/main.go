@@ -39,7 +39,6 @@ func main() {
 		return
 	}
 
-	log.Info("db cred ", os.Getenv("DB_CREDENTIALS"))
 	if err := database.InitDB(os.Getenv("DB_CREDENTIALS")); err != nil {
 		log.Panic(err)
 		return
@@ -52,9 +51,9 @@ func main() {
 	e.Static("/static", "web/static")
 
 	//end points
-	e.GET("/", middleware.Content(pages.Layout, cfg))
-	e.GET("/Users", middleware.Service(api.GetUsers, cfg))
-	e.POST("/Users", middleware.Service(api.PostUser, cfg))
+	e.GET("/", middleware.HTML(pages.Layout, cfg))
+	e.GET("/Users", middleware.JSON(api.GetUsers, cfg))
+	e.POST("/Users", middleware.JSON(api.PostUser, cfg))
 
 	//exit ->
 	e.Logger.Fatal(e.Start(PORT))

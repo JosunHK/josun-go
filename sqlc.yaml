@@ -1,9 +1,9 @@
 version: "2"
 sql:
   - engine: "mysql"
-    queries: "test/query.sql"
-    schema: "test/schema.sql"
+    queries: "db/query/"
+    schema: "db/schema/"
     gen:
       go:
-        package: "test"
-        out: "test"
+        package: "sqlc"
+        out: "db/gen"
