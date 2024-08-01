@@ -6,7 +6,4 @@ tailwindcss
 *.exe
 *.deb
 logs/
-<<<<<<< HEAD
 db/generated/
-=======
->>>>>>> 1ad0aae05226b33df8f2d94ee517dd48e2ea5104
