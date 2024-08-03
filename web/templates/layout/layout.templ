@@ -22,12 +22,15 @@ templ Layout(name string, T func(string) string) {
 	@header() {
         <div class="w-full h-full flex justify-center items-center">
             @ui.InfoCard(ui.CardProps{
-                Title: "Welcome to " + name,
+                Title: "Title",
                 Description : "example of a card",
                 Footer: "Don't be racist, I am a building.",
-            }) {
-                <div class="">{ T("go_watch") } { T(name) }</div>
-            }
+            }) 
+            @ui.LoginCard(ui.CardProps{
+                Title: "Title",
+                Description : "example of a card",
+                Footer: "Don't be racist, I am a building.",
+            }) 
         </div>
 	}
 }

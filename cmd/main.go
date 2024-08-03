@@ -9,6 +9,7 @@ import (
 	"github.com/JosunHK/josun-go.git/cmd/handlers/api"
 	"github.com/JosunHK/josun-go.git/cmd/handlers/pages"
 	"github.com/JosunHK/josun-go.git/cmd/middleware"
+	"github.com/JosunHK/josun-go.git/pkg/twmerge"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -29,6 +30,10 @@ func init() {
 		fmt.Println(err)
 		return
 	}
+
+	//merger for tailwind
+	config := twmerge.MakeDefaultConfig()
+	_ = twmerge.CreateTwMerge(config, nil) // config, cache (if nil default will be used)
 }
 
 func main() {

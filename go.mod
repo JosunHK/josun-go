@@ -7,6 +7,7 @@ require (
 	github.com/a-h/templ v0.2.747 // indirect
 	github.com/eduardolat/goeasyi18n v1.3.0 // indirect
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
+	github.com/gungun974/gocva v0.0.0-20240222073719-746fe714c5f2 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
 	github.com/jackc/pgx/v5 v5.6.0 // indirect

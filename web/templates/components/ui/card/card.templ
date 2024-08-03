@@ -1,63 +1,98 @@
 package ui 
 
+import (
+    twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
+    "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
+)
+
 type CardProps struct {
-    Title string
-    Description string
-    Footer string
+	Title       string
+	Description string
+	Footer      string
+
 }
 
-templ InfoCard(props CardProps){
-    @Card(){
-        @header(){
-            @title(){
-                {props.Title}
+templ LoginCard(props CardProps) {
+	@Card("") {
+		@header("") {
+			@title("") {
+				{ props.Title }
+			}
+		}
+		@content("") {
+            input fields not yet inplemented
+		}
+		@footer("") {
+            @ui.Button(ui.ButtonProps{}){
+                Login
             }
-            @description(){
-                {props.Description}
-            }
-        }
-        @content(){
-            { children... }
-        }
-
-        @footer(){
-            {props.Footer}
-        }
-    }
+		}
+	}
 }
 
-templ Card() {
-    <div class="w-[350px] rounded-lg border bg-card text-card-foreground dark:bg-zinc-900 shadow-sm">
-        {children...}
-    </div>
+templ InfoCard(props CardProps) {
+	@Card("") {
+		@header("") {
+			@title("") {
+				{ props.Title }
+			}
+			@description("") {
+				{ props.Description }
+			}
+		}
+		@content("") {
+			{ children... }
+		}
+		@footer("") {
+			{ props.Footer }
+		}
+	}
 }
 
-templ header(){
-    <div class="flex flex-col space-y-1.5 p-6">
-        {children...}
-    </div>
+templ Card(class string) {
+	<div
+		class={ twmerge.Merge("w-[350px] rounded-lg border bg-card text-card-foreground dark:bg-zinc-900 shadow-sm", class) }
+	>
+		{ children... }
+	</div>
 }
 
-templ title(){
-     <h3 class="text-2xl font-semibold leading-none tracking-tight">
-            {children...}
-     </h3>
+templ header(class string) {
+	<div
+		class={ twmerge.Merge("flex flex-col space-y-1.5 p-6", class) }
+	>
+		{ children... }
+	</div>
 }
 
-templ description(){
-     <p class="text-sm text-muted-foreground">
-            {children...}
-     </p>
+templ title(class string) {
+	<h3
+		class={ twmerge.Merge("text-2xl font-semibold leading-none tracking-tight", class) }
+	>
+		{ children... }
+	</h3>
 }
 
-templ content(){
-    <div class="p-6 pt-0">
-        {children...}
-    </div>
+templ description(class string) {
+	<p
+		class={ twmerge.Merge("text-sm text-muted-foreground", class) }
+	>
+		{ children... }
+	</p>
 }
 
-templ footer(){
-    <div class="flex items-center p-6 pt-0">
-        {children...}
-    </div>
+templ content(class string) {
+	<div
+		class={ twmerge.Merge("p-6 pt-0", class) }
+	>
+		{ children... }
+	</div>
+}
+
+templ footer(class string) {
+	<div
+		class={ twmerge.Merge("flex items-center p-6 pt-0", class) }
+	>
+		{ children... }
+	</div>
 }
