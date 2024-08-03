@@ -1,0 +1,63 @@
+package ui 
+
+type CardProps struct {
+    Title string
+    Description string
+    Footer string
+}
+
+templ InfoCard(props CardProps){
+    @Card(){
+        @header(){
+            @title(){
+                {props.Title}
+            }
+            @description(){
+                {props.Description}
+            }
+        }
+        @content(){
+            { children... }
+        }
+
+        @footer(){
+            {props.Footer}
+        }
+    }
+}
+
+templ Card() {
+    <div class="w-[350px] rounded-lg border bg-card text-card-foreground dark:bg-zinc-900 shadow-sm">
+        {children...}
+    </div>
+}
+
+templ header(){
+    <div class="flex flex-col space-y-1.5 p-6">
+        {children...}
+    </div>
+}
+
+templ title(){
+     <h3 class="text-2xl font-semibold leading-none tracking-tight">
+            {children...}
+     </h3>
+}
+
+templ description(){
+     <p class="text-sm text-muted-foreground">
+            {children...}
+     </p>
+}
+
+templ content(){
+    <div class="p-6 pt-0">
+        {children...}
+    </div>
+}
+
+templ footer(){
+    <div class="flex items-center p-6 pt-0">
+        {children...}
+    </div>
+}

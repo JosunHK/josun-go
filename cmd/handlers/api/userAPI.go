@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
-	sqlc "github.com/JosunHK/josun-go.git/db/gen"
+	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 	"github.com/labstack/echo/v4"
 
 	log "github.com/sirupsen/logrus"

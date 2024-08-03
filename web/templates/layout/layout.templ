@@ -1,0 +1,33 @@
+package layout 
+
+import (
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+)
+
+templ header() {
+	<head>
+		<title> bruh </title>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<script src="static/htmx.min.js"></script>
+		<link rel="stylesheet" href="static/style.css"/>
+		<link rel="stylesheet" href="static/global.css"/>
+	</head>
+	<body class="bg-zinc-900 dark">
+		{ children... }
+	</body>
+}
+
+templ Layout(name string, T func(string) string) {
+	@header() {
+        <div class="w-full h-full flex justify-center items-center">
+            @ui.InfoCard(ui.CardProps{
+                Title: "Welcome to " + name,
+                Description : "example of a card",
+                Footer: "Don't be racist, I am a building.",
+            }) {
+                <div class="">{ T("go_watch") } { T(name) }</div>
+            }
+        </div>
+	}
+}

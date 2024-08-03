@@ -14,7 +14,6 @@ type serviceHandler func(echo.Context) (err error, statusCode int, resObj interf
 
 func HTML(next contentHandler, cfg cfg.Cfg) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		log.Info("Fetching content from middleware...")
 		locale := util.GetLocaleFromCookie(c)
 		T := func(key string) string {
 			return cfg.I18n.T(locale, key)
