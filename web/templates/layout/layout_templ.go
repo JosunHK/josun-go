@@ -9,6 +9,8 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	"github.com/JosunHK/josun-go.git/web/templates/components/common/dropDownMenu"
+	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 )
 
@@ -30,7 +32,7 @@ func header() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<head><title>bruh </title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><script src=\"static/htmx.min.js\"></script><link rel=\"stylesheet\" href=\"static/style.css\"><link rel=\"stylesheet\" href=\"static/global.css\"></head><body class=\"bg-zinc-900 dark\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<head><title>bruh </title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><script src=\"static/htmx-min.js\"></script><script src=\"static/alpine/alpine-persist.js\"></script><script defer src=\"static/alpine/alpine-min.js\"></script><link rel=\"stylesheet\" href=\"static/style.css\"></head><body class=\"bg-background\" x-data x-ref=\"body\" :class=\"{&#39;dark&#39; : Alpine.store(&#39;darkMode&#39;).on }\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -38,7 +40,7 @@ func header() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body><script>\n        if (localStorage.getItem('darkModeOn') === \"true\"){\n            document.querySelector('body').classList.add('dark')\n        }\n    </script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -76,11 +78,19 @@ func Layout(name string, T func(string) string) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"w-full h-full flex justify-center items-center\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"w-full h-full flex flex-col justify-center items-center\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = ui.InfoCard(ui.CardProps{
+			templ_7745c5c3_Err = cmp.DemoDropDown().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = settings.DarkModeToggle(T).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = card.InfoCard(card.CardProps{
 				Title:       "Title",
 				Description: "example of a card",
 				Footer:      "Don't be racist, I am a building.",
@@ -88,7 +98,7 @@ func Layout(name string, T func(string) string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = ui.LoginCard(ui.CardProps{
+			templ_7745c5c3_Err = card.LoginCard(card.CardProps{
 				Title:       "Title",
 				Description: "example of a card",
 				Footer:      "Don't be racist, I am a building.",

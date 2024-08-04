@@ -1,97 +1,111 @@
-package ui 
+package card 
 
 import (
-    twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
-    "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
+	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
+	ui "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
+	"github.com/JosunHK/josun-go.git/web/templates/props"
 )
+
+var M = twmerge.Merge
 
 type CardProps struct {
 	Title       string
 	Description string
 	Footer      string
-
 }
 
-templ LoginCard(props CardProps) {
-	@Card("") {
-		@header("") {
-			@title("") {
-				{ props.Title }
+templ LoginCard(cardProps CardProps) {
+	@Card(base.Props{}) {
+		@Header(base.Props{}) {
+			@Title(base.Props{}) {
+				{ cardProps.Title }
 			}
 		}
-		@content("") {
-            input fields not yet inplemented
+		@Content(base.Props{}) {
+			input fields not yet inplemented
 		}
-		@footer("") {
-            @ui.Button(ui.ButtonProps{}){
-                Login
-            }
+		@Footer(base.Props{}) {
+			@ui.Button(ui.ButtonProps{}) {
+				Login
+			}
 		}
 	}
 }
 
-templ InfoCard(props CardProps) {
-	@Card("") {
-		@header("") {
-			@title("") {
-				{ props.Title }
+templ InfoCard(cardProps CardProps) {
+	@Card(base.Props{}) {
+		@Header(base.Props{}) {
+			@Title(base.Props{}) {
+				{ cardProps.Title }
 			}
-			@description("") {
-				{ props.Description }
+			@Description(base.Props{}) {
+				{ cardProps.Description }
 			}
 		}
-		@content("") {
+		@Content(base.Props{}) {
 			{ children... }
 		}
-		@footer("") {
-			{ props.Footer }
+		@Footer(base.Props{}) {
+			{ cardProps.Footer }
 		}
 	}
 }
 
-templ Card(class string) {
+templ Card(props base.Props) {
 	<div
-		class={ twmerge.Merge("w-[350px] rounded-lg border bg-card text-card-foreground dark:bg-zinc-900 shadow-sm", class) }
+        id={ props.Id }
+		class={ M("w-[350px] rounded-lg border bg-card text-card-foreground shadow-sm", props.Class) }
+        { props.Attrs... }
 	>
 		{ children... }
 	</div>
 }
 
-templ header(class string) {
+templ Header(props base.Props) {
 	<div
-		class={ twmerge.Merge("flex flex-col space-y-1.5 p-6", class) }
+        id={ props.Id }
+		class={ M("flex flex-col space-y-1.5 p-6", props.Class) }
+        { props.Attrs... }
 	>
 		{ children... }
 	</div>
 }
 
-templ title(class string) {
+templ Title(props base.Props) {
 	<h3
-		class={ twmerge.Merge("text-2xl font-semibold leading-none tracking-tight", class) }
+        id={ props.Id }
+		class={ M("text-2xl font-semibold leading-none tracking-tight", props.Class) }
+        { props.Attrs... }
 	>
 		{ children... }
 	</h3>
 }
 
-templ description(class string) {
+templ Description(props base.Props) {
 	<p
-		class={ twmerge.Merge("text-sm text-muted-foreground", class) }
+        id={ props.Id }
+		class={ M("text-sm text-muted-foreground", props.Class) }
+        { props.Attrs... }
 	>
 		{ children... }
 	</p>
 }
 
-templ content(class string) {
+templ Content(props base.Props) {
 	<div
-		class={ twmerge.Merge("p-6 pt-0", class) }
+        id={ props.Id }
+		class={ M("p-6 pt-0", props.Class) }
+        { props.Attrs... }
 	>
 		{ children... }
 	</div>
 }
 
-templ footer(class string) {
+templ Footer(props base.Props) {
 	<div
-		class={ twmerge.Merge("flex items-center p-6 pt-0", class) }
+        id={ props.Id }
+		class={ M("flex items-center p-6 pt-0", props.Class) }
+        { props.Attrs... }
 	>
 		{ children... }
 	</div>

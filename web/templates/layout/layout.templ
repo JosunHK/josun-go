@@ -2,6 +2,8 @@ package layout
 
 import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+	"github.com/JosunHK/josun-go.git/web/templates/components/common/dropDownMenu"
+	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
 )
 
 templ header() {
@@ -9,24 +11,33 @@ templ header() {
 		<title> bruh </title>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<script src="static/htmx.min.js"></script>
+		<script src="static/htmx-min.js"></script>
+		<script src="static/alpine/alpine-persist.js"></script>
+		<script defer src="static/alpine/alpine-min.js"></script>
 		<link rel="stylesheet" href="static/style.css"/>
-		<link rel="stylesheet" href="static/global.css"/>
 	</head>
-	<body class="bg-zinc-900 dark">
+	<body class="bg-background" x-data x-ref="body" :class="{'dark' : Alpine.store('darkMode').on }">
 		{ children... }
 	</body>
+
+    <script>
+        if (localStorage.getItem('darkModeOn') === "true"){
+            document.querySelector('body').classList.add('dark')
+        }
+    </script>
 }
 
 templ Layout(name string, T func(string) string) {
 	@header() {
-        <div class="w-full h-full flex justify-center items-center">
-            @ui.InfoCard(ui.CardProps{
+        <div class="w-full h-full flex flex-col justify-center items-center">
+            @cmp.DemoDropDown()
+            @settings.DarkModeToggle(T)
+            @card.InfoCard(card.CardProps{
                 Title: "Title",
                 Description : "example of a card",
                 Footer: "Don't be racist, I am a building.",
             }) 
-            @ui.LoginCard(ui.CardProps{
+            @card.LoginCard(card.CardProps{
                 Title: "Title",
                 Description : "example of a card",
                 Footer: "Don't be racist, I am a building.",

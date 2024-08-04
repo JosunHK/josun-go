@@ -6,5 +6,13 @@
     { 
         "Key": "go_watch",
         "Default": "heoi tai"
+    },
+    { 
+        "Key": "dark_mode",
+        "Default": "深色主題"
+    },
+    { 
+        "Key": "light_mode",
+        "Default": "淺色主題"
     }
 ]

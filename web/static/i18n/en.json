@@ -6,5 +6,13 @@
     { 
         "Key": "go_watch",
         "Default": "Go watch"
+    },
+    { 
+        "Key": "dark_mode",
+        "Default": "Dark Mode"
+    },
+    { 
+        "Key": "light_mode",
+        "Default": "Light Mode"
     }
 ]

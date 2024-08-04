@@ -1,0 +1,50 @@
+package cmp
+
+import (
+	"github.com/JosunHK/josun-go.git/pkg/twmerge"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dropDownMenu"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
+	"github.com/JosunHK/josun-go.git/web/templates/props"
+	"github.com/gungun974/gocva"
+)
+
+var M = twmerge.Merge
+
+templ DemoDropDown() {
+	@dropDownMenu.DropDownMenu(base.Props{}) {
+		@dropDownMenu.DropDownMenuTrigger(base.Props{}) {
+			@button.Button(button.ButtonProps{
+				Variant: gocva.Variant{
+					"variant": "outline",
+				},
+			}) {
+				Click me
+			}
+		}
+		@dropDownMenu.DropDownMenuContent(base.Props{}) {
+			@dropDownMenu.DropDownMenuLabel(base.Props{}) {
+				Demo DropDown Menu
+			}
+			@dropDownMenu.DropDownMenuSeparator(base.Props{})
+			@dropDownMenu.DropDownMenuItem(base.Props{}, "") {
+				@dropDownMenu.DropDownMenuIcon(base.Props{}) {
+					@icon.Settings()
+				}
+				Item 1 
+				@dropDownMenu.DropDownMenuShortcut(base.Props{}) {
+					Ctrl + S
+				}
+			}
+			@dropDownMenu.DropDownMenuItem(base.Props{}, "") {
+				@dropDownMenu.DropDownMenuIcon(base.Props{}) {
+					@icon.Axe()
+				}
+				Button item
+				@dropDownMenu.DropDownMenuShortcut(base.Props{}) {
+					Ctrl + E
+				}
+			}
+		}
+	}
+}

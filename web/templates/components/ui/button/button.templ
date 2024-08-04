@@ -1,11 +1,14 @@
-package ui
-
-//allow button to be used in other components just for the style but not as a button / allow override button's function
+package button  
 
 import (
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
+	"github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
+
+var M = twmerge.Merge
+
+//allow button to be used in other components just for the style but not as a button / allow override button's function
 
 var cva = gocva.CVA{
 	Base: "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -32,14 +35,15 @@ var cva = gocva.CVA{
 }
 
 type ButtonProps struct {
-	Class    string
-	Variant  gocva.Variant
+    base.Props
+	Variant gocva.Variant
 }
 
 templ Button(props ButtonProps) {
-    <button
-        class={ twmerge.Merge(cva.Render(props.Variant), props.Class) }
-    >
-        { children... }
-    </button>
+	<button
+        id={ props.Id }
+		class={ M(cva.Render(props.Variant), props.Class) }
+	>
+		{ children... }
+	</button>
 }
