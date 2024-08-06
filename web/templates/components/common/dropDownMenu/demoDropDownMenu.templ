@@ -5,7 +5,7 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dropDownMenu"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
-	"github.com/JosunHK/josun-go.git/web/templates/props"
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
 
@@ -27,7 +27,11 @@ templ DemoDropDown() {
 				Demo DropDown Menu
 			}
 			@dropDownMenu.DropDownMenuSeparator(base.Props{})
-			@dropDownMenu.DropDownMenuItem(base.Props{}, "") {
+			@dropDownMenu.DropDownMenuItem(base.Props{
+				Attrs: templ.Attributes{
+					"@item-clicked": "console.log('item 1 clicked')",
+				},
+			}) {
 				@dropDownMenu.DropDownMenuIcon(base.Props{}) {
 					@icon.Settings()
 				}
@@ -36,13 +40,51 @@ templ DemoDropDown() {
 					Ctrl + S
 				}
 			}
-			@dropDownMenu.DropDownMenuItem(base.Props{}, "") {
+			@dropDownMenu.DropDownMenuItem(base.Props{
+				Attrs: templ.Attributes{
+					"@item-clicked": "console.log('item 2 clicked')",
+				},
+			}) {
 				@dropDownMenu.DropDownMenuIcon(base.Props{}) {
 					@icon.Axe()
 				}
 				Button item
 				@dropDownMenu.DropDownMenuShortcut(base.Props{}) {
 					Ctrl + E
+				}
+			}
+			@dropDownMenu.DropDownMenuSub(base.Props{}) {
+				@dropDownMenu.DropDownMenuSubTrigger(base.Props{}) {
+                    @dropDownMenu.DropDownMenuIcon(base.Props{}) {
+                        @icon.Tv()
+                    }
+					test
+				}
+				@dropDownMenu.DropDownMenuSubContent(base.Props{}) {
+					@dropDownMenu.DropDownMenuLabel(base.Props{}) {
+						Sub menu label
+					}
+					@dropDownMenu.DropDownMenuSeparator(base.Props{})
+					@dropDownMenu.DropDownMenuItem(base.Props{
+						Attrs: templ.Attributes{
+							"@item-clicked": "console.log('sub item 1 clicked')",
+						},
+					}) {
+						@dropDownMenu.DropDownMenuIcon(base.Props{}) {
+							@icon.Folder()
+						}
+						Sub item 1
+					}
+					@dropDownMenu.DropDownMenuItem(base.Props{
+						Attrs: templ.Attributes{
+							"@item-clicked": "console.log('sub item 2 clicked')",
+						},
+					}) {
+						@dropDownMenu.DropDownMenuIcon(base.Props{}) {
+							@icon.Apple()
+						}
+						Sub item 2
+					}
 				}
 			}
 		}

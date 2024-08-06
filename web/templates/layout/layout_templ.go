@@ -32,7 +32,7 @@ func header() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<head><title>bruh </title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><script src=\"static/htmx-min.js\"></script><script src=\"static/alpine/alpine-persist.js\"></script><script defer src=\"static/alpine/alpine-min.js\"></script><link rel=\"stylesheet\" href=\"static/style.css\"></head><body class=\"bg-background\" x-data x-ref=\"body\" :class=\"{&#39;dark&#39; : Alpine.store(&#39;darkMode&#39;).on }\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<head><title>bruh </title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><script src=\"static/htmx-min.js\"></script><script src=\"https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js\"></script><link rel=\"stylesheet\" href=\"static/style.css\"></head><body class=\"bg-background\" x-data x-ref=\"body\" :class=\"{&#39;dark&#39; : Alpine.store(&#39;darkMode&#39;).on }\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -40,7 +40,7 @@ func header() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body><script>\n        if (localStorage.getItem('darkModeOn') === \"true\"){\n            document.querySelector('body').classList.add('dark')\n        }\n    </script>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body><!-- Set the mode before alpine while waiting for alpine to init, prevent blinking --><script>\n        if (localStorage.getItem('darkModeOn') === \"true\"){\n            document.querySelector('body').classList.add('dark')\n        }\n    </script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

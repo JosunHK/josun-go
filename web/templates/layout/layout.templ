@@ -12,14 +12,15 @@ templ header() {
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<script src="static/htmx-min.js"></script>
-		<script src="static/alpine/alpine-persist.js"></script>
-		<script defer src="static/alpine/alpine-min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 		<link rel="stylesheet" href="static/style.css"/>
 	</head>
 	<body class="bg-background" x-data x-ref="body" :class="{'dark' : Alpine.store('darkMode').on }">
 		{ children... }
 	</body>
 
+    <!-- Set the mode before alpine while waiting for alpine to init, prevent blinking -->
     <script>
         if (localStorage.getItem('darkModeOn') === "true"){
             document.querySelector('body').classList.add('dark')

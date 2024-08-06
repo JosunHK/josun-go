@@ -17,30 +17,38 @@ templ DarkModeToggle(T func(string) string) {
 					"size":    "icon",
 				},
 			}) {
-                //Make buttons hidden before alpine is loaded becasue I have OCD
-                @dropDownMenu.DropDownMenuTriggerIcon(base.Props{
-                    Class: "hidden",
-                    Attrs: templ.Attributes{
-                        ":class": "{ 'hidden' : !Alpine.store('darkMode').on }",
-                    },
-                }) {
-                    @icon.Moon()
-                }
-                @dropDownMenu.DropDownMenuTriggerIcon(base.Props{
-                    Class: "hidden",
-                    Attrs: templ.Attributes{
-                        ":class": "{ 'hidden' : Alpine.store('darkMode').on }",
-                    },
-                }) {
-                    @icon.Sun()
-                }
+				//Make buttons hidden before alpine is loaded becasue I have OCD
+				@dropDownMenu.DropDownMenuTriggerIcon(base.Props{
+					Class: "hidden",
+					Attrs: templ.Attributes{
+						":class": "{ 'hidden' : !Alpine.store('darkMode').on }",
+					},
+				}) {
+					@icon.Moon()
+				}
+				@dropDownMenu.DropDownMenuTriggerIcon(base.Props{
+					Class: "hidden",
+					Attrs: templ.Attributes{
+						":class": "{ 'hidden' : Alpine.store('darkMode').on }",
+					},
+				}) {
+					@icon.Sun()
+				}
 			}
 		}
 		@dropDownMenu.DropDownMenuContent(base.Props{}) {
-			@dropDownMenu.DropDownMenuItem(base.Props{}, "$store.darkMode.setMode(true)") {
+			@dropDownMenu.DropDownMenuItem(base.Props{
+				Attrs: templ.Attributes{
+					"@item-clicked": "Alpine.store('darkMode').setMode(true)",
+				},
+			}) {
 				{ T("dark_mode") }
 			}
-			@dropDownMenu.DropDownMenuItem(base.Props{}, "$store.darkMode.setMode(false)") {
+			@dropDownMenu.DropDownMenuItem(base.Props{
+				Attrs: templ.Attributes{
+					"@item-clicked": "Alpine.store('darkMode').setMode(false)",
+				},
+			}) {
 				{ T("light_mode") }
 			}
 		}

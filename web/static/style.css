@@ -637,6 +637,38 @@ body {
   left: 0.5rem;
 }
 
+.top-10 {
+  top: 2.5rem;
+}
+
+.left-10 {
+  left: 2.5rem;
+}
+
+.top-0 {
+  top: 0px;
+}
+
+.right-full {
+  right: 100%;
+}
+
+.left-full {
+  left: 100%;
+}
+
+.left-\[50\%\] {
+  left: 50%;
+}
+
+.left-\[105\%\] {
+  left: 105%;
+}
+
+.left-\[102\%\] {
+  left: 102%;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -750,6 +782,11 @@ body {
 
 .min-w-\[8rem\] {
   min-width: 8rem;
+}
+
+.min-w-\[max-content\] {
+  min-width: -moz-max-content;
+  min-width: max-content;
 }
 
 .cursor-default {
@@ -1007,6 +1044,31 @@ body {
   transition-duration: 150ms;
 }
 
+.file\:border-0::file-selector-button {
+  border-width: 0px;
+}
+
+.file\:bg-transparent::file-selector-button {
+  background-color: transparent;
+}
+
+.file\:text-sm::file-selector-button {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.file\:font-medium::file-selector-button {
+  font-weight: 500;
+}
+
+.placeholder\:text-muted-foreground::-moz-placeholder {
+  color: hsl(var(--muted-foreground));
+}
+
+.placeholder\:text-muted-foreground::placeholder {
+  color: hsl(var(--muted-foreground));
+}
+
 .hover\:bg-accent:hover {
   background-color: hsl(var(--accent));
 }
@@ -1060,6 +1122,10 @@ body {
 
 .disabled\:pointer-events-none:disabled {
   pointer-events: none;
+}
+
+.disabled\:cursor-not-allowed:disabled {
+  cursor: not-allowed;
 }
 
 .disabled\:opacity-50:disabled {

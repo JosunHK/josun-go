@@ -2,17 +2,18 @@ package dropDownMenu
 
 import (
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
-	"github.com/JosunHK/josun-go.git/web/templates/props"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var M = twmerge.Merge
 
 templ DropDownMenuTriggerIcon(props base.Props) {
-	<div 
+	<div
 		id={ props.Id }
-        class={ M("m-1 h-5 w-5", props.Class) }
-        { props.Attrs...}
-    >
+		class={ M("m-1 h-5 w-5", props.Class) }
+		{ props.Attrs... }
+	>
 		{ children... }
 	</div>
 }
@@ -20,9 +21,9 @@ templ DropDownMenuTriggerIcon(props base.Props) {
 templ DropDownMenuIcon(props base.Props) {
 	<div
 		id={ props.Id }
-        class={ M("mr-2 h-4 w-4", props.Class) }
-        { props.Attrs...}
-    >
+		class={ M("mr-2 h-4 w-4", props.Class) }
+		{ props.Attrs... }
+	>
 		{ children... }
 	</div>
 }
@@ -31,33 +32,85 @@ templ DropDownMenuTrigger(props base.Props) {
 	<div
 		id={ props.Id }
 		class={ props.Class }
-        { props.Attrs...}
 		x-ref="button"
 		x-on:click="toggle()"
 		:aria-expanded="open"
 		:aria-controls="$id('dropdown-button')"
 		type="button"
+		{ props.Attrs... }
 	>
 		{ children... }
+	</div>
+}
+
+templ DropDownMenuSub(props base.Props) {
+	<div
+		id={ props.Id }
+		class={ M("relative", props.Class) }
+	>
+		<div
+			class={ props.Class }
+			x-data="{
+            open: false,
+            toggle() {
+                if (this.open) {
+                    return this.close()
+                }
+ 
+                this.$refs.button.focus()
+ 
+                this.open = true
+            },
+            close(focusAfter) {
+                if (! this.open) return
+ 
+                this.open = false
+ 
+                focusAfter && focusAfter.focus()
+            }
+        }"
+			x-on:keydown.escape.prevent.stop="close($refs.button)"
+			x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+			x-id="['dropdown-button']"
+			{ props.Attrs... }
+		>
+			{ children... }
+		</div>
 	</div>
 }
 
 templ DropDownMenuSubTrigger(props base.Props) {
 	<div
 		id={ props.Id }
-		class={ M("flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent data-[state=open]:bg-accent", props.Class) }
-        { props.Attrs...}
+		x-ref="button"
+		x-on:click="toggle()"
+		:aria-expanded="open"
+		:aria-controls="$id('dropdown-button')"
+		type="button"
+		class={ M("flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent ", props.Class) }
+		{ props.Attrs... }
 	>
 		{ children... }
+		@DropDownMenuIcon(base.Props{
+			Class: "ml-auto h-4 w-4",
+		}) {
+			@icon.ChevronRight()
+		}
 	</div>
-	))
 }
 
-templ dropDownMenuSubContent(props base.Props) {
+templ DropDownMenuSubContent(props base.Props) {
 	<div
 		id={ props.Id }
-		class={ M("z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2", props.Class) }
-        { props.Attrs...}
+		x-ref="panel"
+		x-show="open"
+		x-transition.origin.top.left
+		x-on:click.outside="close($refs.button)"
+		:id="$id('dropdown-button')"
+		style="display: none;"
+		class={ M(`z-50 min-w-[max-content] overflow-hidden rounded-md border absolute top-0 left-full bg-popover p-1
+            text-popover-foreground shadow-lg`, props.Class) }
+		{ props.Attrs... }
 	>
 		{ children... }
 	</div>
@@ -72,19 +125,19 @@ templ DropDownMenuContent(props base.Props) {
 		x-on:click.outside="close($refs.button)"
 		:id="$id('dropdown-button')"
 		style="display: none;"
-		class={ M("z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 absolute", props.Class) }
-        { props.Attrs...}
+		class={ M("z-50 min-w-[max-content] rounded-md border bg-popover p-1 text-popover-foreground shadow-md absolute", props.Class) }
+		{ props.Attrs... }
 	>
 		{ children... }
 	</div>
 }
 
-templ DropDownMenuItem(props base.Props, clickFn string) {
+templ DropDownMenuItem(props base.Props) {
 	<div
 		id={ props.Id }
-		@click={"toggle();" + clickFn }
+		@click={ "toggle(); $dispatch('item-clicked')" }
 		class={ M("relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
-        { props.Attrs...}
+		{ props.Attrs... }
 	>
 		{ children... }
 	</div>
@@ -95,7 +148,7 @@ templ DropDownMenuCheckBoxItem(props base.Props, checked string) {
 		id={ props.Id }
 		class={ M("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
 		checked={ checked }
-        { props.Attrs...}
+		{ props.Attrs... }
 	>
 		<span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
 			<div>
@@ -110,7 +163,7 @@ templ DropDownMenuRadioItem(props base.Props) {
 	<div
 		id={ props.Id }
 		class={ M("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
-        { props.Attrs...}
+		{ props.Attrs... }
 	>
 		<span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
 			<div>
@@ -125,7 +178,7 @@ templ DropDownMenuLabel(props base.Props) {
 	<div
 		id={ props.Id }
 		class={ M("px-2 py-1.5 text-sm font-semibold", props.Class) }
-        { props.Attrs...}
+		{ props.Attrs... }
 	>
 		{ children... }
 	</div>
@@ -157,7 +210,7 @@ templ DropDownMenu(props base.Props) {
 		x-on:keydown.escape.prevent.stop="close($refs.button)"
 		x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
 		x-id="['dropdown-button']"
-        { props.Attrs...}
+		{ props.Attrs... }
 	>
 		{ children... }
 	</div>
@@ -165,17 +218,17 @@ templ DropDownMenu(props base.Props) {
 
 templ DropDownMenuSeparator(props base.Props) {
 	<hr
-        id={ props.Id }
+		id={ props.Id }
 		class={ M("-mx-1 my-1 h-px bg-muted", props.Class) }
-        { props.Attrs...}
+		{ props.Attrs... }
 	/>
 }
 
 templ DropDownMenuShortcut(props base.Props) {
 	<span
-        id={ props.Id }
+		id={ props.Id }
 		class={ M("ml-auto text-xs tracking-widest opacity-60", props.Class) }
-        { props.Attrs...}
+		{ props.Attrs... }
 	>
 		{ children... }
 	</span>
