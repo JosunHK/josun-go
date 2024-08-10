@@ -1,0 +1,177 @@
+package selectBox
+
+import (
+	"fmt"
+	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
+)
+
+var M = twmerge.Merge
+
+type SelectProps struct {
+	base.Props
+	Name       string
+}
+
+type MenuItem struct {
+	Label string
+	Value string
+}
+
+templ SelectTriggerIcon(props base.Props) {
+	<div
+		class={ M("m-1 h-5 w-5", props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</div>
+}
+
+templ SelectIcon(props base.Props) {
+	<div
+		class={ M("ml-2 h-4 w-4", props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</div>
+}
+
+templ SelectDisplay(props base.Props) {
+	<div
+		x-text="selectedLabel"
+		:style="`width: calc(${maxLength} * 0.6rem)`"
+		class={ M("flex items-center", props.Class) }
+		{ props.Attrs... }
+	></div>
+}
+
+templ SelectTrigger(props base.Props) {
+	<div
+		class={ M("lex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1", props.Class) }
+		x-ref="button"
+		x-on:click="toggle()"
+		:aria-expanded="open"
+		:aria-controls="$id('dropdown-button')"
+		type="button"
+		{ props.Attrs... }
+	>
+		<div
+			class="flex items-center justify-between flex-row"
+		>
+			{ children... }
+			@SelectIcon(base.Props{}) {
+				@icon.ChevronDown()
+			}
+		</div>
+	</div>
+}
+
+templ SelectContent(props base.Props) {
+	<div
+		x-ref="panel"
+		x-show="open"
+		x-transition.origin.top
+		x-on:click.outside="close($refs.button)"
+		:id="$id('dropdown-button')"
+		style="display: none;"
+		class={ M("z-50 rounded-md border bg-popover p-1 text-popover-foreground shadow-md absolute", props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</div>
+}
+
+templ SelectItem(props base.Props, item MenuItem) {
+	<div
+		x-init={ fmt.Sprintf("setLength('%v'.length);setDefault('%v', '%v');", item.Label, item.Label, item.Value) }
+		@click={ fmt.Sprintf("toggle(); selectedLabel = '%v'; selectedValue = '%v'; $dispatch('item-clicked')", item.Label, item.Value) }
+		:style="`width: calc(${maxLength} * 0.6rem + 40px)`"
+		label={ item.Label }
+		value={ item.Value }
+		class={ M("relative flex cursor-default select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+		@SelectIcon(base.Props{
+            Class: "ml-2",
+			Attrs: templ.Attributes{
+				"x-show": fmt.Sprintf("selectedValue === '%v'", item.Value),
+			},
+		}) {
+			@icon.Check()
+		}
+	</div>
+}
+
+templ SelectLabel(props base.Props) {
+	<div
+		x-init="setLength($el.innerText.length)"
+		class={ M("px-2 py-1.5 text-sm font-semibold", props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</div>
+}
+
+templ SelectBody(props SelectProps) {
+	<div
+		id={ props.Id }
+		class={ props.Class }
+		x-data="select"
+		x-on:keydown.escape.prevent.stop="close($refs.button)"
+		x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+		x-id="['dropdown-button']"
+		{ props.Attrs... }
+	>
+		<input
+			type="text"
+			style="display:none"
+			name={ props.Name }
+			x-model="selectedValue"
+		/>
+		{ children... }
+	</div>
+	<script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('select', () => ({
+                open: false,
+                selectedLabel: '',
+                selectedValue: '',
+                maxLength: 0,
+                setDefault(label, value){
+                    if (this.selectedLabel === '') {
+                        this.selectedLabel = label 
+                        this.selectedValue = value
+                    }
+                },
+                toggle() {
+                    if (this.open) {
+                        return this.close()
+                    }
+                    this.$refs.button.focus()
+                    this.open = true
+                },
+                setLength(length) {
+                    if (length > this.maxLength) {
+                        (this.maxLength = length)
+                    } 
+                },
+                close(focusAfter) {
+                    if (! this.open) return
+     
+                    this.open = false
+     
+                    focusAfter && focusAfter.focus()
+                }
+            }))
+        })
+    </script>
+}
+
+templ SelectSeparator(props base.Props) {
+	<hr
+		class={ M("-mx-1 my-1 h-px bg-muted", props.Class) }
+		{ props.Attrs... }
+	/>
+}

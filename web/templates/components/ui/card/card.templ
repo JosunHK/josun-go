@@ -2,8 +2,11 @@ package card
 
 import (
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
-	ui "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
-	"github.com/JosunHK/josun-go.git/web/templates/props"
+	button "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
+	input "github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
+	label "github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
+	"github.com/gungun974/gocva"
 )
 
 var M = twmerge.Merge
@@ -22,10 +25,37 @@ templ LoginCard(cardProps CardProps) {
 			}
 		}
 		@Content(base.Props{}) {
-			input fields not yet inplemented
+			@label.Label(
+                label.LabelProps{
+                    Variant: gocva.Variant{"variant": "default"},
+                },
+            ) { 
+                Username 
+            }
+			@input.Input(
+				input.InputProps{
+                    Type: "text", 
+                    Props: base.Props{
+                        Class:"my-2",
+                    },
+                },
+			)
+			@label.Label(
+                label.LabelProps{Variant: gocva.Variant{"variant": "default"}},
+            ) { 
+               Password 
+            }
+			@input.Input(
+				input.InputProps{
+                    Type: "password",
+                    Props: base.Props{
+                        Class:"my-2",
+                    },
+                },
+			)
 		}
 		@Footer(base.Props{}) {
-			@ui.Button(ui.ButtonProps{}) {
+			@button.Button(button.ButtonProps{}) {
 				Login
 			}
 		}
@@ -43,6 +73,14 @@ templ InfoCard(cardProps CardProps) {
 			}
 		}
 		@Content(base.Props{}) {
+            @input.Input(
+                input.InputProps{
+                    Type: "text",
+                    Props: base.Props{
+                        Class:"my-2",
+                    },
+                },
+            )
 			{ children... }
 		}
 		@Footer(base.Props{}) {
@@ -53,9 +91,9 @@ templ InfoCard(cardProps CardProps) {
 
 templ Card(props base.Props) {
 	<div
-        id={ props.Id }
+		id={ props.Id }
 		class={ M("w-[350px] rounded-lg border bg-card text-card-foreground shadow-sm", props.Class) }
-        { props.Attrs... }
+		{ props.Attrs... }
 	>
 		{ children... }
 	</div>
@@ -63,9 +101,9 @@ templ Card(props base.Props) {
 
 templ Header(props base.Props) {
 	<div
-        id={ props.Id }
+		id={ props.Id }
 		class={ M("flex flex-col space-y-1.5 p-6", props.Class) }
-        { props.Attrs... }
+		{ props.Attrs... }
 	>
 		{ children... }
 	</div>
@@ -73,9 +111,9 @@ templ Header(props base.Props) {
 
 templ Title(props base.Props) {
 	<h3
-        id={ props.Id }
+		id={ props.Id }
 		class={ M("text-2xl font-semibold leading-none tracking-tight", props.Class) }
-        { props.Attrs... }
+		{ props.Attrs... }
 	>
 		{ children... }
 	</h3>
@@ -83,9 +121,9 @@ templ Title(props base.Props) {
 
 templ Description(props base.Props) {
 	<p
-        id={ props.Id }
+		id={ props.Id }
 		class={ M("text-sm text-muted-foreground", props.Class) }
-        { props.Attrs... }
+		{ props.Attrs... }
 	>
 		{ children... }
 	</p>
@@ -93,9 +131,9 @@ templ Description(props base.Props) {
 
 templ Content(props base.Props) {
 	<div
-        id={ props.Id }
+		id={ props.Id }
 		class={ M("p-6 pt-0", props.Class) }
-        { props.Attrs... }
+		{ props.Attrs... }
 	>
 		{ children... }
 	</div>
@@ -103,9 +141,9 @@ templ Content(props base.Props) {
 
 templ Footer(props base.Props) {
 	<div
-        id={ props.Id }
+		id={ props.Id }
 		class={ M("flex items-center p-6 pt-0", props.Class) }
-        { props.Attrs... }
+		{ props.Attrs... }
 	>
 		{ children... }
 	</div>

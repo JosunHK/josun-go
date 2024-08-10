@@ -69,4 +69,10 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+
+  html{
+    background: 240 10% 3.9%;
+  }
+
+  [x-cloak] { display: none !important; }
 }

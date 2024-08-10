@@ -17,18 +17,17 @@ templ DarkModeToggle(T func(string) string) {
 					"size":    "icon",
 				},
 			}) {
-				//Make buttons hidden before alpine is loaded becasue I have OCD
 				@dropDownMenu.DropDownMenuTriggerIcon(base.Props{
-					Class: "hidden",
 					Attrs: templ.Attributes{
+                        "x-cloak": "",
 						":class": "{ 'hidden' : !Alpine.store('darkMode').on }",
 					},
 				}) {
 					@icon.Moon()
 				}
 				@dropDownMenu.DropDownMenuTriggerIcon(base.Props{
-					Class: "hidden",
 					Attrs: templ.Attributes{
+                        "x-cloak": "",
 						":class": "{ 'hidden' : Alpine.store('darkMode').on }",
 					},
 				}) {

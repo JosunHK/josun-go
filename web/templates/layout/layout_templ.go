@@ -9,10 +9,27 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/JosunHK/josun-go.git/web/templates/components/common/dropDownMenu"
+	demoSelect "github.com/JosunHK/josun-go.git/web/templates/components/common"
+	cmp "github.com/JosunHK/josun-go.git/web/templates/components/common/dropDownMenu"
 	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
 )
+
+var yesNo = []selectBox.MenuItem{
+	{Label: "Yes", Value: "yes"},
+	{Label: "No", Value: "no"},
+	{Label: "Maybe?", Value: "maybe"},
+}
+
+var addresses = []selectBox.MenuItem{
+	//fake addresses
+	{Label: "1234 Fake St", Value: "1234"},
+	{Label: "5678 Fake St", Value: "5678"},
+	{Label: "9101 Fake St", Value: "9101"},
+	{Label: "1121 Fake St", Value: "1121"},
+	{Label: "3141 Fake St", Value: "3141"},
+}
 
 func header() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -32,7 +49,7 @@ func header() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<head><title>bruh </title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><script src=\"static/htmx-min.js\"></script><script src=\"https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js\"></script><link rel=\"stylesheet\" href=\"static/style.css\"></head><body class=\"bg-background\" x-data x-ref=\"body\" :class=\"{&#39;dark&#39; : Alpine.store(&#39;darkMode&#39;).on }\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html class=\"bg-black\" x-data x-cloak :class=\"{&#39;dark&#39; : Alpine.store(&#39;darkMode&#39;).on }\"><head><title>bruh </title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><script src=\"static/htmx-min.js\"></script><script src=\"https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js\"></script><link rel=\"stylesheet\" href=\"static/style.css\"></head><body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -40,7 +57,7 @@ func header() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body><!-- Set the mode before alpine while waiting for alpine to init, prevent blinking --><script>\n        if (localStorage.getItem('darkModeOn') === \"true\"){\n            document.querySelector('body').classList.add('dark')\n        }\n    </script>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -83,6 +100,14 @@ func Layout(name string, T func(string) string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			templ_7745c5c3_Err = cmp.DemoDropDown().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = demoSelect.Select("bruh", yesNo).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = demoSelect.LabeledSelect("hehe", "A kida very fucking long label test", addresses).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

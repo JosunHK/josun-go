@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.4.6 | MIT License | https://tailwindcss.com
+! tailwindcss v3.4.7 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -513,6 +513,14 @@ body {
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
+html{
+  background: 240 10% 3.9%;
+}
+
+[x-cloak] {
+  display: none !important;
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -637,36 +645,12 @@ body {
   left: 0.5rem;
 }
 
-.top-10 {
-  top: 2.5rem;
-}
-
-.left-10 {
-  left: 2.5rem;
-}
-
-.top-0 {
-  top: 0px;
-}
-
-.right-full {
-  right: 100%;
-}
-
 .left-full {
   left: 100%;
 }
 
-.left-\[50\%\] {
-  left: 50%;
-}
-
-.left-\[105\%\] {
-  left: 105%;
-}
-
-.left-\[102\%\] {
-  left: 102%;
+.top-0 {
+  top: 0px;
 }
 
 .z-50 {
@@ -677,9 +661,9 @@ body {
   margin: 0.25rem;
 }
 
-.mx-1 {
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
+.-mx-1 {
+  margin-left: -0.25rem;
+  margin-right: -0.25rem;
 }
 
 .my-1 {
@@ -687,9 +671,13 @@ body {
   margin-bottom: 0.25rem;
 }
 
-.-mx-1 {
-  margin-left: -0.25rem;
-  margin-right: -0.25rem;
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
 }
 
 .ml-auto {
@@ -698,10 +686,6 @@ body {
 
 .mr-2 {
   margin-right: 0.5rem;
-}
-
-.mr-0 {
-  margin-right: 0px;
 }
 
 .flex {
@@ -736,6 +720,10 @@ body {
   height: 1rem;
 }
 
+.h-5 {
+  height: 1.25rem;
+}
+
 .h-9 {
   height: 2.25rem;
 }
@@ -746,10 +734,6 @@ body {
 
 .h-px {
   height: 1px;
-}
-
-.h-5 {
-  height: 1.25rem;
 }
 
 .w-10 {
@@ -768,20 +752,16 @@ body {
   width: 1rem;
 }
 
+.w-5 {
+  width: 1.25rem;
+}
+
 .w-\[350px\] {
   width: 350px;
 }
 
 .w-full {
   width: 100%;
-}
-
-.w-5 {
-  width: 1.25rem;
-}
-
-.min-w-\[8rem\] {
-  min-width: 8rem;
 }
 
 .min-w-\[max-content\] {
@@ -799,6 +779,10 @@ body {
           user-select: none;
 }
 
+.flex-row {
+  flex-direction: row;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -809,6 +793,10 @@ body {
 
 .justify-center {
   justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
 }
 
 .space-y-1\.5 > :not([hidden]) ~ :not([hidden]) {
@@ -873,9 +861,9 @@ body {
   background-color: hsl(var(--secondary));
 }
 
-.bg-zinc-900 {
+.bg-black {
   --tw-bg-opacity: 1;
-  background-color: rgb(24 24 27 / var(--tw-bg-opacity));
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
 .fill-current {
@@ -888,10 +876,6 @@ body {
 
 .p-6 {
   padding: 1.5rem;
-}
-
-.p-0 {
-  padding: 0px;
 }
 
 .px-2 {
@@ -1093,12 +1077,23 @@ body {
   text-decoration-line: underline;
 }
 
-.focus\:bg-accent:focus {
-  background-color: hsl(var(--accent));
+.focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
-.focus\:text-accent-foreground:focus {
-  color: hsl(var(--accent-foreground));
+.focus\:ring-2:focus {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus\:ring-ring:focus {
+  --tw-ring-color: hsl(var(--ring));
+}
+
+.focus\:ring-offset-2:focus {
+  --tw-ring-offset-width: 2px;
 }
 
 .focus-visible\:outline-none:focus-visible {
@@ -1132,19 +1127,25 @@ body {
   opacity: 0.5;
 }
 
-.data-\[disabled\]\:pointer-events-none[data-disabled] {
-  pointer-events: none;
+.peer:disabled ~ .peer-disabled\:cursor-not-allowed {
+  cursor: not-allowed;
 }
 
-.data-\[state\=open\]\:bg-accent[data-state=open] {
-  background-color: hsl(var(--accent));
+.peer:disabled ~ .peer-disabled\:opacity-70 {
+  opacity: 0.7;
+}
+
+.data-\[disabled\]\:pointer-events-none[data-disabled] {
+  pointer-events: none;
 }
 
 .data-\[disabled\]\:opacity-50[data-disabled] {
   opacity: 0.5;
 }
 
-.dark\:bg-zinc-900:is(.dark *) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(24 24 27 / var(--tw-bg-opacity));
+.\[\&\>span\]\:line-clamp-1>span {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
