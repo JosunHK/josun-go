@@ -14,5 +14,22 @@
     { 
         "Key": "light_mode",
         "Default": "Light Mode"
+    },
+    { 
+        "Key": "yes",
+        "Default": "Yes"
+    },
+    { 
+        "Key": "no",
+        "Default": "No"
+    },
+    { 
+        "Key": "english",
+        "Default": "English"
+    },
+    { 
+        "Key": "chinese",
+        "Default": "Chinese"
     }
+
 ]

@@ -4,6 +4,9 @@ import (
 	"fmt"
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
+	"github.com/JosunHK/josun-go.git/db/generated"
+
+
 	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
@@ -12,11 +15,6 @@ var M = twmerge.Merge
 type SelectProps struct {
 	base.Props
 	Name string
-}
-
-type MenuItem struct {
-	Label string
-	Value string
 }
 
 templ SelectTriggerIcon(props base.Props) {
@@ -82,7 +80,7 @@ templ SelectContent(props base.Props) {
 	</div>
 }
 
-templ SelectItem(props base.Props, item MenuItem) {
+templ SelectItem(props base.Props, item sqlc.Menuitem) {
 	<div
 		x-init={ fmt.Sprintf("setLength('%v'.length);setDefault('%v', '%v');", item.Label, item.Label, item.Value) }
 		@click={ fmt.Sprintf("toggle(); selectedLabel = '%v'; selectedValue = '%v'; $dispatch('item-clicked')", item.Label, item.Value) }

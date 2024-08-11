@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/JosunHK/josun-go.git/cmd/cfg"
 	"github.com/JosunHK/josun-go.git/cmd/database"
 	"github.com/JosunHK/josun-go.git/cmd/handlers/api"
 	"github.com/JosunHK/josun-go.git/cmd/handlers/pages"
 	"github.com/JosunHK/josun-go.git/cmd/middleware"
+	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	"github.com/JosunHK/josun-go.git/pkg/twmerge"
 
 	"github.com/joho/godotenv"
@@ -37,14 +37,12 @@ func init() {
 }
 
 func main() {
-	cfg, err := cfg.CfgInit()
 	PORT := os.Getenv("PORT")
-	if err != nil {
+	if err := database.InitDB(os.Getenv("DB_CREDENTIALS")); err != nil {
 		log.Panic(err)
 		return
 	}
-
-	if err := database.InitDB(os.Getenv("DB_CREDENTIALS")); err != nil {
+	if err := i18n.InitI18n(); err != nil {
 		log.Panic(err)
 		return
 	}
@@ -56,11 +54,12 @@ func main() {
 	e.Static("/static", "web/static")
 
 	//end points
-	e.GET("/", middleware.HTML(pages.Layout, cfg))
+	e.GET("/", middleware.HTML(pages.Layout))
+	e.GET("/playground", middleware.HTML(pages.Layout))
 
 	//dummy api
-	e.GET("/Users", middleware.JSON(api.GetUsers, cfg))
-	e.POST("/Users", middleware.JSON(api.PostUser, cfg))
+	e.GET("/Users", middleware.JSON(api.GetUsers))
+	e.POST("/Users", middleware.JSON(api.PostUser))
 
 	//exit ->
 	e.Logger.Fatal(e.Start(PORT))

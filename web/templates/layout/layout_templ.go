@@ -8,28 +8,7 @@ package layout
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import (
-	cmp "github.com/JosunHK/josun-go.git/web/templates/components/common/dropDownMenu"
-	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
-	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
-	"github.com/JosunHK/josun-go.git/web/templates/components/ui/datepicker"
-	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
-)
-
-var yesNo = []selectBox.MenuItem{
-	{Label: "Yes", Value: "yes"},
-	{Label: "No", Value: "no"},
-	{Label: "Maybe?", Value: "maybe"},
-}
-
-var addresses = []selectBox.MenuItem{
-	//fake addresses
-	{Label: "1234 Fake St", Value: "1234"},
-	{Label: "5678 Fake St", Value: "5678"},
-	{Label: "9101 Fake St", Value: "9101"},
-	{Label: "1121 Fake St", Value: "1121"},
-	{Label: "3141 Fake St", Value: "3141"},
-}
+import ()
 
 func header() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -49,7 +28,7 @@ func header() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html class=\"bg-background\" x-data x-cloak :class=\"{&#39;dark&#39; : Alpine.store(&#39;darkMode&#39;).on }\"><head><title>bruh </title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><link rel=\"stylesheet\" href=\"static/style.css\"><script src=\"static/htmx-min.js\"></script><script src=\"https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js\"></script></head><body class=\"bg-background\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html class=\"bg-background\" x-data x-cloak :class=\"{&#39;dark&#39; : Alpine.store(&#39;darkMode&#39;).on }\"><head><title>bruh</title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><link rel=\"stylesheet\" href=\"static/style.css\"><script src=\"static/htmx-min.js\"></script><script src=\"https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js\"></script></head><body class=\"bg-background\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -65,7 +44,7 @@ func header() templ.Component {
 	})
 }
 
-func Layout(name string, T func(string) string) templ.Component {
+func Layout(content templ.Component) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -83,65 +62,11 @@ func Layout(name string, T func(string) string) templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Var3 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
-			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
-			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
-			if !templ_7745c5c3_IsBuffer {
-				defer func() {
-					templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
-					if templ_7745c5c3_Err == nil {
-						templ_7745c5c3_Err = templ_7745c5c3_BufErr
-					}
-				}()
-			}
-			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"w-full h-full flex flex-col justify-center items-center\">")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = datepicker.DatePicker().Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = cmp.DemoDropDown().Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = selectBox.Select("bruh", yesNo).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = selectBox.LabeledSelect("hehe", "A kida very fucking long label test", addresses).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = settings.DarkModeToggle(T).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = card.InfoCard(card.CardProps{
-				Title:       "Title",
-				Description: "example of a card",
-				Footer:      "Don't be racist, I am a building.",
-			}).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = card.LoginCard(card.CardProps{
-				Title:       "Title",
-				Description: "example of a card",
-				Footer:      "Don't be racist, I am a building.",
-			}).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
+		templ_7745c5c3_Err = header().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
-		})
-		templ_7745c5c3_Err = header().Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
+		}
+		templ_7745c5c3_Err = content.Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

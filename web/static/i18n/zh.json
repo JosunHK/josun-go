@@ -14,5 +14,21 @@
     { 
         "Key": "light_mode",
         "Default": "淺色主題"
+    },
+    { 
+        "Key": "yes",
+        "Default": "是"
+    },
+    { 
+        "Key": "no",
+        "Default": "否"
+    },
+    { 
+        "Key": "english",
+        "Default": "英文"
+    },
+    { 
+        "Key": "chinese",
+        "Default": "中文"
     }
 ]

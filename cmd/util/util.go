@@ -15,10 +15,6 @@ func HTML(c echo.Context, cmp templ.Component) error {
 }
 
 // dummy for now
-func GetLocaleFromCookie(c echo.Context) string {
-	return "en"
-}
-
 func GetIsDarkFromCookie(c echo.Context) bool {
 	cookie, err := c.Cookie("username")
 	if err != nil {

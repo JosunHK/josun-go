@@ -1,0 +1,41 @@
+package settings 
+
+import (
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dropDownMenu"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
+	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
+	"github.com/gungun974/gocva"
+)
+
+templ I18n() {
+	@dropDownMenu.DropDownMenu(base.Props{}) {
+		@dropDownMenu.DropDownMenuTrigger(base.Props{}) {
+			@button.Button(button.ButtonProps{
+				Variant: gocva.Variant{
+					"variant": "outline",
+					"size":    "icon",
+				},
+			}) {
+				@dropDownMenu.DropDownMenuTriggerIcon(base.Props{}) {
+					@icon.Languages()
+				}
+			}
+		}
+		@dropDownMenu.DropDownMenuContent(base.Props{}) {
+			@dropDownMenu.DropDownMenuItem(base.Props{
+				Attrs: templ.Attributes{
+				},
+			}) {
+				{ i18n.T(ctx,"english") }
+			}
+			@dropDownMenu.DropDownMenuItem(base.Props{
+				Attrs: templ.Attributes{
+				},
+			}) {
+				{ i18n.T(ctx,"chinese") }
+			}
+		}
+	}
+}

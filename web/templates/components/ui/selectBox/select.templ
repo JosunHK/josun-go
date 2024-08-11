@@ -2,26 +2,29 @@ package selectBox
 
 import (
 	base "github.com/JosunHK/josun-go.git/web/templates/props"
+	"github.com/JosunHK/josun-go.git/db/generated"
 )
 
-templ Select(name string, menu []MenuItem) {
+templ Select(name string, menu []sqlc.Menuitem) {
 	@SelectBody(SelectProps{
 		Name: name,
 	}) {
 		@SelectTrigger(base.Props{}) {
 			@SelectDisplay(base.Props{})
 		}
-		@SelectContent(base.Props{}) {
-			for _, item := range menu {
-				@SelectItem(base.Props{}, item) {
-					{ item.Label }
-				}
-			}
+        if len(menu) > 0 {
+            @SelectContent(base.Props{}) {
+                for _, item := range menu {
+                    @SelectItem(base.Props{}, item) {
+				        { item.Label }
+                    }
+                }
+            }
 		}
 	}
 }
 
-templ LabeledSelect(name, label string, menu []MenuItem) {
+templ LabeledSelect(name, label string, menu []sqlc.Menuitem) {
 	@SelectBody(SelectProps{
 		Name: name,
 	}) {
@@ -33,11 +36,13 @@ templ LabeledSelect(name, label string, menu []MenuItem) {
 				{ label }
 			}
 			@SelectSeparator(base.Props{})
-			for _, item := range menu {
-				@SelectItem(base.Props{}, item) {
-					{ item.Label }
-				}
-			}
+            if len(menu) > 0 {
+                for _, item := range menu {
+                    @SelectItem(base.Props{}, item) {
+				        { item.Label }
+                    }
+                }
+            }
 		}
 	}
 }

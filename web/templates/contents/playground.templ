@@ -1,0 +1,44 @@
+package contents
+
+import (
+	"github.com/JosunHK/josun-go.git/cmd/util/menuProvider"
+	sqlc "github.com/JosunHK/josun-go.git/db/generated"
+	cmp "github.com/JosunHK/josun-go.git/web/templates/components/common/dropDownMenu"
+	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/datepicker"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
+)
+
+var addresses = []sqlc.Menuitem{
+	{Label: "1234 Fake St", Value: "1234"},
+	{Label: "5678 Fake St", Value: "5678"},
+	{Label: "9101 Fake St", Value: "9101"},
+	{Label: "1121 Fake St", Value: "1121"},
+	{Label: "3141 Fake St", Value: "3141"},
+}
+
+templ Playground() {
+	<div class="w-full h-full flex flex-col justify-center items-center">
+		@datepicker.DatePicker()
+		@cmp.DemoDropDown()
+		@selectBox.Select("bruh", menuProvider.GetMenu(ctx, "yesNo"))
+		@selectBox.LabeledSelect(
+			"hehe",
+			"A kida very fucking long label test",
+			menuProvider.TranslMenu(ctx, addresses),
+		)
+		@settings.DarkModeToggle()
+		@settings.I18n()
+		@card.InfoCard(card.CardProps{
+			Title:       "Title",
+			Description: "example of a card",
+			Footer:      "Don't be racist, I am a building.",
+		})
+		@card.LoginCard(card.CardProps{
+			Title:       "Title",
+			Description: "example of a card",
+			Footer:      "Don't be racist, I am a building.",
+		})
+	</div>
+}
