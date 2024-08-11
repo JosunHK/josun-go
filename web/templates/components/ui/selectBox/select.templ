@@ -1,0 +1,43 @@
+package selectBox
+
+import (
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
+)
+
+templ Select(name string, menu []MenuItem) {
+	@SelectBody(SelectProps{
+		Name: name,
+	}) {
+		@SelectTrigger(base.Props{}) {
+			@SelectDisplay(base.Props{})
+		}
+		@SelectContent(base.Props{}) {
+			for _, item := range menu {
+				@SelectItem(base.Props{}, item) {
+					{ item.Label }
+				}
+			}
+		}
+	}
+}
+
+templ LabeledSelect(name, label string, menu []MenuItem) {
+	@SelectBody(SelectProps{
+		Name: name,
+	}) {
+		@SelectTrigger(base.Props{}) {
+			@SelectDisplay(base.Props{})
+		}
+		@SelectContent(base.Props{}) {
+			@SelectLabel(base.Props{}) {
+				{ label }
+			}
+			@SelectSeparator(base.Props{})
+			for _, item := range menu {
+				@SelectItem(base.Props{}, item) {
+					{ item.Label }
+				}
+			}
+		}
+	}
+}

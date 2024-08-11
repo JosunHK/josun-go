@@ -9,10 +9,10 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	demoSelect "github.com/JosunHK/josun-go.git/web/templates/components/common"
 	cmp "github.com/JosunHK/josun-go.git/web/templates/components/common/dropDownMenu"
 	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/datepicker"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
 )
 
@@ -49,7 +49,7 @@ func header() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html class=\"bg-black\" x-data x-cloak :class=\"{&#39;dark&#39; : Alpine.store(&#39;darkMode&#39;).on }\"><head><title>bruh </title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><script src=\"static/htmx-min.js\"></script><script src=\"https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js\"></script><link rel=\"stylesheet\" href=\"static/style.css\"></head><body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html class=\"bg-background\" x-data x-cloak :class=\"{&#39;dark&#39; : Alpine.store(&#39;darkMode&#39;).on }\"><head><title>bruh </title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><link rel=\"stylesheet\" href=\"static/style.css\"><script src=\"static/htmx-min.js\"></script><script src=\"https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js\"></script></head><body class=\"bg-background\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -99,15 +99,19 @@ func Layout(name string, T func(string) string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
+			templ_7745c5c3_Err = datepicker.DatePicker().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 			templ_7745c5c3_Err = cmp.DemoDropDown().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = demoSelect.Select("bruh", yesNo).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = selectBox.Select("bruh", yesNo).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = demoSelect.LabeledSelect("hehe", "A kida very fucking long label test", addresses).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = selectBox.LabeledSelect("hehe", "A kida very fucking long label test", addresses).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

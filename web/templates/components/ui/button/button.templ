@@ -26,6 +26,8 @@ var cva = gocva.CVA{
 			"sm":      "h-9 rounded-md px-3",
 			"lg":      "h-11 rounded-md px-8",
 			"icon":    "h-10 w-10",
+			"iconsm":  "h-8 w-8",
+			"iconxs":  "h-7 w-7",
 		},
 	},
 	DefaultVariants: gocva.Variant{
@@ -35,14 +37,15 @@ var cva = gocva.CVA{
 }
 
 type ButtonProps struct {
-    base.Props
+	base.Props
 	Variant gocva.Variant
 }
 
 templ Button(props ButtonProps) {
 	<button
-        id={ props.Id }
+		id={ props.Id }
 		class={ M(cva.Render(props.Variant), props.Class) }
+        { props.Attrs... }
 	>
 		{ children... }
 	</button>

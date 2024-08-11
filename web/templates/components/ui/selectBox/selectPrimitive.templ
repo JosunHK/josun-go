@@ -1,4 +1,4 @@
-package selectBox
+package selectBox 
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ var M = twmerge.Merge
 
 type SelectProps struct {
 	base.Props
-	Name       string
+	Name string
 }
 
 type MenuItem struct {
@@ -94,7 +94,7 @@ templ SelectItem(props base.Props, item MenuItem) {
 	>
 		{ children... }
 		@SelectIcon(base.Props{
-            Class: "ml-2",
+			Class: "ml-2",
 			Attrs: templ.Attributes{
 				"x-show": fmt.Sprintf("selectedValue === '%v'", item.Value),
 			},
@@ -114,6 +114,7 @@ templ SelectLabel(props base.Props) {
 	</div>
 }
 
+var scriptHandle = templ.NewOnceHandle()
 templ SelectBody(props SelectProps) {
 	<div
 		id={ props.Id }
@@ -132,41 +133,43 @@ templ SelectBody(props SelectProps) {
 		/>
 		{ children... }
 	</div>
-	<script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('select', () => ({
-                open: false,
-                selectedLabel: '',
-                selectedValue: '',
-                maxLength: 0,
-                setDefault(label, value){
-                    if (this.selectedLabel === '') {
-                        this.selectedLabel = label 
-                        this.selectedValue = value
+	@scriptHandle.Once() {
+		<script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('select', () => ({
+                    open: false,
+                    selectedLabel: '',
+                    selectedValue: '',
+                    maxLength: 0,
+                    setDefault(label, value){
+                        if (this.selectedLabel === '') {
+                            this.selectedLabel = label 
+                            this.selectedValue = value
+                        }
+                    },
+                    toggle() {
+                        if (this.open) {
+                            return this.close()
+                        }
+                        this.$refs.button.focus()
+                        this.open = true
+                    },
+                    setLength(length) {
+                        if (length > this.maxLength) {
+                            (this.maxLength = length)
+                        } 
+                    },
+                    close(focusAfter) {
+                        if (! this.open) return
+         
+                        this.open = false
+         
+                        focusAfter && focusAfter.focus()
                     }
-                },
-                toggle() {
-                    if (this.open) {
-                        return this.close()
-                    }
-                    this.$refs.button.focus()
-                    this.open = true
-                },
-                setLength(length) {
-                    if (length > this.maxLength) {
-                        (this.maxLength = length)
-                    } 
-                },
-                close(focusAfter) {
-                    if (! this.open) return
-     
-                    this.open = false
-     
-                    focusAfter && focusAfter.focus()
-                }
-            }))
-        })
-    </script>
+                }))
+            })
+        </script>
+	}
 }
 
 templ SelectSeparator(props base.Props) {

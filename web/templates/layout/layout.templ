@@ -1,11 +1,11 @@
 package layout 
 
 import (
-	demoSelect "github.com/JosunHK/josun-go.git/web/templates/components/common"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
 	cmp "github.com/JosunHK/josun-go.git/web/templates/components/common/dropDownMenu"
 	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
-	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/datepicker"
 )
 
 var yesNo = []selectBox.MenuItem{
@@ -24,17 +24,18 @@ var addresses = []selectBox.MenuItem{
 }
 
 templ header() {
-	<html class="bg-black" x-data x-cloak :class="{'dark' : Alpine.store('darkMode').on }">
+    <!doctype html>
+	<html class="bg-background" x-data x-cloak :class="{'dark' : Alpine.store('darkMode').on }">
 		<head>
 			<title>bruh </title>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<link rel="stylesheet" href="static/style.css"/>
 			<script src="static/htmx-min.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js"></script>
 			<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
-			<link rel="stylesheet" href="static/style.css"/>
 		</head>
-        <body>
+        <body class="bg-background">
 			{ children... }
 		</body>
 	</html>
@@ -43,9 +44,10 @@ templ header() {
 templ Layout(name string, T func(string) string) {
 	@header() {
 		<div class="w-full h-full flex flex-col justify-center items-center">
+			@datepicker.DatePicker()
 			@cmp.DemoDropDown()
-			@demoSelect.Select("bruh", yesNo)
-			@demoSelect.LabeledSelect("hehe", "A kida very fucking long label test", addresses)
+			@selectBox.Select("bruh", yesNo)
+			@selectBox.LabeledSelect("hehe", "A kida very fucking long label test", addresses)
 			@settings.DarkModeToggle(T)
 			@card.InfoCard(card.CardProps{
 				Title:       "Title",

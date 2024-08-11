@@ -10,7 +10,6 @@ var M = twmerge.Merge
 
 templ DropDownMenuTriggerIcon(props base.Props) {
 	<div
-		id={ props.Id }
 		class={ M("m-1 h-5 w-5", props.Class) }
 		{ props.Attrs... }
 	>
@@ -20,7 +19,6 @@ templ DropDownMenuTriggerIcon(props base.Props) {
 
 templ DropDownMenuIcon(props base.Props) {
 	<div
-		id={ props.Id }
 		class={ M("mr-2 h-4 w-4", props.Class) }
 		{ props.Attrs... }
 	>
@@ -30,7 +28,6 @@ templ DropDownMenuIcon(props base.Props) {
 
 templ DropDownMenuTrigger(props base.Props) {
 	<div
-		id={ props.Id }
 		class={ props.Class }
 		x-ref="button"
 		x-on:click="toggle()"
@@ -45,7 +42,6 @@ templ DropDownMenuTrigger(props base.Props) {
 
 templ DropDownMenuSub(props base.Props) {
 	<div
-		id={ props.Id }
 		class={ M("relative", props.Class) }
 	>
 		<div
@@ -81,7 +77,6 @@ templ DropDownMenuSub(props base.Props) {
 
 templ DropDownMenuSubTrigger(props base.Props) {
 	<div
-		id={ props.Id }
 		x-ref="button"
 		x-on:click="toggle()"
 		:aria-expanded="open"
@@ -101,7 +96,6 @@ templ DropDownMenuSubTrigger(props base.Props) {
 
 templ DropDownMenuSubContent(props base.Props) {
 	<div
-		id={ props.Id }
 		x-ref="panel"
 		x-show="open"
 		x-transition.origin.top.left
@@ -118,7 +112,6 @@ templ DropDownMenuSubContent(props base.Props) {
 
 templ DropDownMenuContent(props base.Props) {
 	<div
-		id={ props.Id }
 		x-ref="panel"
 		x-show="open"
 		x-transition.origin.top.left
@@ -134,7 +127,6 @@ templ DropDownMenuContent(props base.Props) {
 
 templ DropDownMenuItem(props base.Props) {
 	<div
-		id={ props.Id }
 		@click={ "toggle(); $dispatch('item-clicked')" }
 		class={ M("relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
 		{ props.Attrs... }
@@ -145,7 +137,6 @@ templ DropDownMenuItem(props base.Props) {
 
 templ DropDownMenuCheckBoxItem(props base.Props, checked string) {
 	<div
-		id={ props.Id }
 		class={ M("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
 		checked={ checked }
 		{ props.Attrs... }
@@ -161,7 +152,6 @@ templ DropDownMenuCheckBoxItem(props base.Props, checked string) {
 
 templ DropDownMenuRadioItem(props base.Props) {
 	<div
-		id={ props.Id }
 		class={ M("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
 		{ props.Attrs... }
 	>
@@ -176,7 +166,6 @@ templ DropDownMenuRadioItem(props base.Props) {
 
 templ DropDownMenuLabel(props base.Props) {
 	<div
-		id={ props.Id }
 		class={ M("px-2 py-1.5 text-sm font-semibold", props.Class) }
 		{ props.Attrs... }
 	>
@@ -186,7 +175,6 @@ templ DropDownMenuLabel(props base.Props) {
 
 templ DropDownMenu(props base.Props) {
 	<div
-		id={ props.Id }
 		class={ props.Class }
 		x-data="{
             open: false,
@@ -218,7 +206,6 @@ templ DropDownMenu(props base.Props) {
 
 templ DropDownMenuSeparator(props base.Props) {
 	<hr
-		id={ props.Id }
 		class={ M("-mx-1 my-1 h-px bg-muted", props.Class) }
 		{ props.Attrs... }
 	/>
@@ -226,7 +213,6 @@ templ DropDownMenuSeparator(props base.Props) {
 
 templ DropDownMenuShortcut(props base.Props) {
 	<span
-		id={ props.Id }
 		class={ M("ml-auto text-xs tracking-widest opacity-60", props.Class) }
 		{ props.Attrs... }
 	>
