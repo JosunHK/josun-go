@@ -1,0 +1,23 @@
+package separator
+
+import (
+	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
+)
+
+var M = twmerge.Merge
+
+func getOrientation(orientation string) string {
+	if orientation == "horizontal" {
+		return "h-[1px] w-full"
+	}
+	return "h-full w-[1px]"
+}
+
+templ Separator(props base.Props, orientation string) {
+	<div
+		class={ M(
+            "shrink-0 bg-border", getOrientation(orientation), props.Class,
+          ) }
+	></div>
+}

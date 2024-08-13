@@ -7,7 +7,9 @@ import (
 
 templ Select(name string, menu []sqlc.Menuitem) {
 	@SelectBody(SelectProps{
-		Name: name,
+        Props: base.Props{
+            Name: name,
+        },
 	}) {
 		@SelectTrigger(base.Props{}) {
 			@SelectDisplay(base.Props{})
@@ -26,7 +28,9 @@ templ Select(name string, menu []sqlc.Menuitem) {
 
 templ LabeledSelect(name, label string, menu []sqlc.Menuitem) {
 	@SelectBody(SelectProps{
-		Name: name,
+        Props: base.Props{
+            Name: name,
+        },
 	}) {
 		@SelectTrigger(base.Props{}) {
 			@SelectDisplay(base.Props{})

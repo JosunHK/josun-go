@@ -1,7 +1,6 @@
 package label
 
 import (
-    "fmt"
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
 	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
@@ -19,13 +18,13 @@ var cva = gocva.CVA{
 	Variants: gocva.Variants{
 		"variant": {
 			"default": "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+			"title": "text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-center",
 		},
 	},
 }
 
 templ Label(props LabelProps) {
 	<label
-		:id={ fmt.Sprintf("$id(%v)", props.Id) }
 		class={ M(cva.Render(props.Variant), props.Class) }
 	>
 		{ children... }

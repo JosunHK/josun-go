@@ -30,5 +30,19 @@
     { 
         "Key": "chinese",
         "Default": "中文"
+    },
+    { 
+        "Key": "join_or_create_room",
+        "Default": "加入或創建房間"
+    },
+    { 
+        "Key": "create_new_room",
+        "Default": "創建新房間"
+    },
+    { 
+        "Key": "join",
+        "Default": "加入"
     }
+
+
 ]

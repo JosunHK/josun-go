@@ -98,7 +98,7 @@ func Select(name string, menu []sqlc.Menuitem) templ.Component {
 							var templ_7745c5c3_Var6 string
 							templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(item.Label)
 							if templ_7745c5c3_Err != nil {
-								return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/select.templ`, Line: 19, Col: 24}
+								return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/select.templ`, Line: 21, Col: 24}
 							}
 							_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 							if templ_7745c5c3_Err != nil {
@@ -121,7 +121,9 @@ func Select(name string, menu []sqlc.Menuitem) templ.Component {
 			return templ_7745c5c3_Err
 		})
 		templ_7745c5c3_Err = SelectBody(SelectProps{
-			Name: name,
+			Props: base.Props{
+				Name: name,
+			},
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -213,7 +215,7 @@ func LabeledSelect(name, label string, menu []sqlc.Menuitem) templ.Component {
 					var templ_7745c5c3_Var12 string
 					templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(label)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/select.templ`, Line: 36, Col: 11}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/select.templ`, Line: 40, Col: 11}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 					if templ_7745c5c3_Err != nil {
@@ -254,7 +256,7 @@ func LabeledSelect(name, label string, menu []sqlc.Menuitem) templ.Component {
 							var templ_7745c5c3_Var14 string
 							templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(item.Label)
 							if templ_7745c5c3_Err != nil {
-								return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/select.templ`, Line: 42, Col: 24}
+								return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/select.templ`, Line: 46, Col: 24}
 							}
 							_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 							if templ_7745c5c3_Err != nil {
@@ -277,7 +279,9 @@ func LabeledSelect(name, label string, menu []sqlc.Menuitem) templ.Component {
 			return templ_7745c5c3_Err
 		})
 		templ_7745c5c3_Err = SelectBody(SelectProps{
-			Name: name,
+			Props: base.Props{
+				Name: name,
+			},
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var8), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

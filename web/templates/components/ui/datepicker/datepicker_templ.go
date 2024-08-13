@@ -283,7 +283,7 @@ func DatePickerContainer() templ.Component {
 			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div x-show=\"datePickerOpen\" x-transition.origin.top @click.away=\"datePickerOpen = false\" class=\"absolute text-sm top-0 left-0 max-w-lg p-4 mt-12 antialiased bg-background border rounded-lg shadow w-[18rem] border-accent\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div x-show=\"datePickerOpen\" x-transition.origin.top @click.away=\"datePickerOpen = false\" class=\"z-50 absolute text-sm top-0 left-0 max-w-lg p-4 mt-12 antialiased bg-background border rounded-lg shadow w-[18rem] border-accent\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

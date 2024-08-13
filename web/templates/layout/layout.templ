@@ -4,7 +4,7 @@ import ()
 
 templ header() {
 	<!DOCTYPE html>
-	<html class="bg-background" x-data x-cloak :class="{'dark' : Alpine.store('darkMode').on }">
+	<html class="bg-background dark" x-data x-cloak :class="{'dark' : Alpine.store('darkMode').on }">
 		<head>
 			<title>bruh</title>
 			<meta charset="UTF-8"/>
@@ -14,7 +14,7 @@ templ header() {
 			<script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js"></script>
 			<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 		</head>
-		<body class="bg-background">
+		<body class="bg-background w-screen h-screen overflow-y-scroll">
 			{ children... }
 		</body>
 	</html>

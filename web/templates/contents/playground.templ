@@ -7,7 +7,9 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/datepicker"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var addresses = []sqlc.Menuitem{
@@ -29,6 +31,11 @@ templ Playground() {
 			menuProvider.TranslMenu(ctx, addresses),
 		)
 		@settings.DarkModeToggle()
+		@input.Digits(base.Props{
+			Name: "roomNo",
+		},
+			4,
+		)
 		@settings.I18n()
 		@card.InfoCard(card.CardProps{
 			Title:       "Title",

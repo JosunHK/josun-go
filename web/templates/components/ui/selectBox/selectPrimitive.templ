@@ -14,7 +14,6 @@ var M = twmerge.Merge
 
 type SelectProps struct {
 	base.Props
-	Name string
 }
 
 templ SelectTriggerIcon(props base.Props) {
@@ -115,7 +114,6 @@ templ SelectLabel(props base.Props) {
 var scriptHandle = templ.NewOnceHandle()
 templ SelectBody(props SelectProps) {
 	<div
-		id={ props.Id }
 		class={ props.Class }
 		x-data="select"
 		x-on:keydown.escape.prevent.stop="close($refs.button)"

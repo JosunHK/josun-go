@@ -10,6 +10,8 @@ import (
 	"github.com/JosunHK/josun-go.git/cmd/middleware"
 	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	"github.com/JosunHK/josun-go.git/pkg/twmerge"
+	"github.com/JosunHK/josun-go.git/web/templates/contents"
+	"github.com/JosunHK/josun-go.git/web/templates/contents/mahjong"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -54,8 +56,8 @@ func main() {
 	e.Static("/static", "web/static")
 
 	//end points
-	e.GET("/", middleware.HTML(pages.Layout))
-	e.GET("/playground", middleware.HTML(pages.Layout))
+	e.GET("/", middleware.HTML(pages.Layout, contents.Playground()))
+	e.GET("/mahjong", middleware.HTML(pages.Layout, mahjong.RoomSelect()))
 
 	//dummy api
 	e.GET("/Users", middleware.JSON(api.GetUsers))

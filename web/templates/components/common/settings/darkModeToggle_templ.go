@@ -177,7 +177,7 @@ func DarkModeToggle() templ.Component {
 					var templ_7745c5c3_Var9 string
 					templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "dark_mode"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/darkModeToggle.templ`, Line: 45, Col: 29}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/darkModeToggle.templ`, Line: 47, Col: 29}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 					if templ_7745c5c3_Err != nil {
@@ -212,7 +212,7 @@ func DarkModeToggle() templ.Component {
 					var templ_7745c5c3_Var11 string
 					templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "light_mode"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/darkModeToggle.templ`, Line: 52, Col: 30}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/darkModeToggle.templ`, Line: 54, Col: 30}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 					if templ_7745c5c3_Err != nil {
@@ -230,7 +230,9 @@ func DarkModeToggle() templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = dropDownMenu.DropDownMenuContent(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = dropDownMenu.DropDownMenuContent(base.Props{
+				Class: "right-0",
+			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

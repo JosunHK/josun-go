@@ -91,7 +91,6 @@ templ InfoCard(cardProps CardProps) {
 
 templ Card(props base.Props) {
 	<div
-		id={ props.Id }
 		class={ M("w-[350px] rounded-lg border bg-card text-card-foreground shadow-sm", props.Class) }
 		{ props.Attrs... }
 	>
@@ -101,7 +100,6 @@ templ Card(props base.Props) {
 
 templ Header(props base.Props) {
 	<div
-		id={ props.Id }
 		class={ M("flex flex-col space-y-1.5 p-6", props.Class) }
 		{ props.Attrs... }
 	>
@@ -111,7 +109,6 @@ templ Header(props base.Props) {
 
 templ Title(props base.Props) {
 	<h3
-		id={ props.Id }
 		class={ M("text-2xl font-semibold leading-none tracking-tight", props.Class) }
 		{ props.Attrs... }
 	>
@@ -121,7 +118,6 @@ templ Title(props base.Props) {
 
 templ Description(props base.Props) {
 	<p
-		id={ props.Id }
 		class={ M("text-sm text-muted-foreground", props.Class) }
 		{ props.Attrs... }
 	>
@@ -131,7 +127,6 @@ templ Description(props base.Props) {
 
 templ Content(props base.Props) {
 	<div
-		id={ props.Id }
 		class={ M("p-6 pt-0", props.Class) }
 		{ props.Attrs... }
 	>
@@ -141,7 +136,6 @@ templ Content(props base.Props) {
 
 templ Footer(props base.Props) {
 	<div
-		id={ props.Id }
 		class={ M("flex items-center p-6 pt-0", props.Class) }
 		{ props.Attrs... }
 	>

@@ -36,7 +36,9 @@ templ DarkModeToggle() {
 				}
 			}
 		}
-		@dropDownMenu.DropDownMenuContent(base.Props{}) {
+		@dropDownMenu.DropDownMenuContent(base.Props{
+                Class:  "right-0",
+            }) {
 			@dropDownMenu.DropDownMenuItem(base.Props{
 				Attrs: templ.Attributes{
 					"@item-clicked": "Alpine.store('darkMode').setMode(true)",

@@ -1,0 +1,74 @@
+package mahjong
+
+import (
+	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
+	button "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
+	separator "github.com/JosunHK/josun-go.git/web/templates/components/ui/separator"
+	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+	input "github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
+	label "github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
+	"github.com/gungun974/gocva"
+)
+
+templ RoomSelect() {
+	<div class="w-full h-full flex flex-col">
+		<div class="w-full h-min flex justify-end hidden">
+			@settings.DarkModeToggle()
+		</div>
+		<div class="h-auto flex justify-center items-center grow">
+			@RoomSelectCard()
+		</div>
+	</div>
+}
+
+templ RoomSelectCard() {
+	@card.Card(base.Props{}) {
+		@card.Header(base.Props{}) {
+			@card.Title(base.Props{
+                Class: "text-center",
+                }) {
+                { i18n.T(ctx, "join_or_create_room") }
+			}
+		}
+        @separator.Separator(base.Props{}, "horizontal")
+		@card.Content(base.Props{
+			Class: "flex flex-col ",
+		}) {
+			@button.Button(button.ButtonProps{
+				Props: base.Props{
+					Class: "mt-2 mb-2.5",
+				},
+				Variant: gocva.Variant{"variant": "secondary"},
+			}) {
+				@label.Label(
+					label.LabelProps{
+						Variant: gocva.Variant{"variant": "title"},
+					},
+				) {
+					{ i18n.T(ctx, "create_new_room") }
+				}
+			}
+			<div class="flex flex-row justify-between items-end">
+
+                <div class="flex justify-center items-center grow">
+                    @input.Digits(base.Props{
+                        Class: "mt-3",
+                        Name:  "roomNo",
+                    },
+                        4,
+                    )
+                </div>
+				@button.Button(button.ButtonProps{
+					Props: base.Props{
+						Class: "w-min",
+					},
+					Variant: gocva.Variant{"variant": "secondary"},
+				}) {
+					{ i18n.T(ctx, "join") }
+				}
+			</div>
+		}
+	}
+}

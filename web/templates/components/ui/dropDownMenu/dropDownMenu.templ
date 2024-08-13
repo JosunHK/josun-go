@@ -128,7 +128,7 @@ templ DropDownMenuContent(props base.Props) {
 templ DropDownMenuItem(props base.Props) {
 	<div
 		@click={ "toggle(); $dispatch('item-clicked')" }
-		class={ M("relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
+		class={ M("relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground ", props.Class) }
 		{ props.Attrs... }
 	>
 		{ children... }
@@ -137,7 +137,7 @@ templ DropDownMenuItem(props base.Props) {
 
 templ DropDownMenuCheckBoxItem(props base.Props, checked string) {
 	<div
-		class={ M("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
+		class={ M("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground ", props.Class) }
 		checked={ checked }
 		{ props.Attrs... }
 	>
@@ -152,7 +152,7 @@ templ DropDownMenuCheckBoxItem(props base.Props, checked string) {
 
 templ DropDownMenuRadioItem(props base.Props) {
 	<div
-		class={ M("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
+		class={ M("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground ", props.Class) }
 		{ props.Attrs... }
 	>
 		<span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
@@ -175,7 +175,7 @@ templ DropDownMenuLabel(props base.Props) {
 
 templ DropDownMenu(props base.Props) {
 	<div
-		class={ props.Class }
+		class={ M("relative w-min h-min" , props.Class) }
 		x-data="{
             open: false,
             toggle() {

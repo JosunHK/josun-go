@@ -43,7 +43,7 @@ type ButtonProps struct {
 
 templ Button(props ButtonProps) {
 	<button
-		id={ props.Id }
+		name={ props.Name }
 		class={ M(cva.Render(props.Variant), props.Class) }
         { props.Attrs... }
 	>

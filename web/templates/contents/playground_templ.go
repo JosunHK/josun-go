@@ -15,7 +15,9 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/datepicker"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var addresses = []sqlc.Menuitem{
@@ -69,6 +71,14 @@ func Playground() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = settings.DarkModeToggle().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = input.Digits(base.Props{
+			Name: "roomNo",
+		},
+			4,
+		).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

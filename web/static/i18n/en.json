@@ -30,6 +30,17 @@
     { 
         "Key": "chinese",
         "Default": "Chinese"
+    },
+    { 
+        "Key": "join_or_create_room",
+        "Default": "Join or Create Room"
+    },
+    { 
+        "Key": "create_new_room",
+        "Default": "Create New Room"
+    },
+    { 
+        "Key": "join",
+        "Default": "Join"
     }
-
 ]
