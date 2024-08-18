@@ -7,18 +7,31 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-type contentHandler func(echo.Context, templ.Component) error
+type requestHandler func(echo.Context) error
+type pageHandler func(echo.Context, templ.Component) error
 type serviceHandler func(echo.Context) (err error, statusCode int, resObj interface{})
+type PageHandler func(echo.Context) templ.Component
 
-func HTML(next contentHandler, content templ.Component) echo.HandlerFunc {
-	log.Info("log is working")
+func StaticPages(next pageHandler, content templ.Component) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		return next(c, content)
 	}
 }
 
+func Pages(next pageHandler, p PageHandler) echo.HandlerFunc {
+	return func(c echo.Context) error {
+
+		return next(c, p(c))
+	}
+}
+
+func HTML(next requestHandler) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		return next(c)
+	}
+}
+
 func JSON(handler serviceHandler) echo.HandlerFunc {
-	log.Info("log is working")
 	return func(c echo.Context) error {
 		err, statusCode, resObj := handler(c)
 		if err != nil {

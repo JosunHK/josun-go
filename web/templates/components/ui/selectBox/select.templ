@@ -5,12 +5,8 @@ import (
 	"github.com/JosunHK/josun-go.git/db/generated"
 )
 
-templ Select(name string, menu []sqlc.Menuitem) {
-	@SelectBody(SelectProps{
-        Props: base.Props{
-            Name: name,
-        },
-	}) {
+templ Select(menu []sqlc.MenuItem, selectProps SelectProps) {
+	@SelectBody(selectProps) {
 		@SelectTrigger(base.Props{}) {
 			@SelectDisplay(base.Props{})
 		}
@@ -26,12 +22,8 @@ templ Select(name string, menu []sqlc.Menuitem) {
 	}
 }
 
-templ LabeledSelect(name, label string, menu []sqlc.Menuitem) {
-	@SelectBody(SelectProps{
-        Props: base.Props{
-            Name: name,
-        },
-	}) {
+templ LabeledSelect(label string, menu []sqlc.MenuItem, selectProps SelectProps) {
+	@SelectBody(selectProps) {
 		@SelectTrigger(base.Props{}) {
 			@SelectDisplay(base.Props{})
 		}

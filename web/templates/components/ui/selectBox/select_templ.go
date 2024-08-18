@@ -13,7 +13,7 @@ import (
 	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
-func Select(name string, menu []sqlc.Menuitem) templ.Component {
+func Select(menu []sqlc.MenuItem, selectProps SelectProps) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -98,7 +98,7 @@ func Select(name string, menu []sqlc.Menuitem) templ.Component {
 							var templ_7745c5c3_Var6 string
 							templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(item.Label)
 							if templ_7745c5c3_Err != nil {
-								return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/select.templ`, Line: 21, Col: 24}
+								return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/select.templ`, Line: 17, Col: 24}
 							}
 							_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 							if templ_7745c5c3_Err != nil {
@@ -120,11 +120,7 @@ func Select(name string, menu []sqlc.Menuitem) templ.Component {
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = SelectBody(SelectProps{
-			Props: base.Props{
-				Name: name,
-			},
-		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = SelectBody(selectProps).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -132,7 +128,7 @@ func Select(name string, menu []sqlc.Menuitem) templ.Component {
 	})
 }
 
-func LabeledSelect(name, label string, menu []sqlc.Menuitem) templ.Component {
+func LabeledSelect(label string, menu []sqlc.MenuItem, selectProps SelectProps) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -215,7 +211,7 @@ func LabeledSelect(name, label string, menu []sqlc.Menuitem) templ.Component {
 					var templ_7745c5c3_Var12 string
 					templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(label)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/select.templ`, Line: 40, Col: 11}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/select.templ`, Line: 32, Col: 11}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 					if templ_7745c5c3_Err != nil {
@@ -256,7 +252,7 @@ func LabeledSelect(name, label string, menu []sqlc.Menuitem) templ.Component {
 							var templ_7745c5c3_Var14 string
 							templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(item.Label)
 							if templ_7745c5c3_Err != nil {
-								return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/select.templ`, Line: 46, Col: 24}
+								return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/select.templ`, Line: 38, Col: 24}
 							}
 							_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 							if templ_7745c5c3_Err != nil {
@@ -278,11 +274,7 @@ func LabeledSelect(name, label string, menu []sqlc.Menuitem) templ.Component {
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = SelectBody(SelectProps{
-			Props: base.Props{
-				Name: name,
-			},
-		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var8), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = SelectBody(selectProps).Render(templ.WithChildren(ctx, templ_7745c5c3_Var8), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

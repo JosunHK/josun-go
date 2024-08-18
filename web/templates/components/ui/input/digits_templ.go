@@ -72,7 +72,7 @@ func Digits(props base.Props, digits int) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("><div x-data=\"digits\" class=\"flex justify-center\"><div class=\"flex justify-center w-min\" x-ref=\"otpInputContainer\"><template x-for=\"(input, index) in length\" :key=\"index\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("><div x-data=\"{\n                    value: &#39;&#39;,\n                    get inputs() {\n                        return this.$refs.otpInputContainer.querySelectorAll(&#39;.otpInput&#39;);\n                    },\n                    handleInput(e, index) {\n                        if (isNaN(e.target.value)) {\n                            e.target.value = &#39;&#39;\n                            return\n                        }\n                        const inputValues = [...this.inputs].map(input =&gt; input.value);\n                        this.value = inputValues.join(&#39;&#39;);\n                        if (e.target.value) {\n                            const nextInput = this.inputs[index + 1];\n                            if (nextInput) {\n                                nextInput.focus();\n                                nextInput.select();\n                            }\n                        }\n                    },\n\n                    handlePaste(e) {\n                        const paste = e.clipboardData.getData(&#39;text&#39;).slice(0, this.length);\n                        paste.split(&#39;&#39;).forEach((char, i) =&gt; {\n                            if (this.inputs[i]) {\n                                this.inputs[i].value = char;\n                            }\n                        });\n                        this.value = [...this.inputs].map(input =&gt; input.value).join(&#39;&#39;);\n                    },\n\n                    handleBackspace(e, index) {\n                        if (index &gt; 0) {\n                            this.inputs[index - 1].focus();\n                            this.inputs[index - 1].select();\n                        }\n                    },\n                    resetCaret(el) {\n                        var val = el.value; \n                        el.value = &#39;&#39;; \n                        el.value = val; \n                    }\n                }\" class=\"flex justify-center\"><div class=\"flex justify-center w-min\" x-ref=\"otpInputContainer\"><template x-for=\"(input, index) in length\" :key=\"index\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -99,35 +99,13 @@ func Digits(props base.Props, digits int) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(props.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/input/digits.templ`, Line: 37, Col: 41}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/input/digits.templ`, Line: 79, Col: 41}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-model=\"value\"></div></div>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Var6 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
-			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
-			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
-			if !templ_7745c5c3_IsBuffer {
-				defer func() {
-					templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
-					if templ_7745c5c3_Err == nil {
-						templ_7745c5c3_Err = templ_7745c5c3_BufErr
-					}
-				}()
-			}
-			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<script>\n            document.addEventListener('alpine:init', () => {\n                Alpine.data('digits', () => ({\n                    value: \"\",\n                    get inputs() {\n                        return this.$refs.otpInputContainer.querySelectorAll('.otpInput');\n                    },\n                    handleInput(e, index) {\n                        if (isNaN(e.target.value)) {\n                            e.target.value = ''\n                            return\n                        }\n                        const inputValues = [...this.inputs].map(input => input.value);\n                        this.value = inputValues.join('');\n                        if (e.target.value) {\n                            const nextInput = this.inputs[index + 1];\n                            if (nextInput) {\n                                nextInput.focus();\n                                nextInput.select();\n                            }\n                        }\n                    },\n\n                    handlePaste(e) {\n                        const paste = e.clipboardData.getData('text').slice(0, this.length);\n                        paste.split('').forEach((char, i) => {\n                            if (this.inputs[i]) {\n                                this.inputs[i].value = char;\n                            }\n                        });\n                        this.value = [...this.inputs].map(input => input.value).join('');\n                    },\n\n                    handleBackspace(e, index) {\n                        if (index > 0) {\n                            this.inputs[index - 1].focus();\n                            this.inputs[index - 1].select();\n                        }\n                    },\n                    resetCaret(el) {\n                        var val = el.value; \n                        el.value = ''; \n                        el.value = val; \n                    }\n                }))\n            })\n        </script>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			return templ_7745c5c3_Err
-		})
-		templ_7745c5c3_Err = scriptHandle.Once().Render(templ.WithChildren(ctx, templ_7745c5c3_Var6), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

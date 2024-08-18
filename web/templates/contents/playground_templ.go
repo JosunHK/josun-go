@@ -20,7 +20,7 @@ import (
 	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
-var addresses = []sqlc.Menuitem{
+var addresses = []sqlc.MenuItem{
 	{Label: "1234 Fake St", Value: "1234"},
 	{Label: "5678 Fake St", Value: "5678"},
 	{Label: "9101 Fake St", Value: "9101"},
@@ -58,14 +58,25 @@ func Playground() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = selectBox.Select("bruh", menuProvider.GetMenu(ctx, "yesNo")).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = selectBox.Select(menuProvider.GetMenu(ctx, "yesNo"), selectBox.SelectProps{
+			Props: base.Props{
+				Name: "bruh",
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = selectBox.LabeledSelect(
-			"hehe",
 			"A kida very fucking long label test",
 			menuProvider.TranslMenu(ctx, addresses),
+			selectBox.SelectProps{
+				Props: base.Props{
+					Name: "hehe",
+					Attrs: templ.Attributes{
+						"@item-clicked": "window.location('i18n/' + selectedValue)",
+					},
+				},
+			},
 		).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

@@ -104,17 +104,17 @@ templ DatePickerDates() {
 					},
 					Props: base.Props{
 						Class: "mx-1",
-                        Attrs: templ.Attributes{
-                            "@click": "datePickerDayClicked(day)",
-					        "x-text": "day",
-                            ":class": `{
+						Attrs: templ.Attributes{
+							"@click": "datePickerDayClicked(day)",
+							"x-text": "day",
+							":class": `{
                                 'bg-primary text-primary-foreground' : datePickerIsSelectedDate(day) == true, 
                                 'bg-accent text-primary': datePickerIsToday(day) == true && datePickerIsSelectedDate(day) == false,
                                 'text-primary hover:bg-accent': datePickerIsToday(day) == false && datePickerIsSelectedDate(day) == false,
-                            }`, 
-                        },
+                            }`,
+						},
 					},
-				},)
+				})
 		</template>
 	</div>
 }
@@ -130,36 +130,11 @@ templ DatePickerContainer() {
 	</div>
 }
 
+var scriptHandle = templ.NewOnceHandle()
+
 templ DatePicker() {
 	<div
-		x-data="datepicker"
-		x-init="
-        currentDate = new Date();
-        if (datePickerValue) {
-            currentDate = new Date(Date.parse(datePickerValue));
-        }
-        datePickerMonth = currentDate.getMonth();
-        datePickerYear = currentDate.getFullYear();
-        datePickerDay = currentDate.getDay();
-        datePickerValue = datePickerFormatDate( currentDate );
-        datePickerCalculateDays();
-    "
-		x-cloak
-	>
-		<div class="w-full">
-			<div class="relative w-[18rem]">
-				@DatePickerTrigger()
-				@DatePickerContainer() {
-					@DatePickerHeader()
-					@DatePickerDays()
-					@DatePickerDates()
-				}
-			</div>
-		</div>
-	</div>
-	<script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('datepicker', () => ({
+		x-data="{
               datePickerOpen: false,
               datePickerValue: '',
               datePickerFormat: 'M d, Y',
@@ -244,8 +219,29 @@ templ DatePicker() {
                 
                 return `${formattedMonth} ${formattedDate}, ${formattedYear}`;
               },
-            }))
-        })
-    </script>
+            }"
+		x-init="
+        currentDate = new Date();
+        if (datePickerValue) {
+            currentDate = new Date(Date.parse(datePickerValue));
+        }
+        datePickerMonth = currentDate.getMonth();
+        datePickerYear = currentDate.getFullYear();
+        datePickerDay = currentDate.getDay();
+        datePickerValue = datePickerFormatDate( currentDate );
+        datePickerCalculateDays();
+    "
+		x-cloak
+	>
+		<div class="w-full">
+			<div class="relative w-[18rem]">
+				@DatePickerTrigger()
+				@DatePickerContainer() {
+					@DatePickerHeader()
+					@DatePickerDays()
+					@DatePickerDates()
+				}
+			</div>
+		</div>
+	</div>
 }
-

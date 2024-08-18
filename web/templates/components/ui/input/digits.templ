@@ -13,35 +13,8 @@ templ Digits(props base.Props, digits int) {
         class={ props.Class }
         { props.Attrs... }
     >
-		<div x-data="digits" class="flex justify-center">
-			<div
-				class="flex justify-center w-min"
-				x-ref="otpInputContainer"
-			>
-				<template x-for="(input, index) in length" :key="index">
-					@Input(InputProps{
-						Props: base.Props{
-							Class: "otpInput w-[2.5rem] h-[2.5rem] text-center text-md border focus:border-2 focus:border-primary focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-bold rounded-none first-of-type:rounded-l-md first-of-type:border-l last:rounded-r-md transition-all caret-transparent ease-in-out duration-[30ms]",
-							Attrs: templ.Attributes{
-								"type":                   "tel",
-								"maxlength":              "1",
-								"x-on:input":             "handleInput($event, index)",
-                                "x-on:click":             "resetCaret($el)",
-								"x-on:paste":             "handlePaste($event)",
-								"x-on:keydown.backspace": "$event.target.value || handleBackspace($event, index)",
-							},
-						},
-					})
-				</template>
-			</div>
-			<input type="hidden" name={ props.Name } x-model="value"/>
-		</div>
-	</div>
-	@scriptHandle.Once() {
-		<script>
-            document.addEventListener('alpine:init', () => {
-                Alpine.data('digits', () => ({
-                    value: "",
+		<div x-data="{
+                    value: '',
                     get inputs() {
                         return this.$refs.otpInputContainer.querySelectorAll('.otpInput');
                     },
@@ -82,8 +55,28 @@ templ Digits(props base.Props, digits int) {
                         el.value = ''; 
                         el.value = val; 
                     }
-                }))
-            })
-        </script>
-	}
+                }" class="flex justify-center">
+			<div
+				class="flex justify-center w-min"
+				x-ref="otpInputContainer"
+			>
+				<template x-for="(input, index) in length" :key="index">
+					@Input(InputProps{
+						Props: base.Props{
+							Class: "otpInput w-[2.5rem] h-[2.5rem] text-center text-md border focus:border-2 focus:border-primary focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-bold rounded-none first-of-type:rounded-l-md first-of-type:border-l last:rounded-r-md transition-all caret-transparent ease-in-out duration-[30ms]",
+							Attrs: templ.Attributes{
+								"type":                   "tel",
+								"maxlength":              "1",
+								"x-on:input":             "handleInput($event, index)",
+                                "x-on:click":             "resetCaret($el)",
+								"x-on:paste":             "handlePaste($event)",
+								"x-on:keydown.backspace": "$event.target.value || handleBackspace($event, index)",
+							},
+						},
+					})
+				</template>
+			</div>
+			<input type="hidden" name={ props.Name } x-model="value"/>
+		</div>
+	</div>
 }

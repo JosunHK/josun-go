@@ -1,4 +1,4 @@
-CREATE TABLE menuItem (
+CREATE TABLE menu_item (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     menuCollectionId BIGINT NOT NULL,
     label varchar(150) NOT NULL,

@@ -1,0 +1,82 @@
+package table 
+
+import (
+	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
+)
+
+var M = twmerge.Merge
+
+templ Table(props base.Props) {
+	<div className="relative w-full overflow-auto">
+		<table
+			class={ M("w-full caption-bottom text-sm", props.Class) }
+			{ props.Attrs... }
+		>
+		{ children... }
+        </table>
+	</div>
+}
+
+templ Header(props base.Props) {
+	<thead
+		class={ M("[&_tr]:border-b", props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</thead>
+}
+
+templ Body(props base.Props) {
+	<tbody
+		class={ M("[&_tr:last-child]:border-0", props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</tbody>
+}
+
+templ Footer(props base.Props) {
+	<tfoot
+		class={ M("border-t bg-muted/50 font-medium [&>tr]:last:border-b-0", props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</tfoot>
+}
+
+templ Row(props base.Props) {
+	<tr
+		class={ M("border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted", props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</tr>
+}
+
+templ Head(props base.Props) {
+	<th
+		class={ M("h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0", props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</th>
+}
+
+templ Cell(props base.Props) {
+	<td
+		class={ M("p-4 align-middle [&:has([role=checkbox])]:pr-0", props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</td>
+}
+
+templ Caption(props base.Props) {
+	<caption
+		class={ M("mt-4 text-sm text-muted-foreground", props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</caption>
+}

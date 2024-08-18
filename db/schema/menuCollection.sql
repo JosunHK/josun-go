@@ -1,4 +1,4 @@
-CREATE TABLE menuCollection (
+CREATE TABLE menu_collection (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name varchar(150) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE

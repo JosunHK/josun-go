@@ -2,17 +2,16 @@ package selectBox
 
 import (
 	"fmt"
+	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
-	"github.com/JosunHK/josun-go.git/db/generated"
-
-
 	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var M = twmerge.Merge
 
 type SelectProps struct {
+	Selected sqlc.MenuItem
 	base.Props
 }
 
@@ -79,7 +78,7 @@ templ SelectContent(props base.Props) {
 	</div>
 }
 
-templ SelectItem(props base.Props, item sqlc.Menuitem) {
+templ SelectItem(props base.Props, item sqlc.MenuItem) {
 	<div
 		x-init={ fmt.Sprintf("setLength('%v'.length);setDefault('%v', '%v');", item.Label, item.Label, item.Value) }
 		@click={ fmt.Sprintf("toggle(); selectedLabel = '%v'; selectedValue = '%v'; $dispatch('item-clicked')", item.Label, item.Value) }
@@ -112,27 +111,12 @@ templ SelectLabel(props base.Props) {
 }
 
 var scriptHandle = templ.NewOnceHandle()
+
 templ SelectBody(props SelectProps) {
 	<div
 		class={ props.Class }
-		x-data="select"
-		x-on:keydown.escape.prevent.stop="close($refs.button)"
-		x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
-		x-id="['dropdown-button']"
-		{ props.Attrs... }
-	>
-		<input
-			type="text"
-			style="display:none"
-			name={ props.Name }
-			x-model="selectedValue"
-		/>
-		{ children... }
-	</div>
-	@scriptHandle.Once() {
-		<script>
-            document.addEventListener('alpine:init', () => {
-                Alpine.data('select', () => ({
+		x-init={ fmt.Sprintf("setDefault('%v', '%v')", props.Selected.Label, props.Selected.Value) }
+		x-data="{
                     open: false,
                     selectedLabel: '',
                     selectedValue: '',
@@ -162,10 +146,20 @@ templ SelectBody(props SelectProps) {
          
                         focusAfter && focusAfter.focus()
                     }
-                }))
-            })
-        </script>
-	}
+                }"
+		x-on:keydown.escape.prevent.stop="close($refs.button)"
+		x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+		x-id="['dropdown-button']"
+		{ props.Attrs... }
+	>
+		<input
+			type="text"
+			style="display:none"
+			name={ props.Name }
+			x-model="selectedValue"
+		/>
+		{ children... }
+	</div>
 }
 
 templ SelectSeparator(props base.Props) {

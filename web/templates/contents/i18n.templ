@@ -1,0 +1,197 @@
+package contents
+
+import (
+	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	button "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
+	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
+	input "github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
+	label "github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
+	selectBox "github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
+	table "github.com/JosunHK/josun-go.git/web/templates/components/ui/table"
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
+	gocva "github.com/gungun974/gocva"
+)
+
+templ I18n(locale string) {
+	<div class="w-screen h-screen flex flex-col justify-center items-center">
+		@selectBox.Select(i18n.LOCALE_MENU,
+			selectBox.SelectProps{
+				Selected: i18n.GetMenuItem(locale),
+				Props: base.Props{
+					Attrs: templ.Attributes{
+						"@item-clicked": "window.location.replace(selectedValue)",
+					},
+				},
+			},
+		)
+		@card.Card(base.Props{
+			Class: "w-[1000px]",
+		}) {
+			@I18nTable(locale)
+		}
+	</div>
+}
+
+templ I18nTableHeader() {
+	@table.Header(base.Props{
+		Class: "sticky top-0 bg-background z-10",
+	}) {
+		@table.Row(base.Props{
+			Class: "rounded-t-lg",
+		}) {
+			@table.Cell(base.Props{}) {
+				Key
+			}
+			@table.Cell(base.Props{}) {
+				Default
+			}
+			@table.Cell(base.Props{}) {
+				One	
+			}
+			@table.Cell(base.Props{}) {
+				Many
+			}
+			@table.Cell(base.Props{}) {
+			}
+		}
+		{ children... }
+	}
+}
+
+templ I18nTable(locale string) {
+	<div
+		Class="max-h-[500px] overflow-y-scroll"
+	>
+		@table.Table(base.Props{}) {
+			@I18nTableHeader() {
+				@NewRow(locale)
+			}
+			@table.Body(base.Props{
+				Attrs: templ.Attributes{
+					"hx-get":     "/i18n/items/" + locale,
+					"hx-trigger": "load",
+                    "id" : "i18n-table",
+				},
+			})
+		}
+	</div>
+}
+
+templ NewRow(locale string) {
+	<form
+		hx-post={ "/i18n/items/" + locale }
+		hx-on::after-request="this.reset()"
+        hx-target="#i18n-table"
+	>
+		@table.Row(base.Props{}) {
+			@table.Cell(base.Props{}) {
+				@input.Input(
+					input.InputProps{
+						Type: "text",
+						Props: base.Props{
+							Name:  "key",
+							Class: "my-2",
+						},
+					},
+				)
+			}
+			@table.Cell(base.Props{}) {
+				@input.Input(
+					input.InputProps{
+						Type: "text",
+						Props: base.Props{
+							Name:  "default",
+							Class: "my-2",
+						},
+					},
+				)
+			}
+			@table.Cell(base.Props{}) {
+				@input.Input(
+					input.InputProps{
+						Type: "text",
+						Props: base.Props{
+							Name:  "one",
+							Class: "my-2",
+						},
+					},
+				)
+			}
+			@table.Cell(base.Props{}) {
+				@input.Input(
+					input.InputProps{
+						Type: "text",
+						Props: base.Props{
+							Name:  "many",
+							Class: "my-2",
+						},
+					},
+				)
+			}
+			@table.Cell(base.Props{}) {
+				@button.Button(button.ButtonProps{
+					Props: base.Props{
+						Class: "mt-2 mb-2.5",
+					},
+					Variant: gocva.Variant{"variant": "secondary"},
+				}) {
+					@label.Label(
+						label.LabelProps{
+							Variant: gocva.Variant{"variant": "title"},
+						},
+					) {
+						@icon.Wrapper(base.Props{}) {
+							@icon.Plus()
+						}
+					}
+				}
+			}
+		}
+	</form>
+}
+
+templ I18nTableItems(tableItems []i18n.Item) {
+	for _, item := range tableItems {
+		@table.Row(base.Props{}) {
+			@table.Cell(base.Props{}) {
+				@input.Input(
+					input.InputProps{
+						Type:  "text",
+						Value: item.Key,
+						Props: base.Props{
+							Attrs: templ.Attributes{
+								"disabled": "true",
+							},
+						},
+					},
+				)
+			}
+			@table.Cell(base.Props{}) {
+				@input.Input(
+					input.InputProps{
+						Type:  "text",
+						Value: item.Default,
+					},
+				)
+			}
+			@table.Cell(base.Props{}) {
+				@input.Input(
+					input.InputProps{
+						Type:  "text",
+						Value: item.One,
+					},
+				)
+			}
+			@table.Cell(base.Props{}) {
+				@input.Input(
+					input.InputProps{
+						Type:  "text",
+						Value: item.Many,
+					},
+				)
+			}
+			@table.Cell(base.Props{})
+		}
+	}
+}

@@ -12,7 +12,7 @@ import (
 	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
-var addresses = []sqlc.Menuitem{
+var addresses = []sqlc.MenuItem{
 	{Label: "1234 Fake St", Value: "1234"},
 	{Label: "5678 Fake St", Value: "5678"},
 	{Label: "9101 Fake St", Value: "9101"},
@@ -24,11 +24,22 @@ templ Playground() {
 	<div class="w-full h-full flex flex-col justify-center items-center">
 		@datepicker.DatePicker()
 		@cmp.DemoDropDown()
-		@selectBox.Select("bruh", menuProvider.GetMenu(ctx, "yesNo"))
+		@selectBox.Select(menuProvider.GetMenu(ctx, "yesNo"), selectBox.SelectProps{
+			Props: base.Props{
+				Name: "bruh",
+			},
+		})
 		@selectBox.LabeledSelect(
-			"hehe",
 			"A kida very fucking long label test",
 			menuProvider.TranslMenu(ctx, addresses),
+			selectBox.SelectProps{
+				Props: base.Props{
+					Name: "hehe",
+					Attrs: templ.Attributes{
+						"@item-clicked": "window.location('i18n/' + selectedValue)",
+					},
+				},
+			},
 		)
 		@settings.DarkModeToggle()
 		@input.Digits(base.Props{

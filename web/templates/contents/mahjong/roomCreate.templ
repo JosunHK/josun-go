@@ -1,0 +1,26 @@
+package mahjong
+
+import (
+	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+	//selectBox "github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
+	separator "github.com/JosunHK/josun-go.git/web/templates/components/ui/separator"
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
+)
+
+templ RoomCreate() {
+	@card.Card(base.Props{}) {
+		@card.Header(base.Props{}) {
+			@card.Title(base.Props{
+				Class: "text-center",
+			}) {
+				{ i18n.T(ctx, "create_room") }
+			}
+		}
+		@separator.Separator(base.Props{}, "horizontal")
+		@card.Content(base.Props{
+			Class: "flex flex-col ",
+		}) {
+		}
+	}
+}

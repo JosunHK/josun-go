@@ -10,3 +10,7 @@ import (
 func Layout(c echo.Context, content templ.Component) error {
 	return util.HTML(c, layout.Layout(content))
 }
+
+func Component(c echo.Context, content templ.Component) error {
+	return util.HTML(c, content)
+}
