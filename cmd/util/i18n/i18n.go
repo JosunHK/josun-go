@@ -98,7 +98,7 @@ func readJSON(locale string) (string, error) {
 }
 
 func getLocaleFromCookie(c context.Context) string {
-	return "en"
+	return "zh"
 }
 
 func GetItems(locale string) []Item {

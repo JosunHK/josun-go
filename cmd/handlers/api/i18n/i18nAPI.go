@@ -1,6 +1,7 @@
 package i18nAPI
 
 import (
+	"fmt"
 	"slices"
 
 	"github.com/JosunHK/josun-go.git/cmd/util"
@@ -32,6 +33,12 @@ func AddItems(c echo.Context) error {
 
 	err = decoder.Decode(&item, c.Request().PostForm)
 	if err != nil {
+		log.Error(err)
+		return err
+	}
+
+	if !isItemValid(item, i18n.GetItems(locale)) {
+		err := fmt.Errorf("Invalid item")
 		log.Error(err)
 		return err
 	}
@@ -68,4 +75,18 @@ func DeleteItems(c echo.Context) error {
 
 	return GetItems(c)
 
+}
+
+func isItemValid(item i18n.Item, items []i18n.Item) bool {
+	if item.Key == "" || item.Default == "" {
+		return false
+	}
+
+	for _, item := range items {
+		if item.One != "" && item.Many == "" {
+			return false
+		}
+	}
+
+	return true
 }

@@ -14,22 +14,29 @@ import (
 )
 
 templ I18n(locale string) {
-	<div class="w-screen h-screen flex flex-col justify-center items-center">
+	<div class="flex flex-col justify-center items-center w-full h-full">
+		@card.Card(base.Props{
+			Class: "w-[1000px]",
+		}) {
+			@LocaleSelect(locale)
+			@I18nTable(locale)
+		}
+	</div>
+}
+
+templ LocaleSelect(locale string) {
+	<div class="w-full flex justify-end">
 		@selectBox.Select(i18n.LOCALE_MENU,
 			selectBox.SelectProps{
 				Selected: i18n.GetMenuItem(locale),
 				Props: base.Props{
+					Class: "mt-2 mr-2",
 					Attrs: templ.Attributes{
 						"@item-clicked": "window.location.replace(selectedValue)",
 					},
 				},
 			},
 		)
-		@card.Card(base.Props{
-			Class: "w-[1000px]",
-		}) {
-			@I18nTable(locale)
-		}
 	</div>
 }
 
@@ -38,7 +45,7 @@ templ I18nTableHeader() {
 		Class: "sticky top-0 bg-background z-10",
 	}) {
 		@table.Row(base.Props{
-			Class: "rounded-t-lg",
+			Class: "rounded-t-lg sticky",
 		}) {
 			@table.Cell(base.Props{}) {
 				Key
@@ -61,7 +68,7 @@ templ I18nTableHeader() {
 
 templ I18nTable(locale string) {
 	<div
-		Class="max-h-[500px] overflow-y-scroll"
+		Class="max-h-[500px] h-[500px] overflow-y-scroll scrollbar-hide "
 	>
 		@table.Table(base.Props{}) {
 			@I18nTableHeader() {
@@ -71,7 +78,7 @@ templ I18nTable(locale string) {
 				Attrs: templ.Attributes{
 					"hx-get":     "/i18n/items/" + locale,
 					"hx-trigger": "load",
-                    "id" : "i18n-table",
+					"id":         "i18n-table",
 				},
 			})
 		}
@@ -82,9 +89,12 @@ templ NewRow(locale string) {
 	<form
 		hx-post={ "/i18n/items/" + locale }
 		hx-on::after-request="this.reset()"
-        hx-target="#i18n-table"
+		hx-swap="outerHTML transition:true"
+		hx-target="#i18n-table"
 	>
-		@table.Row(base.Props{}) {
+		@table.Row(base.Props{
+			Class: "border-top-none",
+		}) {
 			@table.Cell(base.Props{}) {
 				@input.Input(
 					input.InputProps{
@@ -155,41 +165,16 @@ templ I18nTableItems(tableItems []i18n.Item) {
 	for _, item := range tableItems {
 		@table.Row(base.Props{}) {
 			@table.Cell(base.Props{}) {
-				@input.Input(
-					input.InputProps{
-						Type:  "text",
-						Value: item.Key,
-						Props: base.Props{
-							Attrs: templ.Attributes{
-								"disabled": "true",
-							},
-						},
-					},
-				)
+				{ item.Key }
 			}
 			@table.Cell(base.Props{}) {
-				@input.Input(
-					input.InputProps{
-						Type:  "text",
-						Value: item.Default,
-					},
-				)
+				{ item.Default }
 			}
 			@table.Cell(base.Props{}) {
-				@input.Input(
-					input.InputProps{
-						Type:  "text",
-						Value: item.One,
-					},
-				)
+				{ item.One }
 			}
 			@table.Cell(base.Props{}) {
-				@input.Input(
-					input.InputProps{
-						Type:  "text",
-						Value: item.Many,
-					},
-				)
+				{ item.Many }
 			}
 			@table.Cell(base.Props{})
 		}

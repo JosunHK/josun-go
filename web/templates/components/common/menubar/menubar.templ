@@ -1,0 +1,44 @@
+package menubar
+
+import (
+	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
+	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+	label "github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
+	base "github.com/JosunHK/josun-go.git/web/templates/props"
+	gocva "github.com/gungun974/gocva"
+)
+
+templ ColorStripe() {
+	<div class="ml-2 flex flex-row gap-2 ">
+        <div class="bg-eRed block w-[10px] h-[20px]"></div>
+        <div class="bg-eOrange block w-[10px] h-[20px]"></div>
+        <div class="bg-eYellow block w-[10px] h-[20px]"></div>
+        <div class="bg-eGreen block w-[10px] h-[20px]"></div>
+        <div class="bg-eBlue block w-[10px] h-[20px]"></div>
+    </div>
+}
+
+
+templ Menubar() {
+	@card.Card(base.Props{
+		Class: "flex flex-row w-full fixed top-0 justify-between items-center p-1 bg-background rounded-none",
+	}) {
+		<div class="flex flex-row gap-1 ">
+            @ColorStripe()
+            @label.Label(label.LabelProps{
+                Variant: gocva.Variant{
+                    "variant": "title",
+                },
+                Props: base.Props{
+                    Class: "ml-2",
+                },
+            }) {
+                Goofy Ahh Ahh site	
+            }
+		</div>
+		<div class="flex flex-row gap-1 ">
+			@settings.I18n()
+			@settings.DarkModeToggle()
+		</div>
+	}
+}

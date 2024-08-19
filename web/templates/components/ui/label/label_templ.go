@@ -22,7 +22,7 @@ type LabelProps struct {
 }
 
 var cva = gocva.CVA{
-	Base: "",
+	Base: "block",
 	Variants: gocva.Variants{
 		"variant": {
 			"default": "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",

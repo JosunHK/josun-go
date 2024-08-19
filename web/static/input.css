@@ -4,34 +4,40 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
+    --background: 52 42% 91%;
+    --foreground: 82 14% 74%;
+    --card: 52 42% 91%;
     --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
+    --popover:52 42% 91%; 
     --popover-foreground: 240 10% 3.9%;
     --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
+    --primary-foreground:52 42% 91%; 
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
+    --muted: 52 14% 74%;
     --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --accent: 52 14% 74%;
+    --accent-foreground: 240 3.8% 46.1%;
     --destructive: 0 72.22% 50.59%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5% 64.9%;
+    --border: 202 11% 40%;
+    --input: 202 11% 40%;
+    --ring: 83.4, 33.7%, 62.7%;
     --radius: 0.5rem;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%
+    --chart-5: 27 87% 67%;
+
+    --eRed: 359 68% 70%;
+    --eOrange: 19 69% 68%;
+    --eYellow: 40 56% 68%;
+    --eGreen: 83 34% 63%;
+    --eBlue: 172 31% 62%;
   }
 
-  .dark{
+  .green{
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
@@ -58,16 +64,16 @@
     --chart-5: 340 75% 55%
   }
 
-  .green{
-    --background: 202 1% 5%;
+  .dark{
+    --background: 0 1% 5%;
     --foreground: 41 38% 75%;
-    --card: 202 1% 5%;
+    --card: 0 1% 5%;
     --card-foreground: 41 38% 75%;
-    --popover: 202 1% 5%;
+    --popover: 0 1% 5%;
     --popover-foreground: 41 38% 75%;
     --primary: 83.4, 33.7%, 62.7%;
-    --primary-foreground: 202 1% 5%;
-    --secondary: 202 1% 5%;
+    --primary-foreground: 0 1% 5%;
+    --secondary: 0 1% 5%;
     --secondary-foreground: 41 38% 75%;
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
@@ -75,20 +81,29 @@
     --accent-foreground: 41 38% 75%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
-    --border: 202 1% 18%;
-    --input:  202 1% 18%;
+    --border: 0 1% 18%;
+    --input:  0 1% 18%;
     --ring:   83.4, 33.7%, 62.7%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
-    
+    --chart-5: 340 75% 55%;
+
+    --eRed: 359 68% 70%;
+    --eOrange: 19 69% 68%;
+    --eYellow: 40 56% 68%;
+    --eGreen: 83 34% 63%;
+    --eBlue: 172 31% 62%;
   }
 }
 
-@layer base {
+@view-transition {
+    navigation:auto;
+}
 
+@layer base {
+ 
   * {
     @apply border-border;
   }
@@ -110,4 +125,13 @@
   }
 
   [x-cloak] { display: none !important; }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
