@@ -1,7 +1,8 @@
-package contents
+package i18nTemplates 
 
 import (
-	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	i18nStructs "github.com/JosunHK/josun-go.git/cmd/structs/i18n"
+	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	button "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
@@ -26,9 +27,9 @@ templ I18n(locale string) {
 
 templ LocaleSelect(locale string) {
 	<div class="w-full flex justify-end">
-		@selectBox.Select(i18n.LOCALE_MENU,
+		@selectBox.Select(i18nUtil.LOCALE_MENU,
 			selectBox.SelectProps{
-				Selected: i18n.GetMenuItem(locale),
+				Selected: i18nUtil.GetMenuItem(locale),
 				Props: base.Props{
 					Class: "mt-2 mr-2",
 					Attrs: templ.Attributes{
@@ -45,21 +46,21 @@ templ I18nTableHeader() {
 		Class: "sticky top-0 bg-background z-10",
 	}) {
 		@table.Row(base.Props{
-			Class: "rounded-t-lg sticky",
+			Class: "rounded-t-lg sticky border-none [&>th]:font-bold",
 		}) {
-			@table.Cell(base.Props{}) {
+			@table.Head(base.Props{}) {
 				Key
 			}
-			@table.Cell(base.Props{}) {
+			@table.Head(base.Props{}) {
 				Default
 			}
-			@table.Cell(base.Props{}) {
+			@table.Head(base.Props{}) {
 				One	
 			}
-			@table.Cell(base.Props{}) {
+			@table.Head(base.Props{}) {
 				Many
 			}
-			@table.Cell(base.Props{}) {
+			@table.Head(base.Props{}) {
 			}
 		}
 		{ children... }
@@ -161,7 +162,7 @@ templ NewRow(locale string) {
 	</form>
 }
 
-templ I18nTableItems(tableItems []i18n.Item) {
+templ I18nTableItems(tableItems []i18nStructs.Item) {
 	for _, item := range tableItems {
 		@table.Row(base.Props{}) {
 			@table.Cell(base.Props{}) {

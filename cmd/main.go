@@ -5,15 +5,14 @@ import (
 	"os"
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
-	"github.com/JosunHK/josun-go.git/cmd/handlers/api"
-	i18nAPI "github.com/JosunHK/josun-go.git/cmd/handlers/api/i18n"
-	"github.com/JosunHK/josun-go.git/cmd/handlers/pages"
-	i18nContent "github.com/JosunHK/josun-go.git/cmd/handlers/pages/i18n"
+	"github.com/JosunHK/josun-go.git/cmd/handlers/i18n"
+	"github.com/JosunHK/josun-go.git/cmd/handlers/mahjong"
+	"github.com/JosunHK/josun-go.git/cmd/handlers/user"
+	"github.com/JosunHK/josun-go.git/cmd/layout"
 	"github.com/JosunHK/josun-go.git/cmd/middleware"
-	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	"github.com/JosunHK/josun-go.git/pkg/twmerge"
-	"github.com/JosunHK/josun-go.git/web/templates/contents"
-	"github.com/JosunHK/josun-go.git/web/templates/contents/mahjong"
+	playgroundTemplates "github.com/JosunHK/josun-go.git/web/templates/contents/playground"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -47,7 +46,7 @@ func main() {
 		log.Panic(err)
 		return
 	}
-	if err := i18n.InitI18n(); err != nil {
+	if err := i18nUtil.InitI18n(); err != nil {
 		log.Panic(err)
 		return
 	}
@@ -58,19 +57,11 @@ func main() {
 	e := echo.New()
 
 	e.Static("/static", "web/static")
+	e.GET("/", middleware.StaticPages(layout.Layout, playgroundTemplates.Playground()))
 
-	e.GET("/", middleware.StaticPages(pages.Layout, contents.Playground()))
-	e.GET("/mahjong", middleware.StaticPages(pages.Layout, mahjong.RoomSelect()))
-	e.GET("/mahjong/room/create", middleware.StaticPages(pages.Component, mahjong.RoomCreate()))
-	e.GET("/i18n/:locale", middleware.Pages(pages.Layout, i18nContent.Content))
-
-	//dummy api
-	e.GET("/i18n/items/:locale", middleware.HTML(i18nAPI.GetItems))
-	e.POST("/i18n/items/:locale", middleware.HTML(i18nAPI.AddItems))
-	e.DELETE("/i18n/items/:locale", middleware.HTML(i18nAPI.DeleteItems))
-
-	e.GET("/Users", middleware.JSON(api.GetUsers))
-	e.POST("/Users", middleware.JSON(api.PostUser))
+	i18n.RegisterRoutes(e)
+	mahjong.RegisterRoutes(e)
+	user.RegisterRoutes(e)
 
 	//exit ->
 	e.Logger.Fatal(e.Start(PORT))

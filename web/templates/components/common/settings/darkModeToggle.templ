@@ -44,14 +44,14 @@ templ DarkModeToggle() {
 					"@item-clicked": "Alpine.store('darkMode').setMode(true)",
 				},
 			}) {
-				{ i18n.T(ctx,"dark_mode") }
+				{ i18nUtil.T(ctx,"dark_mode") }
 			}
 			@dropDownMenu.DropDownMenuItem(base.Props{
 				Attrs: templ.Attributes{
 					"@item-clicked": "Alpine.store('darkMode').setMode(false)",
 				},
 			}) {
-				{ i18n.T(ctx,"light_mode") }
+				{ i18nUtil.T(ctx,"light_mode") }
 			}
 		}
 	}

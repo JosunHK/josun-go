@@ -1,12 +1,13 @@
-package i18nAPI
+package i18n
 
 import (
 	"fmt"
 	"slices"
 
+	i18nStructs "github.com/JosunHK/josun-go.git/cmd/structs/i18n"
 	"github.com/JosunHK/josun-go.git/cmd/util"
-	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
-	"github.com/JosunHK/josun-go.git/web/templates/contents"
+	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	i18nTemplates "github.com/JosunHK/josun-go.git/web/templates/contents/i18n"
 	"github.com/gorilla/schema"
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
@@ -16,9 +17,9 @@ var decoder = schema.NewDecoder()
 
 func GetItems(c echo.Context) error {
 	locale := c.Param("locale")
-	items := i18n.GetItems(locale)
+	items := i18nUtil.GetItems(locale)
 	slices.Reverse(items)
-	return util.HTML(c, contents.I18nTableItems((items)))
+	return util.HTML(c, i18nTemplates.I18nTableItems((items)))
 }
 
 func AddItems(c echo.Context) error {
@@ -29,7 +30,7 @@ func AddItems(c echo.Context) error {
 		return err
 	}
 
-	var item i18n.Item
+	var item i18nStructs.Item
 
 	err = decoder.Decode(&item, c.Request().PostForm)
 	if err != nil {
@@ -37,13 +38,13 @@ func AddItems(c echo.Context) error {
 		return err
 	}
 
-	if !isItemValid(item, i18n.GetItems(locale)) {
+	if !isItemValid(item, i18nUtil.GetItems(locale)) {
 		err := fmt.Errorf("Invalid item")
 		log.Error(err)
 		return err
 	}
 
-	if err := i18n.AddItem(locale, item); err != nil {
+	if err := i18nUtil.AddItem(locale, item); err != nil {
 		log.Error(err)
 		return err
 	}
@@ -60,7 +61,7 @@ func DeleteItems(c echo.Context) error {
 		return err
 	}
 
-	var item i18n.Item
+	var item i18nStructs.Item
 
 	err = decoder.Decode(&item, c.Request().PostForm)
 	if err != nil {
@@ -68,7 +69,7 @@ func DeleteItems(c echo.Context) error {
 		return err
 	}
 
-	if err := i18n.DeleteItem(locale, item.Key); err != nil {
+	if err := i18nUtil.DeleteItem(locale, item.Key); err != nil {
 		log.Error(err)
 		return err
 	}
@@ -77,7 +78,7 @@ func DeleteItems(c echo.Context) error {
 
 }
 
-func isItemValid(item i18n.Item, items []i18n.Item) bool {
+func isItemValid(item i18nStructs.Item, items []i18nStructs.Item) bool {
 	if item.Key == "" || item.Default == "" {
 		return false
 	}

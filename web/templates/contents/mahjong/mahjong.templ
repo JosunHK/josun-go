@@ -1,4 +1,4 @@
-package mahjong
+package mahjongTemplates
 
 import (
 	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
@@ -29,7 +29,7 @@ templ RoomSelectCard() {
 			@card.Title(base.Props{
 				Class: "text-center",
 			}) {
-				{ i18n.T(ctx, "join_or_create_room") }
+				{ i18nUtil.T(ctx, "join_or_create_room") }
 			}
 		}
 		@separator.Separator(base.Props{}, "horizontal")
@@ -52,7 +52,7 @@ templ RoomSelectCard() {
 						Variant: gocva.Variant{"variant": "title"},
 					},
 				) {
-					{ i18n.T(ctx, "create_new_room") }
+					{ i18nUtil.T(ctx, "create_new_room") }
 				}
 			}
 			<div class="flex flex-row justify-between items-end">
@@ -70,7 +70,7 @@ templ RoomSelectCard() {
 					},
 					Variant: gocva.Variant{"variant": "secondary"},
 				}) {
-					{ i18n.T(ctx, "join") }
+					{ i18nUtil.T(ctx, "join") }
 				}
 			</div>
 		}

@@ -139,9 +139,9 @@ func I18n() templ.Component {
 					}
 					ctx = templ.InitializeContext(ctx)
 					var templ_7745c5c3_Var8 string
-					templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "english"))
+					templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "english"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/i18n.templ`, Line: 31, Col: 27}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/i18n.templ`, Line: 31, Col: 31}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 					if templ_7745c5c3_Err != nil {
@@ -172,9 +172,9 @@ func I18n() templ.Component {
 					}
 					ctx = templ.InitializeContext(ctx)
 					var templ_7745c5c3_Var10 string
-					templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(i18n.T(ctx, "chinese"))
+					templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "chinese"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/i18n.templ`, Line: 37, Col: 27}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/i18n.templ`, Line: 37, Col: 31}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 					if templ_7745c5c3_Err != nil {

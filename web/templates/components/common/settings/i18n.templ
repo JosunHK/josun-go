@@ -28,13 +28,13 @@ templ I18n() {
 				Attrs: templ.Attributes{
 				},
 			}) {
-				{ i18n.T(ctx,"english") }
+				{ i18nUtil.T(ctx,"english") }
 			}
 			@dropDownMenu.DropDownMenuItem(base.Props{
 				Attrs: templ.Attributes{
 				},
 			}) {
-				{ i18n.T(ctx,"chinese") }
+				{ i18nUtil.T(ctx,"chinese") }
 			}
 		}
 	}

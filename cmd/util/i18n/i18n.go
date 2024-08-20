@@ -1,4 +1,4 @@
-package i18n
+package i18nUtil
 
 import (
 	"context"
@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 
+	i18nStructs "github.com/JosunHK/josun-go.git/cmd/structs/i18n"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 	"github.com/eduardolat/goeasyi18n"
 	log "github.com/sirupsen/logrus"
@@ -27,13 +28,6 @@ var LOCALE_MENU = []sqlc.MenuItem{
 		Label: "中文",
 		Value: "zh",
 	},
-}
-
-type Item struct {
-	Key     string `json:"Key"`
-	Default string `json:"Default"`
-	One     string `json:"One"`
-	Many    string `json:"Many"`
 }
 
 func GetMenuItem(locale string) sqlc.MenuItem {
@@ -101,12 +95,12 @@ func getLocaleFromCookie(c context.Context) string {
 	return "zh"
 }
 
-func GetItems(locale string) []Item {
-	var items []Item
+func GetItems(locale string) []i18nStructs.Item {
+	var items []i18nStructs.Item
 	table, err := readJSON(locale)
 	if err != nil {
 		log.Error("Error reading json file: ", err)
-		return []Item{}
+		return []i18nStructs.Item{}
 	}
 
 	json.Unmarshal([]byte(table), &items)
@@ -114,7 +108,7 @@ func GetItems(locale string) []Item {
 	return items
 }
 
-func AddItem(locale string, item Item) error {
+func AddItem(locale string, item i18nStructs.Item) error {
 	items := GetItems(locale)
 	for _, i := range items {
 		if i.Key == item.Key {

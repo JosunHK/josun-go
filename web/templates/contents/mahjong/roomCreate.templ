@@ -1,4 +1,4 @@
-package mahjong
+package mahjongTemplates
 
 import (
 	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
@@ -14,7 +14,7 @@ templ RoomCreate() {
 			@card.Title(base.Props{
 				Class: "text-center",
 			}) {
-				{ i18n.T(ctx, "create_room") }
+				{ i18nUtil.T(ctx, "create_room") }
 			}
 		}
 		@separator.Separator(base.Props{}, "horizontal")
