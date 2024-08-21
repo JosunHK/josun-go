@@ -17,7 +17,6 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/datepicker"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var addresses = []sqlc.MenuItem{
@@ -58,10 +57,8 @@ func Playground() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = selectBox.Select(menuProvider.GetMenu(ctx, "yesNo"), selectBox.SelectProps{
-			Props: base.Props{
-				Name: "bruh",
-			},
+		templ_7745c5c3_Err = selectBox.Select(menuProvider.GetMenu(ctx, "yesNo"), selectBox.BodyProps{
+			Name: "bruh",
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -69,12 +66,10 @@ func Playground() templ.Component {
 		templ_7745c5c3_Err = selectBox.LabeledSelect(
 			"A kida very fucking long label test",
 			menuProvider.TranslMenu(ctx, addresses),
-			selectBox.SelectProps{
-				Props: base.Props{
-					Name: "hehe",
-					Attrs: templ.Attributes{
-						"@item-clicked": "window.location('i18n/' + selectedValue)",
-					},
+			selectBox.BodyProps{
+				Name: "hehe",
+				Attrs: templ.Attributes{
+					"@item-clicked": "window.location('i18n/' + selectedValue)",
 				},
 			},
 		).Render(ctx, templ_7745c5c3_Buffer)
@@ -85,7 +80,7 @@ func Playground() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = input.Digits(base.Props{
+		templ_7745c5c3_Err = input.Digits(input.Props{
 			Name: "roomNo",
 		},
 			4,
@@ -97,7 +92,7 @@ func Playground() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = card.InfoCard(card.CardProps{
+		templ_7745c5c3_Err = card.InfoCard(card.Props{
 			Title:       "Title",
 			Description: "example of a card",
 			Footer:      "Don't be racist, I am a building.",
@@ -105,7 +100,7 @@ func Playground() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = card.LoginCard(card.CardProps{
+		templ_7745c5c3_Err = card.LoginCard(card.Props{
 			Title:       "Title",
 			Description: "example of a card",
 			Footer:      "Don't be racist, I am a building.",

@@ -3,12 +3,17 @@ package dropDownMenu
 import (
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var M = twmerge.Merge
 
-templ DropDownMenuTriggerIcon(props base.Props) {
+type Props struct {
+	Name  string
+	Class string
+	Attrs templ.Attributes
+}
+
+templ DropDownMenuTriggerIcon(props Props) {
 	<div
 		class={ M("m-1 h-5 w-5", props.Class) }
 		{ props.Attrs... }
@@ -17,7 +22,7 @@ templ DropDownMenuTriggerIcon(props base.Props) {
 	</div>
 }
 
-templ DropDownMenuIcon(props base.Props) {
+templ DropDownMenuIcon(props Props) {
 	<div
 		class={ M("mr-2 h-4 w-4", props.Class) }
 		{ props.Attrs... }
@@ -26,7 +31,7 @@ templ DropDownMenuIcon(props base.Props) {
 	</div>
 }
 
-templ DropDownMenuTrigger(props base.Props) {
+templ DropDownMenuTrigger(props Props) {
 	<div
 		class={ props.Class }
 		x-ref="button"
@@ -40,7 +45,7 @@ templ DropDownMenuTrigger(props base.Props) {
 	</div>
 }
 
-templ DropDownMenuSub(props base.Props) {
+templ DropDownMenuSub(props Props) {
 	<div
 		class={ M("relative", props.Class) }
 	>
@@ -75,7 +80,7 @@ templ DropDownMenuSub(props base.Props) {
 	</div>
 }
 
-templ DropDownMenuSubTrigger(props base.Props) {
+templ DropDownMenuSubTrigger(props Props) {
 	<div
 		x-ref="button"
 		x-on:click="toggle()"
@@ -86,7 +91,7 @@ templ DropDownMenuSubTrigger(props base.Props) {
 		{ props.Attrs... }
 	>
 		{ children... }
-		@DropDownMenuIcon(base.Props{
+		@DropDownMenuIcon(Props{
 			Class: "ml-auto h-4 w-4",
 		}) {
 			@icon.ChevronRight()
@@ -94,7 +99,7 @@ templ DropDownMenuSubTrigger(props base.Props) {
 	</div>
 }
 
-templ DropDownMenuSubContent(props base.Props) {
+templ DropDownMenuSubContent(props Props) {
 	<div
 		x-ref="panel"
 		x-show="open"
@@ -110,7 +115,7 @@ templ DropDownMenuSubContent(props base.Props) {
 	</div>
 }
 
-templ DropDownMenuContent(props base.Props) {
+templ DropDownMenuContent(props Props) {
 	<div
 		x-ref="panel"
 		x-show="open"
@@ -125,7 +130,7 @@ templ DropDownMenuContent(props base.Props) {
 	</div>
 }
 
-templ DropDownMenuItem(props base.Props) {
+templ DropDownMenuItem(props Props) {
 	<div
 		@click={ "toggle(); $dispatch('item-clicked')" }
 		class={ M("relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground ", props.Class) }
@@ -135,7 +140,7 @@ templ DropDownMenuItem(props base.Props) {
 	</div>
 }
 
-templ DropDownMenuCheckBoxItem(props base.Props, checked string) {
+templ DropDownMenuCheckBoxItem(props Props, checked string) {
 	<div
 		class={ M("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground ", props.Class) }
 		checked={ checked }
@@ -150,7 +155,7 @@ templ DropDownMenuCheckBoxItem(props base.Props, checked string) {
 	</div>
 }
 
-templ DropDownMenuRadioItem(props base.Props) {
+templ DropDownMenuRadioItem(props Props) {
 	<div
 		class={ M("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground ", props.Class) }
 		{ props.Attrs... }
@@ -164,7 +169,7 @@ templ DropDownMenuRadioItem(props base.Props) {
 	</div>
 }
 
-templ DropDownMenuLabel(props base.Props) {
+templ DropDownMenuLabel(props Props) {
 	<div
 		class={ M("px-2 py-1.5 text-sm font-semibold", props.Class) }
 		{ props.Attrs... }
@@ -173,9 +178,9 @@ templ DropDownMenuLabel(props base.Props) {
 	</div>
 }
 
-templ DropDownMenu(props base.Props) {
+templ DropDownMenu(props Props) {
 	<div
-		class={ M("relative w-min h-min" , props.Class) }
+		class={ M("relative w-min h-min", props.Class) }
 		x-data="{
             open: false,
             toggle() {
@@ -204,14 +209,14 @@ templ DropDownMenu(props base.Props) {
 	</div>
 }
 
-templ DropDownMenuSeparator(props base.Props) {
+templ DropDownMenuSeparator(props Props) {
 	<hr
 		class={ M("-mx-1 my-1 h-px bg-muted", props.Class) }
 		{ props.Attrs... }
 	/>
 }
 
-templ DropDownMenuShortcut(props base.Props) {
+templ DropDownMenuShortcut(props Props) {
 	<span
 		class={ M("ml-auto text-xs tracking-widest opacity-60", props.Class) }
 		{ props.Attrs... }

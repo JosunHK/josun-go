@@ -9,14 +9,13 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
 	button "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	input "github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
 	label "github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
 	separator "github.com/JosunHK/josun-go.git/web/templates/components/ui/separator"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
 
@@ -119,7 +118,7 @@ func RoomSelectCard() templ.Component {
 					var templ_7745c5c3_Var6 string
 					templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "join_or_create_room"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 32, Col: 44}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 31, Col: 44}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 					if templ_7745c5c3_Err != nil {
@@ -127,7 +126,7 @@ func RoomSelectCard() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = card.Title(base.Props{
+				templ_7745c5c3_Err = card.Title(card.Props{
 					Class: "text-center",
 				}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
@@ -135,7 +134,7 @@ func RoomSelectCard() templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = card.Header(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var4), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = card.Header(card.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var4), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -143,7 +142,7 @@ func RoomSelectCard() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = separator.Separator(base.Props{}, "horizontal").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = separator.Separator(separator.Props{}, "horizontal").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -190,7 +189,7 @@ func RoomSelectCard() templ.Component {
 						var templ_7745c5c3_Var10 string
 						templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "create_new_room"))
 						if templ_7745c5c3_Err != nil {
-							return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 55, Col: 41}
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 52, Col: 41}
 						}
 						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 						if templ_7745c5c3_Err != nil {
@@ -208,14 +207,12 @@ func RoomSelectCard() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = button.Button(button.ButtonProps{
-					Props: base.Props{
-						Class: "mt-2 mb-2.5",
-						Attrs: templ.Attributes{
-							"hx-get":     "/mahjong/room/create",
-							"hx-target":  "#card-content",
-							"hx-trigger": "click",
-						},
+				templ_7745c5c3_Err = button.Button(button.Props{
+					Class: "mt-2 mb-2.5",
+					Attrs: templ.Attributes{
+						"hx-get":     "/mahjong/room/create",
+						"hx-target":  "#card-content",
+						"hx-trigger": "click",
 					},
 					Variant: gocva.Variant{"variant": "secondary"},
 				}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var8), templ_7745c5c3_Buffer)
@@ -226,7 +223,7 @@ func RoomSelectCard() templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = input.Digits(base.Props{
+				templ_7745c5c3_Err = input.Digits(input.Props{
 					Class: "mt-3",
 					Name:  "roomNo",
 				},
@@ -254,7 +251,7 @@ func RoomSelectCard() templ.Component {
 					var templ_7745c5c3_Var12 string
 					templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "join"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 73, Col: 30}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 68, Col: 30}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 					if templ_7745c5c3_Err != nil {
@@ -262,10 +259,8 @@ func RoomSelectCard() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = button.Button(button.ButtonProps{
-					Props: base.Props{
-						Class: "w-min",
-					},
+				templ_7745c5c3_Err = button.Button(button.Props{
+					Class:   "w-min",
 					Variant: gocva.Variant{"variant": "secondary"},
 				}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var11), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
@@ -277,7 +272,7 @@ func RoomSelectCard() templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = card.Content(base.Props{
+			templ_7745c5c3_Err = card.Content(card.Props{
 				Class: "flex flex-col ",
 			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
@@ -285,7 +280,7 @@ func RoomSelectCard() templ.Component {
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = card.Card(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = card.Card(card.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

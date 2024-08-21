@@ -2,12 +2,17 @@ package input
 
 import (
     "fmt"
-    base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var scriptHandle = templ.NewOnceHandle()
 
-templ Digits(props base.Props, digits int) {
+type Props struct {
+	Name  string
+	Class string
+	Attrs templ.Attributes
+}
+
+templ Digits(props Props, digits int) {
 	<div
         x-data={ fmt.Sprintf("{length :  %v}", digits) }
         class={ props.Class }
@@ -62,17 +67,15 @@ templ Digits(props base.Props, digits int) {
 			>
 				<template x-for="(input, index) in length" :key="index">
 					@Input(InputProps{
-						Props: base.Props{
-							Class: "otpInput w-[2.5rem] h-[2.5rem] text-center text-md border focus:border-2 focus:border-primary focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-bold rounded-none first-of-type:rounded-l-md first-of-type:border-l last:rounded-r-md transition-all caret-transparent ease-in-out duration-[30ms]",
-							Attrs: templ.Attributes{
-								"type":                   "tel",
-								"maxlength":              "1",
-								"x-on:input":             "handleInput($event, index)",
-                                "x-on:click":             "resetCaret($el)",
-								"x-on:paste":             "handlePaste($event)",
-								"x-on:keydown.backspace": "$event.target.value || handleBackspace($event, index)",
-							},
-						},
+                        Class: "otpInput w-[2.5rem] h-[2.5rem] text-center text-md border focus:border-2 focus:border-primary focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-bold rounded-none first-of-type:rounded-l-md first-of-type:border-l last:rounded-r-md transition-all caret-transparent ease-in-out duration-[30ms]",
+                        Attrs: templ.Attributes{
+                            "type":                   "tel",
+                            "maxlength":              "1",
+                            "x-on:input":             "handleInput($event, index)",
+                            "x-on:click":             "resetCaret($el)",
+                            "x-on:paste":             "handlePaste($event)",
+                            "x-on:keydown.backspace": "$event.target.value || handleBackspace($event, index)",
+                        },
 					})
 				</template>
 			</div>

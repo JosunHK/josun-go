@@ -11,12 +11,17 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var M = twmerge.Merge
 
-func DropDownMenuTriggerIcon(props base.Props) templ.Component {
+type Props struct {
+	Name  string
+	Class string
+	Attrs templ.Attributes
+}
+
+func DropDownMenuTriggerIcon(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -76,7 +81,7 @@ func DropDownMenuTriggerIcon(props base.Props) templ.Component {
 	})
 }
 
-func DropDownMenuIcon(props base.Props) templ.Component {
+func DropDownMenuIcon(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -136,7 +141,7 @@ func DropDownMenuIcon(props base.Props) templ.Component {
 	})
 }
 
-func DropDownMenuTrigger(props base.Props) templ.Component {
+func DropDownMenuTrigger(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -196,7 +201,7 @@ func DropDownMenuTrigger(props base.Props) templ.Component {
 	})
 }
 
-func DropDownMenuSub(props base.Props) templ.Component {
+func DropDownMenuSub(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -278,7 +283,7 @@ func DropDownMenuSub(props base.Props) templ.Component {
 	})
 }
 
-func DropDownMenuSubTrigger(props base.Props) templ.Component {
+func DropDownMenuSubTrigger(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -348,7 +353,7 @@ func DropDownMenuSubTrigger(props base.Props) templ.Component {
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = DropDownMenuIcon(base.Props{
+		templ_7745c5c3_Err = DropDownMenuIcon(Props{
 			Class: "ml-auto h-4 w-4",
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var18), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -362,7 +367,7 @@ func DropDownMenuSubTrigger(props base.Props) templ.Component {
 	})
 }
 
-func DropDownMenuSubContent(props base.Props) templ.Component {
+func DropDownMenuSubContent(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -423,7 +428,7 @@ func DropDownMenuSubContent(props base.Props) templ.Component {
 	})
 }
 
-func DropDownMenuContent(props base.Props) templ.Component {
+func DropDownMenuContent(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -483,7 +488,7 @@ func DropDownMenuContent(props base.Props) templ.Component {
 	})
 }
 
-func DropDownMenuItem(props base.Props) templ.Component {
+func DropDownMenuItem(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -513,7 +518,7 @@ func DropDownMenuItem(props base.Props) templ.Component {
 		var templ_7745c5c3_Var27 string
 		templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.JoinStringErrs("toggle(); $dispatch('item-clicked')")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/dropDownMenu/dropDownMenu.templ`, Line: 130, Col: 48}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/dropDownMenu/dropDownMenu.templ`, Line: 135, Col: 48}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var27))
 		if templ_7745c5c3_Err != nil {
@@ -556,7 +561,7 @@ func DropDownMenuItem(props base.Props) templ.Component {
 	})
 }
 
-func DropDownMenuCheckBoxItem(props base.Props, checked string) templ.Component {
+func DropDownMenuCheckBoxItem(props Props, checked string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -599,7 +604,7 @@ func DropDownMenuCheckBoxItem(props base.Props, checked string) templ.Component 
 		var templ_7745c5c3_Var32 string
 		templ_7745c5c3_Var32, templ_7745c5c3_Err = templ.JoinStringErrs(checked)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/dropDownMenu/dropDownMenu.templ`, Line: 141, Col: 19}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/dropDownMenu/dropDownMenu.templ`, Line: 146, Col: 19}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var32))
 		if templ_7745c5c3_Err != nil {
@@ -629,7 +634,7 @@ func DropDownMenuCheckBoxItem(props base.Props, checked string) templ.Component 
 	})
 }
 
-func DropDownMenuRadioItem(props base.Props) templ.Component {
+func DropDownMenuRadioItem(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -689,7 +694,7 @@ func DropDownMenuRadioItem(props base.Props) templ.Component {
 	})
 }
 
-func DropDownMenuLabel(props base.Props) templ.Component {
+func DropDownMenuLabel(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -749,7 +754,7 @@ func DropDownMenuLabel(props base.Props) templ.Component {
 	})
 }
 
-func DropDownMenu(props base.Props) templ.Component {
+func DropDownMenu(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -809,7 +814,7 @@ func DropDownMenu(props base.Props) templ.Component {
 	})
 }
 
-func DropDownMenuSeparator(props base.Props) templ.Component {
+func DropDownMenuSeparator(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -861,7 +866,7 @@ func DropDownMenuSeparator(props base.Props) templ.Component {
 	})
 }
 
-func DropDownMenuShortcut(props base.Props) templ.Component {
+func DropDownMenuShortcut(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)

@@ -10,12 +10,17 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var M = twmerge.Merge
 
-func Wrapper(props base.Props) templ.Component {
+type Props struct {
+	Name  string
+	Class string
+	Attrs templ.Attributes
+}
+
+func Wrapper(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)

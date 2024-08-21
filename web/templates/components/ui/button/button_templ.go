@@ -10,13 +10,10 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
-	"github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
 
 var M = twmerge.Merge
-
-//allow button to be used in other components just for the style but not as a button / allow override button's function
 
 var cva = gocva.CVA{
 	Base: "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -44,12 +41,14 @@ var cva = gocva.CVA{
 	},
 }
 
-type ButtonProps struct {
-	base.Props
+type Props struct {
+	Name    string
+	Class   string
+	Attrs   templ.Attributes
 	Variant gocva.Variant
 }
 
-func Button(props ButtonProps) templ.Component {
+func Button(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -79,7 +78,7 @@ func Button(props ButtonProps) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(props.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/button/button.templ`, Line: 46, Col: 19}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/button/button.templ`, Line: 45, Col: 19}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {

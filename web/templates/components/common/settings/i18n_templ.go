@@ -9,11 +9,10 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dropDownMenu"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
 
@@ -89,13 +88,13 @@ func I18n() templ.Component {
 						}
 						return templ_7745c5c3_Err
 					})
-					templ_7745c5c3_Err = dropDownMenu.DropDownMenuTriggerIcon(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = dropDownMenu.DropDownMenuTriggerIcon(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = button.Button(button.ButtonProps{
+				templ_7745c5c3_Err = button.Button(button.Props{
 					Variant: gocva.Variant{
 						"variant": "outline",
 						"size":    "icon",
@@ -106,7 +105,7 @@ func I18n() templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = dropDownMenu.DropDownMenuTrigger(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = dropDownMenu.DropDownMenuTrigger(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -141,7 +140,7 @@ func I18n() templ.Component {
 					var templ_7745c5c3_Var8 string
 					templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "english"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/i18n.templ`, Line: 31, Col: 31}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/i18n.templ`, Line: 29, Col: 31}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 					if templ_7745c5c3_Err != nil {
@@ -149,7 +148,7 @@ func I18n() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(base.Props{
+				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 					Attrs: templ.Attributes{},
 				}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
@@ -174,7 +173,7 @@ func I18n() templ.Component {
 					var templ_7745c5c3_Var10 string
 					templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "chinese"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/i18n.templ`, Line: 37, Col: 31}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/i18n.templ`, Line: 34, Col: 31}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 					if templ_7745c5c3_Err != nil {
@@ -182,7 +181,7 @@ func I18n() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(base.Props{
+				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 					Attrs: templ.Attributes{},
 				}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var9), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
@@ -190,13 +189,13 @@ func I18n() templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = dropDownMenu.DropDownMenuContent(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var6), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = dropDownMenu.DropDownMenuContent(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var6), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = dropDownMenu.DropDownMenu(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = dropDownMenu.DropDownMenu(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

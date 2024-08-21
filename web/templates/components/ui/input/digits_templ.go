@@ -10,12 +10,17 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"fmt"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var scriptHandle = templ.NewOnceHandle()
 
-func Digits(props base.Props, digits int) templ.Component {
+type Props struct {
+	Name  string
+	Class string
+	Attrs templ.Attributes
+}
+
+func Digits(props Props, digits int) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -45,7 +50,7 @@ func Digits(props base.Props, digits int) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("{length :  %v}", digits))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/input/digits.templ`, Line: 12, Col: 54}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/input/digits.templ`, Line: 17, Col: 54}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -77,16 +82,14 @@ func Digits(props base.Props, digits int) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = Input(InputProps{
-			Props: base.Props{
-				Class: "otpInput w-[2.5rem] h-[2.5rem] text-center text-md border focus:border-2 focus:border-primary focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-bold rounded-none first-of-type:rounded-l-md first-of-type:border-l last:rounded-r-md transition-all caret-transparent ease-in-out duration-[30ms]",
-				Attrs: templ.Attributes{
-					"type":                   "tel",
-					"maxlength":              "1",
-					"x-on:input":             "handleInput($event, index)",
-					"x-on:click":             "resetCaret($el)",
-					"x-on:paste":             "handlePaste($event)",
-					"x-on:keydown.backspace": "$event.target.value || handleBackspace($event, index)",
-				},
+			Class: "otpInput w-[2.5rem] h-[2.5rem] text-center text-md border focus:border-2 focus:border-primary focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-bold rounded-none first-of-type:rounded-l-md first-of-type:border-l last:rounded-r-md transition-all caret-transparent ease-in-out duration-[30ms]",
+			Attrs: templ.Attributes{
+				"type":                   "tel",
+				"maxlength":              "1",
+				"x-on:input":             "handleInput($event, index)",
+				"x-on:click":             "resetCaret($el)",
+				"x-on:paste":             "handlePaste($event)",
+				"x-on:keydown.backspace": "$event.target.value || handleBackspace($event, index)",
 			},
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -99,7 +102,7 @@ func Digits(props base.Props, digits int) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(props.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/input/digits.templ`, Line: 79, Col: 41}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/input/digits.templ`, Line: 82, Col: 41}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {

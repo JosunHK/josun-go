@@ -10,13 +10,12 @@ import (
 	label "github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
 	selectBox "github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
 	table "github.com/JosunHK/josun-go.git/web/templates/components/ui/table"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	gocva "github.com/gungun974/gocva"
 )
 
 templ I18n(locale string) {
 	<div class="flex flex-col justify-center items-center w-full h-full">
-		@card.Card(base.Props{
+		@card.Card(card.Props{
 			Class: "w-[1000px]",
 		}) {
 			@LocaleSelect(locale)
@@ -28,39 +27,37 @@ templ I18n(locale string) {
 templ LocaleSelect(locale string) {
 	<div class="w-full flex justify-end">
 		@selectBox.Select(i18nUtil.LOCALE_MENU,
-			selectBox.SelectProps{
+			selectBox.BodyProps{
 				Selected: i18nUtil.GetMenuItem(locale),
-				Props: base.Props{
 					Class: "mt-2 mr-2",
 					Attrs: templ.Attributes{
 						"@item-clicked": "window.location.replace(selectedValue)",
 					},
-				},
 			},
 		)
 	</div>
 }
 
 templ I18nTableHeader() {
-	@table.Header(base.Props{
+	@table.Header(table.Props{
 		Class: "sticky top-0 bg-background z-10",
 	}) {
-		@table.Row(base.Props{
+		@table.Row(table.Props{
 			Class: "rounded-t-lg sticky border-none [&>th]:font-bold",
 		}) {
-			@table.Head(base.Props{}) {
+			@table.Head(table.Props{}) {
 				Key
 			}
-			@table.Head(base.Props{}) {
+			@table.Head(table.Props{}) {
 				Default
 			}
-			@table.Head(base.Props{}) {
+			@table.Head(table.Props{}) {
 				One	
 			}
-			@table.Head(base.Props{}) {
+			@table.Head(table.Props{}) {
 				Many
 			}
-			@table.Head(base.Props{}) {
+			@table.Head(table.Props{}) {
 			}
 		}
 		{ children... }
@@ -71,11 +68,11 @@ templ I18nTable(locale string) {
 	<div
 		Class="max-h-[500px] h-[500px] overflow-y-scroll scrollbar-hide "
 	>
-		@table.Table(base.Props{}) {
+		@table.Table(table.Props{}) {
 			@I18nTableHeader() {
 				@NewRow(locale)
 			}
-			@table.Body(base.Props{
+			@table.Body(table.Props{
 				Attrs: templ.Attributes{
 					"hx-get":     "/i18n/items/" + locale,
 					"hx-trigger": "load",
@@ -93,58 +90,48 @@ templ NewRow(locale string) {
 		hx-swap="outerHTML transition:true"
 		hx-target="#i18n-table"
 	>
-		@table.Row(base.Props{
+		@table.Row(table.Props{
 			Class: "border-top-none",
 		}) {
-			@table.Cell(base.Props{}) {
+			@table.Cell(table.Props{}) {
 				@input.Input(
 					input.InputProps{
 						Type: "text",
-						Props: base.Props{
 							Name:  "key",
 							Class: "my-2",
-						},
 					},
 				)
 			}
-			@table.Cell(base.Props{}) {
+			@table.Cell(table.Props{}) {
 				@input.Input(
 					input.InputProps{
 						Type: "text",
-						Props: base.Props{
-							Name:  "default",
-							Class: "my-2",
-						},
+                        Name:  "default",
+                        Class: "my-2",
 					},
 				)
 			}
-			@table.Cell(base.Props{}) {
+			@table.Cell(table.Props{}) {
 				@input.Input(
 					input.InputProps{
 						Type: "text",
-						Props: base.Props{
-							Name:  "one",
-							Class: "my-2",
-						},
+                        Name:  "one",
+                        Class: "my-2",
 					},
 				)
 			}
-			@table.Cell(base.Props{}) {
+			@table.Cell(table.Props{}) {
 				@input.Input(
 					input.InputProps{
 						Type: "text",
-						Props: base.Props{
-							Name:  "many",
-							Class: "my-2",
-						},
+                        Name:  "many",
+                        Class: "my-2",
 					},
 				)
 			}
-			@table.Cell(base.Props{}) {
-				@button.Button(button.ButtonProps{
-					Props: base.Props{
-						Class: "mt-2 mb-2.5",
-					},
+			@table.Cell(table.Props{}) {
+				@button.Button(button.Props{
+					Class: "mt-2 mb-2.5",
 					Variant: gocva.Variant{"variant": "secondary"},
 				}) {
 					@label.Label(
@@ -152,7 +139,7 @@ templ NewRow(locale string) {
 							Variant: gocva.Variant{"variant": "title"},
 						},
 					) {
-						@icon.Wrapper(base.Props{}) {
+						@icon.Wrapper(icon.Props{}) {
 							@icon.Plus()
 						}
 					}
@@ -164,20 +151,20 @@ templ NewRow(locale string) {
 
 templ I18nTableItems(tableItems []i18nStructs.Item) {
 	for _, item := range tableItems {
-		@table.Row(base.Props{}) {
-			@table.Cell(base.Props{}) {
+		@table.Row(table.Props{}) {
+			@table.Cell(table.Props{}) {
 				{ item.Key }
 			}
-			@table.Cell(base.Props{}) {
+			@table.Cell(table.Props{}) {
 				{ item.Default }
 			}
-			@table.Cell(base.Props{}) {
+			@table.Cell(table.Props{}) {
 				{ item.One }
 			}
-			@table.Cell(base.Props{}) {
+			@table.Cell(table.Props{}) {
 				{ item.Many }
 			}
-			@table.Cell(base.Props{})
+			@table.Cell(table.Props{})
 		}
 	}
 }

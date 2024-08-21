@@ -13,7 +13,6 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dropDownMenu"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
 
@@ -79,7 +78,7 @@ func DemoDropDown() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = button.Button(button.ButtonProps{
+				templ_7745c5c3_Err = button.Button(button.Props{
 					Variant: gocva.Variant{
 						"variant": "outline",
 					},
@@ -89,7 +88,7 @@ func DemoDropDown() templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = dropDownMenu.DropDownMenuTrigger(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = dropDownMenu.DropDownMenuTrigger(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -127,7 +126,7 @@ func DemoDropDown() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = dropDownMenu.DropDownMenuLabel(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var6), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = dropDownMenu.DropDownMenuLabel(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var6), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -135,7 +134,7 @@ func DemoDropDown() templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = dropDownMenu.DropDownMenuSeparator(base.Props{}).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = dropDownMenu.DropDownMenuSeparator(dropDownMenu.Props{}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -173,7 +172,7 @@ func DemoDropDown() templ.Component {
 						}
 						return templ_7745c5c3_Err
 					})
-					templ_7745c5c3_Err = dropDownMenu.DropDownMenuIcon(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var8), templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = dropDownMenu.DropDownMenuIcon(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var8), templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -199,13 +198,13 @@ func DemoDropDown() templ.Component {
 						}
 						return templ_7745c5c3_Err
 					})
-					templ_7745c5c3_Err = dropDownMenu.DropDownMenuShortcut(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var9), templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = dropDownMenu.DropDownMenuShortcut(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var9), templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(base.Props{
+				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 					Attrs: templ.Attributes{
 						"@item-clicked": "console.log('item 1 clicked')",
 					},
@@ -247,7 +246,7 @@ func DemoDropDown() templ.Component {
 						}
 						return templ_7745c5c3_Err
 					})
-					templ_7745c5c3_Err = dropDownMenu.DropDownMenuIcon(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var11), templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = dropDownMenu.DropDownMenuIcon(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var11), templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -273,13 +272,13 @@ func DemoDropDown() templ.Component {
 						}
 						return templ_7745c5c3_Err
 					})
-					templ_7745c5c3_Err = dropDownMenu.DropDownMenuShortcut(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var12), templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = dropDownMenu.DropDownMenuShortcut(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var12), templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(base.Props{
+				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 					Attrs: templ.Attributes{
 						"@item-clicked": "console.log('item 2 clicked')",
 					},
@@ -333,7 +332,7 @@ func DemoDropDown() templ.Component {
 							}
 							return templ_7745c5c3_Err
 						})
-						templ_7745c5c3_Err = dropDownMenu.DropDownMenuIcon(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var15), templ_7745c5c3_Buffer)
+						templ_7745c5c3_Err = dropDownMenu.DropDownMenuIcon(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var15), templ_7745c5c3_Buffer)
 						if templ_7745c5c3_Err != nil {
 							return templ_7745c5c3_Err
 						}
@@ -343,7 +342,7 @@ func DemoDropDown() templ.Component {
 						}
 						return templ_7745c5c3_Err
 					})
-					templ_7745c5c3_Err = dropDownMenu.DropDownMenuSubTrigger(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var14), templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = dropDownMenu.DropDownMenuSubTrigger(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var14), templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -381,7 +380,7 @@ func DemoDropDown() templ.Component {
 							}
 							return templ_7745c5c3_Err
 						})
-						templ_7745c5c3_Err = dropDownMenu.DropDownMenuLabel(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var17), templ_7745c5c3_Buffer)
+						templ_7745c5c3_Err = dropDownMenu.DropDownMenuLabel(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var17), templ_7745c5c3_Buffer)
 						if templ_7745c5c3_Err != nil {
 							return templ_7745c5c3_Err
 						}
@@ -389,7 +388,7 @@ func DemoDropDown() templ.Component {
 						if templ_7745c5c3_Err != nil {
 							return templ_7745c5c3_Err
 						}
-						templ_7745c5c3_Err = dropDownMenu.DropDownMenuSeparator(base.Props{}).Render(ctx, templ_7745c5c3_Buffer)
+						templ_7745c5c3_Err = dropDownMenu.DropDownMenuSeparator(dropDownMenu.Props{}).Render(ctx, templ_7745c5c3_Buffer)
 						if templ_7745c5c3_Err != nil {
 							return templ_7745c5c3_Err
 						}
@@ -427,7 +426,7 @@ func DemoDropDown() templ.Component {
 								}
 								return templ_7745c5c3_Err
 							})
-							templ_7745c5c3_Err = dropDownMenu.DropDownMenuIcon(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var19), templ_7745c5c3_Buffer)
+							templ_7745c5c3_Err = dropDownMenu.DropDownMenuIcon(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var19), templ_7745c5c3_Buffer)
 							if templ_7745c5c3_Err != nil {
 								return templ_7745c5c3_Err
 							}
@@ -437,7 +436,7 @@ func DemoDropDown() templ.Component {
 							}
 							return templ_7745c5c3_Err
 						})
-						templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(base.Props{
+						templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 							Attrs: templ.Attributes{
 								"@item-clicked": "console.log('sub item 1 clicked')",
 							},
@@ -479,7 +478,7 @@ func DemoDropDown() templ.Component {
 								}
 								return templ_7745c5c3_Err
 							})
-							templ_7745c5c3_Err = dropDownMenu.DropDownMenuIcon(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var21), templ_7745c5c3_Buffer)
+							templ_7745c5c3_Err = dropDownMenu.DropDownMenuIcon(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var21), templ_7745c5c3_Buffer)
 							if templ_7745c5c3_Err != nil {
 								return templ_7745c5c3_Err
 							}
@@ -489,7 +488,7 @@ func DemoDropDown() templ.Component {
 							}
 							return templ_7745c5c3_Err
 						})
-						templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(base.Props{
+						templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 							Attrs: templ.Attributes{
 								"@item-clicked": "console.log('sub item 2 clicked')",
 							},
@@ -499,25 +498,25 @@ func DemoDropDown() templ.Component {
 						}
 						return templ_7745c5c3_Err
 					})
-					templ_7745c5c3_Err = dropDownMenu.DropDownMenuSubContent(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var16), templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = dropDownMenu.DropDownMenuSubContent(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var16), templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = dropDownMenu.DropDownMenuSub(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var13), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = dropDownMenu.DropDownMenuSub(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var13), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = dropDownMenu.DropDownMenuContent(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = dropDownMenu.DropDownMenuContent(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = dropDownMenu.DropDownMenu(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = dropDownMenu.DropDownMenu(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

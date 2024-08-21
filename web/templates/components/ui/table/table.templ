@@ -2,12 +2,17 @@ package table
 
 import (
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var M = twmerge.Merge
 
-templ Table(props base.Props) {
+type Props struct {
+	Name  string
+	Class string
+	Attrs templ.Attributes
+}
+
+templ Table(props Props) {
 	<div className="relative w-full overflow-auto">
 		<table
 			class={ M("w-full caption-bottom text-sm", props.Class) }
@@ -18,7 +23,7 @@ templ Table(props base.Props) {
 	</div>
 }
 
-templ Header(props base.Props) {
+templ Header(props Props) {
 	<thead
 		class={ M("[&_tr]:border-b", props.Class) }
 		{ props.Attrs... }
@@ -27,7 +32,7 @@ templ Header(props base.Props) {
 	</thead>
 }
 
-templ Body(props base.Props) {
+templ Body(props Props) {
 	<tbody
 		class={ M("[&_tr:last-child]:border-0", props.Class) }
 		{ props.Attrs... }
@@ -36,7 +41,7 @@ templ Body(props base.Props) {
 	</tbody>
 }
 
-templ Footer(props base.Props) {
+templ Footer(props Props) {
 	<tfoot
 		class={ M("border-t bg-muted/50 font-medium [&>tr]:last:border-b-0", props.Class) }
 		{ props.Attrs... }
@@ -45,7 +50,7 @@ templ Footer(props base.Props) {
 	</tfoot>
 }
 
-templ Row(props base.Props) {
+templ Row(props Props) {
 	<tr
 		class={ M("border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted", props.Class) }
 		{ props.Attrs... }
@@ -54,7 +59,7 @@ templ Row(props base.Props) {
 	</tr>
 }
 
-templ Head(props base.Props) {
+templ Head(props Props) {
 	<th
 		class={ M("h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0", props.Class) }
 		{ props.Attrs... }
@@ -63,7 +68,7 @@ templ Head(props base.Props) {
 	</th>
 }
 
-templ Cell(props base.Props) {
+templ Cell(props Props) {
 	<td
 		class={ M("p-4 align-middle [&:has([role=checkbox])]:pr-0", props.Class) }
 		{ props.Attrs... }
@@ -72,7 +77,7 @@ templ Cell(props base.Props) {
 	</td>
 }
 
-templ Caption(props base.Props) {
+templ Caption(props Props) {
 	<caption
 		class={ M("mt-4 text-sm text-muted-foreground", props.Class) }
 		{ props.Attrs... }

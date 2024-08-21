@@ -5,17 +5,25 @@ import (
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var M = twmerge.Merge
 
-type SelectProps struct {
+type Props struct {
 	Selected sqlc.MenuItem
-	base.Props
+	Name     string
+	Class    string
+	Attrs    templ.Attributes
 }
 
-templ SelectTriggerIcon(props base.Props) {
+type BodyProps struct {
+	Selected sqlc.MenuItem
+	Name     string
+	Class    string
+	Attrs    templ.Attributes
+}
+
+templ SelectTriggerIcon(props Props) {
 	<div
 		class={ M("m-1 h-5 w-5", props.Class) }
 		{ props.Attrs... }
@@ -24,7 +32,7 @@ templ SelectTriggerIcon(props base.Props) {
 	</div>
 }
 
-templ SelectIcon(props base.Props) {
+templ SelectIcon(props Props) {
 	<div
 		class={ M("ml-2 h-4 w-4", props.Class) }
 		{ props.Attrs... }
@@ -33,7 +41,7 @@ templ SelectIcon(props base.Props) {
 	</div>
 }
 
-templ SelectDisplay(props base.Props) {
+templ SelectDisplay(props Props) {
 	<div
 		x-text="selectedLabel"
 		:style="`width: calc(${maxLength} * 0.6rem)`"
@@ -42,7 +50,7 @@ templ SelectDisplay(props base.Props) {
 	></div>
 }
 
-templ SelectTrigger(props base.Props) {
+templ SelectTrigger(props Props) {
 	<div
 		class={ M("lex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1", props.Class) }
 		x-ref="button"
@@ -56,14 +64,14 @@ templ SelectTrigger(props base.Props) {
 			class="flex items-center justify-between flex-row"
 		>
 			{ children... }
-			@SelectIcon(base.Props{}) {
+			@SelectIcon(Props{}) {
 				@icon.ChevronDown()
 			}
 		</div>
 	</div>
 }
 
-templ SelectContent(props base.Props) {
+templ SelectContent(props Props) {
 	<div
 		x-ref="panel"
 		x-show="open"
@@ -78,7 +86,7 @@ templ SelectContent(props base.Props) {
 	</div>
 }
 
-templ SelectItem(props base.Props, item sqlc.MenuItem) {
+templ SelectItem(props Props, item sqlc.MenuItem) {
 	<div
 		x-init={ fmt.Sprintf("setLength('%v'.length);setDefault('%v', '%v');", item.Label, item.Label, item.Value) }
 		@click={ fmt.Sprintf("toggle(); selectedLabel = '%v'; selectedValue = '%v'; $dispatch('item-clicked')", item.Label, item.Value) }
@@ -89,7 +97,7 @@ templ SelectItem(props base.Props, item sqlc.MenuItem) {
 		{ props.Attrs... }
 	>
 		{ children... }
-		@SelectIcon(base.Props{
+		@SelectIcon(Props{
 			Class: "ml-2",
 			Attrs: templ.Attributes{
 				"x-show": fmt.Sprintf("selectedValue === '%v'", item.Value),
@@ -100,7 +108,7 @@ templ SelectItem(props base.Props, item sqlc.MenuItem) {
 	</div>
 }
 
-templ SelectLabel(props base.Props) {
+templ SelectLabel(props Props) {
 	<div
 		x-init="setLength($el.innerText.length)"
 		class={ M("px-2 py-1.5 text-sm font-semibold", props.Class) }
@@ -112,7 +120,7 @@ templ SelectLabel(props base.Props) {
 
 var scriptHandle = templ.NewOnceHandle()
 
-templ SelectBody(props SelectProps) {
+templ SelectBody(props BodyProps) {
 	<div
 		class={ props.Class }
 		x-init={ fmt.Sprintf("setDefault('%v', '%v')", props.Selected.Label, props.Selected.Value) }
@@ -162,7 +170,7 @@ templ SelectBody(props SelectProps) {
 	</div>
 }
 
-templ SelectSeparator(props base.Props) {
+templ SelectSeparator(props Props) {
 	<hr
 		class={ M("-mx-1 my-1 h-px bg-muted", props.Class) }
 		{ props.Attrs... }

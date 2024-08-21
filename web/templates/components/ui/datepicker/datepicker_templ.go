@@ -12,7 +12,6 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
 
@@ -35,17 +34,15 @@ func DatePickerTrigger() templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = input.Input(input.InputProps{
-			Type: "text",
-			Props: base.Props{
-				Class: "pl-[2.5rem] focus-visible:ring-0 focus-visible:ring-offset-0 hover:bg-accent transition-colors",
-				Attrs: templ.Attributes{
-					"placeholder":     "Select date",
-					"readonly":        "",
-					"x-ref":           "datePickerInput",
-					"x-model":         "datePickerValue",
-					"@click":          "datePickerOpen=!datePickerOpen",
-					"@keydown.escape": "datePickerOpen=false",
-				},
+			Type:  "text",
+			Class: "pl-[2.5rem] focus-visible:ring-0 focus-visible:ring-offset-0 hover:bg-accent transition-colors",
+			Attrs: templ.Attributes{
+				"placeholder":     "Select date",
+				"readonly":        "",
+				"x-ref":           "datePickerInput",
+				"x-model":         "datePickerValue",
+				"@click":          "datePickerOpen=!datePickerOpen",
+				"@keydown.escape": "datePickerOpen=false",
 			},
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -116,16 +113,14 @@ func DatePickerHeader() templ.Component {
 			return templ_7745c5c3_Err
 		})
 		templ_7745c5c3_Err = button.Button(
-			button.ButtonProps{
+			button.Props{
 				Variant: gocva.Variant{
 					"variant": "outline",
 					"size":    "iconxs",
 				},
-				Props: base.Props{
-					Class: "text-primary",
-					Attrs: templ.Attributes{
-						"@click": "datePickerPreviousMonth()",
-					},
+				Class: "text-primary",
+				Attrs: templ.Attributes{
+					"@click": "datePickerPreviousMonth()",
 				},
 			},
 		).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
@@ -163,16 +158,14 @@ func DatePickerHeader() templ.Component {
 			return templ_7745c5c3_Err
 		})
 		templ_7745c5c3_Err = button.Button(
-			button.ButtonProps{
+			button.Props{
 				Variant: gocva.Variant{
 					"variant": "outline",
 					"size":    "iconxs",
 				},
-				Props: base.Props{
-					Class: "text-primary",
-					Attrs: templ.Attributes{
-						"@click": "datePickerNextMonth()",
-					},
+				Class: "text-primary",
+				Attrs: templ.Attributes{
+					"@click": "datePickerNextMonth()",
 				},
 			},
 		).Render(templ.WithChildren(ctx, templ_7745c5c3_Var4), templ_7745c5c3_Buffer)
@@ -236,22 +229,20 @@ func DatePickerDates() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = button.Button(
-			button.ButtonProps{
+			button.Props{
 				Variant: gocva.Variant{
 					"variant": "ghost",
 					"size":    "iconsm",
 				},
-				Props: base.Props{
-					Class: "mx-1",
-					Attrs: templ.Attributes{
-						"@click": "datePickerDayClicked(day)",
-						"x-text": "day",
-						":class": `{
+				Class: "mx-1",
+				Attrs: templ.Attributes{
+					"@click": "datePickerDayClicked(day)",
+					"x-text": "day",
+					":class": `{
                                 'bg-primary text-primary-foreground' : datePickerIsSelectedDate(day) == true, 
                                 'bg-accent text-primary': datePickerIsToday(day) == true && datePickerIsSelectedDate(day) == false,
                                 'text-primary hover:bg-accent': datePickerIsToday(day) == false && datePickerIsSelectedDate(day) == false,
                             }`,
-					},
 				},
 			}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {

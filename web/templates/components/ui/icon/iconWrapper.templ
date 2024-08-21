@@ -2,12 +2,17 @@ package icon
 
 import (
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var M = twmerge.Merge
 
-templ Wrapper(props base.Props) {
+type Props struct {
+	Name  string
+	Class string
+	Attrs templ.Attributes
+}
+
+templ Wrapper(props Props) {
 	<div
 		class={ M("h-4 w-4", props.Class) }
 		{ props.Attrs... }

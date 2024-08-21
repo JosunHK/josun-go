@@ -12,7 +12,6 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
 	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	label "github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	gocva "github.com/gungun974/gocva"
 )
 
@@ -102,9 +101,7 @@ func Menubar() templ.Component {
 				Variant: gocva.Variant{
 					"variant": "title",
 				},
-				Props: base.Props{
-					Class: "ml-2",
-				},
+				Class: "ml-2",
 			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var4), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -127,7 +124,7 @@ func Menubar() templ.Component {
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = card.Card(base.Props{
+		templ_7745c5c3_Err = card.Card(card.Props{
 			Class: "flex flex-row w-full fixed top-0 justify-between items-center p-1 bg-background rounded-none",
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {

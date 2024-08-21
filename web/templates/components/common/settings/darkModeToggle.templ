@@ -5,20 +5,19 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dropDownMenu"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
 	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
 
 templ DarkModeToggle() {
-	@dropDownMenu.DropDownMenu(base.Props{}) {
-		@dropDownMenu.DropDownMenuTrigger(base.Props{}) {
-			@button.Button(button.ButtonProps{
+	@dropDownMenu.DropDownMenu(dropDownMenu.Props{}) {
+		@dropDownMenu.DropDownMenuTrigger(dropDownMenu.Props{}) {
+			@button.Button(button.Props{
 				Variant: gocva.Variant{
 					"variant": "outline",
 					"size":    "icon",
 				},
 			}) {
-				@dropDownMenu.DropDownMenuTriggerIcon(base.Props{
+				@dropDownMenu.DropDownMenuTriggerIcon(dropDownMenu.Props{
 					Attrs: templ.Attributes{
                         "x-cloak": "",
 						":class": "{ 'hidden' : !Alpine.store('darkMode').on }",
@@ -26,7 +25,7 @@ templ DarkModeToggle() {
 				}) {
 					@icon.Moon()
 				}
-				@dropDownMenu.DropDownMenuTriggerIcon(base.Props{
+				@dropDownMenu.DropDownMenuTriggerIcon(dropDownMenu.Props{
 					Attrs: templ.Attributes{
                         "x-cloak": "",
 						":class": "{ 'hidden' : Alpine.store('darkMode').on }",
@@ -36,17 +35,17 @@ templ DarkModeToggle() {
 				}
 			}
 		}
-		@dropDownMenu.DropDownMenuContent(base.Props{
+		@dropDownMenu.DropDownMenuContent(dropDownMenu.Props{
                 Class:  "right-0",
             }) {
-			@dropDownMenu.DropDownMenuItem(base.Props{
+			@dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 				Attrs: templ.Attributes{
 					"@item-clicked": "Alpine.store('darkMode').setMode(true)",
 				},
 			}) {
 				{ i18nUtil.T(ctx,"dark_mode") }
 			}
-			@dropDownMenu.DropDownMenuItem(base.Props{
+			@dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 				Attrs: templ.Attributes{
 					"@item-clicked": "Alpine.store('darkMode').setMode(false)",
 				},

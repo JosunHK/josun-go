@@ -13,7 +13,6 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dropDownMenu"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
 
@@ -89,7 +88,7 @@ func DarkModeToggle() templ.Component {
 						}
 						return templ_7745c5c3_Err
 					})
-					templ_7745c5c3_Err = dropDownMenu.DropDownMenuTriggerIcon(base.Props{
+					templ_7745c5c3_Err = dropDownMenu.DropDownMenuTriggerIcon(dropDownMenu.Props{
 						Attrs: templ.Attributes{
 							"x-cloak": "",
 							":class":  "{ 'hidden' : !Alpine.store('darkMode').on }",
@@ -120,7 +119,7 @@ func DarkModeToggle() templ.Component {
 						}
 						return templ_7745c5c3_Err
 					})
-					templ_7745c5c3_Err = dropDownMenu.DropDownMenuTriggerIcon(base.Props{
+					templ_7745c5c3_Err = dropDownMenu.DropDownMenuTriggerIcon(dropDownMenu.Props{
 						Attrs: templ.Attributes{
 							"x-cloak": "",
 							":class":  "{ 'hidden' : Alpine.store('darkMode').on }",
@@ -131,7 +130,7 @@ func DarkModeToggle() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = button.Button(button.ButtonProps{
+				templ_7745c5c3_Err = button.Button(button.Props{
 					Variant: gocva.Variant{
 						"variant": "outline",
 						"size":    "icon",
@@ -142,7 +141,7 @@ func DarkModeToggle() templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = dropDownMenu.DropDownMenuTrigger(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = dropDownMenu.DropDownMenuTrigger(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -177,7 +176,7 @@ func DarkModeToggle() templ.Component {
 					var templ_7745c5c3_Var9 string
 					templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "dark_mode"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/darkModeToggle.templ`, Line: 47, Col: 33}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/darkModeToggle.templ`, Line: 46, Col: 33}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 					if templ_7745c5c3_Err != nil {
@@ -185,7 +184,7 @@ func DarkModeToggle() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(base.Props{
+				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 					Attrs: templ.Attributes{
 						"@item-clicked": "Alpine.store('darkMode').setMode(true)",
 					},
@@ -212,7 +211,7 @@ func DarkModeToggle() templ.Component {
 					var templ_7745c5c3_Var11 string
 					templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "light_mode"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/darkModeToggle.templ`, Line: 54, Col: 34}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/darkModeToggle.templ`, Line: 53, Col: 34}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 					if templ_7745c5c3_Err != nil {
@@ -220,7 +219,7 @@ func DarkModeToggle() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(base.Props{
+				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 					Attrs: templ.Attributes{
 						"@item-clicked": "Alpine.store('darkMode').setMode(false)",
 					},
@@ -230,7 +229,7 @@ func DarkModeToggle() templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = dropDownMenu.DropDownMenuContent(base.Props{
+			templ_7745c5c3_Err = dropDownMenu.DropDownMenuContent(dropDownMenu.Props{
 				Class: "right-0",
 			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
@@ -238,7 +237,7 @@ func DarkModeToggle() templ.Component {
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = dropDownMenu.DropDownMenu(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = dropDownMenu.DropDownMenu(dropDownMenu.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

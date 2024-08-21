@@ -10,14 +10,15 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
 
 var M = twmerge.Merge
 
 type LabelProps struct {
-	base.Props
+	Name    string
+	Class   string
+	Attrs   templ.Attributes
 	Variant gocva.Variant
 }
 

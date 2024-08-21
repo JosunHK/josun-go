@@ -18,7 +18,6 @@ import (
 	label "github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
 	selectBox "github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
 	table "github.com/JosunHK/josun-go.git/web/templates/components/ui/table"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	gocva "github.com/gungun974/gocva"
 )
 
@@ -70,7 +69,7 @@ func I18n(locale string) templ.Component {
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = card.Card(base.Props{
+		templ_7745c5c3_Err = card.Card(card.Props{
 			Class: "w-[1000px]",
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -107,13 +106,11 @@ func LocaleSelect(locale string) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = selectBox.Select(i18nUtil.LOCALE_MENU,
-			selectBox.SelectProps{
+			selectBox.BodyProps{
 				Selected: i18nUtil.GetMenuItem(locale),
-				Props: base.Props{
-					Class: "mt-2 mr-2",
-					Attrs: templ.Attributes{
-						"@item-clicked": "window.location.replace(selectedValue)",
-					},
+				Class:    "mt-2 mr-2",
+				Attrs: templ.Attributes{
+					"@item-clicked": "window.location.replace(selectedValue)",
 				},
 			},
 		).Render(ctx, templ_7745c5c3_Buffer)
@@ -188,7 +185,7 @@ func I18nTableHeader() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = table.Head(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = table.Head(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -214,7 +211,7 @@ func I18nTableHeader() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = table.Head(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var8), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = table.Head(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var8), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -240,7 +237,7 @@ func I18nTableHeader() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = table.Head(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var9), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = table.Head(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var9), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -266,7 +263,7 @@ func I18nTableHeader() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = table.Head(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var10), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = table.Head(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var10), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -288,13 +285,13 @@ func I18nTableHeader() templ.Component {
 					ctx = templ.InitializeContext(ctx)
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = table.Head(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var11), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = table.Head(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var11), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = table.Row(base.Props{
+			templ_7745c5c3_Err = table.Row(table.Props{
 				Class: "rounded-t-lg sticky border-none [&>th]:font-bold",
 			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var6), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
@@ -310,7 +307,7 @@ func I18nTableHeader() templ.Component {
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = table.Header(base.Props{
+		templ_7745c5c3_Err = table.Header(table.Props{
 			Class: "sticky top-0 bg-background z-10",
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -380,7 +377,7 @@ func I18nTable(locale string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = table.Body(base.Props{
+			templ_7745c5c3_Err = table.Body(table.Props{
 				Attrs: templ.Attributes{
 					"hx-get":     "/i18n/items/" + locale,
 					"hx-trigger": "load",
@@ -392,7 +389,7 @@ func I18nTable(locale string) templ.Component {
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = table.Table(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var13), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = table.Table(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var13), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -429,7 +426,7 @@ func NewRow(locale string) templ.Component {
 		var templ_7745c5c3_Var16 string
 		templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs("/i18n/items/" + locale)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 91, Col: 35}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 88, Col: 35}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 		if templ_7745c5c3_Err != nil {
@@ -465,11 +462,9 @@ func NewRow(locale string) templ.Component {
 				ctx = templ.InitializeContext(ctx)
 				templ_7745c5c3_Err = input.Input(
 					input.InputProps{
-						Type: "text",
-						Props: base.Props{
-							Name:  "key",
-							Class: "my-2",
-						},
+						Type:  "text",
+						Name:  "key",
+						Class: "my-2",
 					},
 				).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
@@ -477,7 +472,7 @@ func NewRow(locale string) templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = table.Cell(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var18), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = table.Cell(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var18), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -499,11 +494,9 @@ func NewRow(locale string) templ.Component {
 				ctx = templ.InitializeContext(ctx)
 				templ_7745c5c3_Err = input.Input(
 					input.InputProps{
-						Type: "text",
-						Props: base.Props{
-							Name:  "default",
-							Class: "my-2",
-						},
+						Type:  "text",
+						Name:  "default",
+						Class: "my-2",
 					},
 				).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
@@ -511,7 +504,7 @@ func NewRow(locale string) templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = table.Cell(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var19), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = table.Cell(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var19), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -533,11 +526,9 @@ func NewRow(locale string) templ.Component {
 				ctx = templ.InitializeContext(ctx)
 				templ_7745c5c3_Err = input.Input(
 					input.InputProps{
-						Type: "text",
-						Props: base.Props{
-							Name:  "one",
-							Class: "my-2",
-						},
+						Type:  "text",
+						Name:  "one",
+						Class: "my-2",
 					},
 				).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
@@ -545,7 +536,7 @@ func NewRow(locale string) templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = table.Cell(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var20), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = table.Cell(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var20), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -567,11 +558,9 @@ func NewRow(locale string) templ.Component {
 				ctx = templ.InitializeContext(ctx)
 				templ_7745c5c3_Err = input.Input(
 					input.InputProps{
-						Type: "text",
-						Props: base.Props{
-							Name:  "many",
-							Class: "my-2",
-						},
+						Type:  "text",
+						Name:  "many",
+						Class: "my-2",
 					},
 				).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
@@ -579,7 +568,7 @@ func NewRow(locale string) templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = table.Cell(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var21), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = table.Cell(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var21), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -641,7 +630,7 @@ func NewRow(locale string) templ.Component {
 							}
 							return templ_7745c5c3_Err
 						})
-						templ_7745c5c3_Err = icon.Wrapper(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var25), templ_7745c5c3_Buffer)
+						templ_7745c5c3_Err = icon.Wrapper(icon.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var25), templ_7745c5c3_Buffer)
 						if templ_7745c5c3_Err != nil {
 							return templ_7745c5c3_Err
 						}
@@ -657,10 +646,8 @@ func NewRow(locale string) templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = button.Button(button.ButtonProps{
-					Props: base.Props{
-						Class: "mt-2 mb-2.5",
-					},
+				templ_7745c5c3_Err = button.Button(button.Props{
+					Class:   "mt-2 mb-2.5",
 					Variant: gocva.Variant{"variant": "secondary"},
 				}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var23), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
@@ -668,13 +655,13 @@ func NewRow(locale string) templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = table.Cell(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var22), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = table.Cell(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var22), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = table.Row(base.Props{
+		templ_7745c5c3_Err = table.Row(table.Props{
 			Class: "border-top-none",
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var17), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -734,7 +721,7 @@ func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
 					var templ_7745c5c3_Var29 string
 					templ_7745c5c3_Var29, templ_7745c5c3_Err = templ.JoinStringErrs(item.Key)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 169, Col: 14}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 156, Col: 14}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var29))
 					if templ_7745c5c3_Err != nil {
@@ -742,7 +729,7 @@ func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = table.Cell(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var28), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = table.Cell(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var28), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -765,7 +752,7 @@ func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
 					var templ_7745c5c3_Var31 string
 					templ_7745c5c3_Var31, templ_7745c5c3_Err = templ.JoinStringErrs(item.Default)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 172, Col: 18}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 159, Col: 18}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var31))
 					if templ_7745c5c3_Err != nil {
@@ -773,7 +760,7 @@ func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = table.Cell(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var30), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = table.Cell(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var30), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -796,7 +783,7 @@ func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
 					var templ_7745c5c3_Var33 string
 					templ_7745c5c3_Var33, templ_7745c5c3_Err = templ.JoinStringErrs(item.One)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 175, Col: 14}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 162, Col: 14}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var33))
 					if templ_7745c5c3_Err != nil {
@@ -804,7 +791,7 @@ func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = table.Cell(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var32), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = table.Cell(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var32), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -827,7 +814,7 @@ func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
 					var templ_7745c5c3_Var35 string
 					templ_7745c5c3_Var35, templ_7745c5c3_Err = templ.JoinStringErrs(item.Many)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 178, Col: 15}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 165, Col: 15}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var35))
 					if templ_7745c5c3_Err != nil {
@@ -835,7 +822,7 @@ func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = table.Cell(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var34), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = table.Cell(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var34), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -843,13 +830,13 @@ func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = table.Cell(base.Props{}).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = table.Cell(table.Props{}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = table.Row(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var27), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = table.Row(table.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var27), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

@@ -5,16 +5,15 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dropDownMenu"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
 
 var M = twmerge.Merge
 
 templ DemoDropDown() {
-	@dropDownMenu.DropDownMenu(base.Props{}) {
-		@dropDownMenu.DropDownMenuTrigger(base.Props{}) {
-			@button.Button(button.ButtonProps{
+	@dropDownMenu.DropDownMenu(dropDownMenu.Props{}) {
+		@dropDownMenu.DropDownMenuTrigger(dropDownMenu.Props{}) {
+			@button.Button(button.Props{
 				Variant: gocva.Variant{
 					"variant": "outline",
 				},
@@ -22,65 +21,65 @@ templ DemoDropDown() {
 				Click me
 			}
 		}
-		@dropDownMenu.DropDownMenuContent(base.Props{}) {
-			@dropDownMenu.DropDownMenuLabel(base.Props{}) {
+		@dropDownMenu.DropDownMenuContent(dropDownMenu.Props{}) {
+			@dropDownMenu.DropDownMenuLabel(dropDownMenu.Props{}) {
 				Demo DropDown Menu
 			}
-			@dropDownMenu.DropDownMenuSeparator(base.Props{})
-			@dropDownMenu.DropDownMenuItem(base.Props{
+			@dropDownMenu.DropDownMenuSeparator(dropDownMenu.Props{})
+			@dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 				Attrs: templ.Attributes{
 					"@item-clicked": "console.log('item 1 clicked')",
 				},
 			}) {
-				@dropDownMenu.DropDownMenuIcon(base.Props{}) {
+				@dropDownMenu.DropDownMenuIcon(dropDownMenu.Props{}) {
 					@icon.Settings()
 				}
 				Item 1 
-				@dropDownMenu.DropDownMenuShortcut(base.Props{}) {
+				@dropDownMenu.DropDownMenuShortcut(dropDownMenu.Props{}) {
 					Ctrl + S
 				}
 			}
-			@dropDownMenu.DropDownMenuItem(base.Props{
+			@dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 				Attrs: templ.Attributes{
 					"@item-clicked": "console.log('item 2 clicked')",
 				},
 			}) {
-				@dropDownMenu.DropDownMenuIcon(base.Props{}) {
+				@dropDownMenu.DropDownMenuIcon(dropDownMenu.Props{}) {
 					@icon.Axe()
 				}
 				Button item
-				@dropDownMenu.DropDownMenuShortcut(base.Props{}) {
+				@dropDownMenu.DropDownMenuShortcut(dropDownMenu.Props{}) {
 					Ctrl + E
 				}
 			}
-			@dropDownMenu.DropDownMenuSub(base.Props{}) {
-				@dropDownMenu.DropDownMenuSubTrigger(base.Props{}) {
-                    @dropDownMenu.DropDownMenuIcon(base.Props{}) {
-                        @icon.Tv()
-                    }
+			@dropDownMenu.DropDownMenuSub(dropDownMenu.Props{}) {
+				@dropDownMenu.DropDownMenuSubTrigger(dropDownMenu.Props{}) {
+					@dropDownMenu.DropDownMenuIcon(dropDownMenu.Props{}) {
+						@icon.Tv()
+					}
 					test
 				}
-				@dropDownMenu.DropDownMenuSubContent(base.Props{}) {
-					@dropDownMenu.DropDownMenuLabel(base.Props{}) {
+				@dropDownMenu.DropDownMenuSubContent(dropDownMenu.Props{}) {
+					@dropDownMenu.DropDownMenuLabel(dropDownMenu.Props{}) {
 						Sub menu label
 					}
-					@dropDownMenu.DropDownMenuSeparator(base.Props{})
-					@dropDownMenu.DropDownMenuItem(base.Props{
+					@dropDownMenu.DropDownMenuSeparator(dropDownMenu.Props{})
+					@dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 						Attrs: templ.Attributes{
 							"@item-clicked": "console.log('sub item 1 clicked')",
 						},
 					}) {
-						@dropDownMenu.DropDownMenuIcon(base.Props{}) {
+						@dropDownMenu.DropDownMenuIcon(dropDownMenu.Props{}) {
 							@icon.Folder()
 						}
 						Sub item 1
 					}
-					@dropDownMenu.DropDownMenuItem(base.Props{
+					@dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
 						Attrs: templ.Attributes{
 							"@item-clicked": "console.log('sub item 2 clicked')",
 						},
 					}) {
-						@dropDownMenu.DropDownMenuIcon(base.Props{}) {
+						@dropDownMenu.DropDownMenuIcon(dropDownMenu.Props{}) {
 							@icon.Apple()
 						}
 						Sub item 2

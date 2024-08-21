@@ -9,7 +9,6 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/datepicker"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 var addresses = []sqlc.MenuItem{
@@ -24,36 +23,32 @@ templ Playground() {
 	<div class="w-full h-full flex flex-col justify-center items-center">
 		@datepicker.DatePicker()
 		@cmp.DemoDropDown()
-		@selectBox.Select(menuProvider.GetMenu(ctx, "yesNo"), selectBox.SelectProps{
-			Props: base.Props{
-				Name: "bruh",
-			},
+		@selectBox.Select(menuProvider.GetMenu(ctx, "yesNo"), selectBox.BodyProps{
+			Name: "bruh",
 		})
 		@selectBox.LabeledSelect(
 			"A kida very fucking long label test",
 			menuProvider.TranslMenu(ctx, addresses),
-			selectBox.SelectProps{
-				Props: base.Props{
-					Name: "hehe",
-					Attrs: templ.Attributes{
-						"@item-clicked": "window.location('i18n/' + selectedValue)",
-					},
+			selectBox.BodyProps{
+				Name: "hehe",
+				Attrs: templ.Attributes{
+					"@item-clicked": "window.location('i18n/' + selectedValue)",
 				},
 			},
 		)
 		@settings.DarkModeToggle()
-		@input.Digits(base.Props{
+		@input.Digits(input.Props{
 			Name: "roomNo",
 		},
 			4,
 		)
 		@settings.I18n()
-		@card.InfoCard(card.CardProps{
+		@card.InfoCard(card.Props{
 			Title:       "Title",
 			Description: "example of a card",
 			Footer:      "Don't be racist, I am a building.",
 		})
-		@card.LoginCard(card.CardProps{
+		@card.LoginCard(card.Props{
 			Title:       "Title",
 			Description: "example of a card",
 			Footer:      "Don't be racist, I am a building.",

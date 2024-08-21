@@ -4,23 +4,20 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
 
 templ DatePickerTrigger() {
 	@input.Input(input.InputProps{
-		Type: "text",
-		Props: base.Props{
-			Class: "pl-[2.5rem] focus-visible:ring-0 focus-visible:ring-offset-0 hover:bg-accent transition-colors",
-			Attrs: templ.Attributes{
-				"placeholder":     "Select date",
-				"readonly":        "",
-				"x-ref":           "datePickerInput",
-				"x-model":         "datePickerValue",
-				"@click":          "datePickerOpen=!datePickerOpen",
-				"@keydown.escape": "datePickerOpen=false",
-			},
+		Type:  "text",
+		Class: "pl-[2.5rem] focus-visible:ring-0 focus-visible:ring-offset-0 hover:bg-accent transition-colors",
+		Attrs: templ.Attributes{
+			"placeholder":     "Select date",
+			"readonly":        "",
+			"x-ref":           "datePickerInput",
+			"x-model":         "datePickerValue",
+			"@click":          "datePickerOpen=!datePickerOpen",
+			"@keydown.escape": "datePickerOpen=false",
 		},
 	})
 	<div
@@ -37,16 +34,14 @@ templ DatePickerHeader() {
 	<div class="flex items-center justify-between mb-2">
 		<div class="flex justify-between w-full items-center">
 			@button.Button(
-				button.ButtonProps{
+				button.Props{
 					Variant: gocva.Variant{
 						"variant": "outline",
 						"size":    "iconxs",
 					},
-					Props: base.Props{
-						Class: "text-primary",
-						Attrs: templ.Attributes{
-							"@click": "datePickerPreviousMonth()",
-						},
+					Class: "text-primary",
+					Attrs: templ.Attributes{
+						"@click": "datePickerPreviousMonth()",
 					},
 				},
 			) {
@@ -59,16 +54,14 @@ templ DatePickerHeader() {
 				<span x-text="datePickerYear" class="ml-1 font-bold text-sm text-primary"></span>
 			</div>
 			@button.Button(
-				button.ButtonProps{
+				button.Props{
 					Variant: gocva.Variant{
 						"variant": "outline",
 						"size":    "iconxs",
 					},
-					Props: base.Props{
-						Class: "text-primary",
-						Attrs: templ.Attributes{
-							"@click": "datePickerNextMonth()",
-						},
+					Class: "text-primary",
+					Attrs: templ.Attributes{
+						"@click": "datePickerNextMonth()",
 					},
 				},
 			) {
@@ -97,22 +90,20 @@ templ DatePickerDates() {
 		</template>
 		<template x-for="(day, dayIndex) in datePickerDaysInMonth" :key="dayIndex">
 			@button.Button(
-				button.ButtonProps{
+				button.Props{
 					Variant: gocva.Variant{
 						"variant": "ghost",
 						"size":    "iconsm",
 					},
-					Props: base.Props{
-						Class: "mx-1",
-						Attrs: templ.Attributes{
-							"@click": "datePickerDayClicked(day)",
-							"x-text": "day",
-							":class": `{
+					Class: "mx-1",
+					Attrs: templ.Attributes{
+						"@click": "datePickerDayClicked(day)",
+						"x-text": "day",
+						":class": `{
                                 'bg-primary text-primary-foreground' : datePickerIsSelectedDate(day) == true, 
                                 'bg-accent text-primary': datePickerIsToday(day) == true && datePickerIsSelectedDate(day) == false,
                                 'text-primary hover:bg-accent': datePickerIsToday(day) == false && datePickerIsSelectedDate(day) == false,
                             }`,
-						},
 					},
 				})
 		</template>

@@ -13,7 +13,6 @@ import (
 	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	//selectBox "github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
 	separator "github.com/JosunHK/josun-go.git/web/templates/components/ui/separator"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 )
 
 func RoomCreate() templ.Component {
@@ -73,7 +72,7 @@ func RoomCreate() templ.Component {
 					var templ_7745c5c3_Var5 string
 					templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "create_room"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/roomCreate.templ`, Line: 17, Col: 36}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/roomCreate.templ`, Line: 16, Col: 36}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 					if templ_7745c5c3_Err != nil {
@@ -81,7 +80,7 @@ func RoomCreate() templ.Component {
 					}
 					return templ_7745c5c3_Err
 				})
-				templ_7745c5c3_Err = card.Title(base.Props{
+				templ_7745c5c3_Err = card.Title(card.Props{
 					Class: "text-center",
 				}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var4), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
@@ -89,7 +88,7 @@ func RoomCreate() templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = card.Header(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = card.Header(card.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -97,7 +96,7 @@ func RoomCreate() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = separator.Separator(base.Props{}, "horizontal").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = separator.Separator(separator.Props{}, "horizontal").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -119,7 +118,7 @@ func RoomCreate() templ.Component {
 				ctx = templ.InitializeContext(ctx)
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = card.Content(base.Props{
+			templ_7745c5c3_Err = card.Content(card.Props{
 				Class: "flex flex-col ",
 			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var6), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
@@ -127,7 +126,7 @@ func RoomCreate() templ.Component {
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = card.Card(base.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = card.Card(card.Props{}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

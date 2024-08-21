@@ -1,14 +1,13 @@
 package mahjongTemplates
 
 import (
-	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
 	button "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	input "github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
 	label "github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
 	separator "github.com/JosunHK/josun-go.git/web/templates/components/ui/separator"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
 
@@ -17,33 +16,31 @@ templ RoomSelect() {
 		<div class="w-full h-min justify-end hidden">
 			@settings.DarkModeToggle()
 		</div>
-		<div class="h-auto flex justify-center items-center grow" id="card-content" >
+		<div class="h-auto flex justify-center items-center grow" id="card-content">
 			@RoomSelectCard()
 		</div>
 	</div>
 }
 
 templ RoomSelectCard() {
-	@card.Card(base.Props{}) {
-		@card.Header(base.Props{}) {
-			@card.Title(base.Props{
+	@card.Card(card.Props{}) {
+		@card.Header(card.Props{}) {
+			@card.Title(card.Props{
 				Class: "text-center",
 			}) {
 				{ i18nUtil.T(ctx, "join_or_create_room") }
 			}
 		}
-		@separator.Separator(base.Props{}, "horizontal")
-		@card.Content(base.Props{
+		@separator.Separator(separator.Props{}, "horizontal")
+		@card.Content(card.Props{
 			Class: "flex flex-col ",
 		}) {
-			@button.Button(button.ButtonProps{
-				Props: base.Props{
-					Class: "mt-2 mb-2.5",
-					Attrs: templ.Attributes{
-						"hx-get":     "/mahjong/room/create",
-						"hx-target":  "#card-content",
-						"hx-trigger": "click",
-					},
+			@button.Button(button.Props{
+				Class: "mt-2 mb-2.5",
+				Attrs: templ.Attributes{
+					"hx-get":     "/mahjong/room/create",
+					"hx-target":  "#card-content",
+					"hx-trigger": "click",
 				},
 				Variant: gocva.Variant{"variant": "secondary"},
 			}) {
@@ -57,17 +54,15 @@ templ RoomSelectCard() {
 			}
 			<div class="flex flex-row justify-between items-end">
 				<div class="flex justify-center items-center grow">
-					@input.Digits(base.Props{
+					@input.Digits(input.Props{
 						Class: "mt-3",
 						Name:  "roomNo",
 					},
 						4,
 					)
 				</div>
-				@button.Button(button.ButtonProps{
-					Props: base.Props{
-						Class: "w-min",
-					},
+				@button.Button(button.Props{
+					Class:   "w-min",
 					Variant: gocva.Variant{"variant": "secondary"},
 				}) {
 					{ i18nUtil.T(ctx, "join") }

@@ -1,44 +1,41 @@
 package selectBox
 
-import (
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
-	"github.com/JosunHK/josun-go.git/db/generated"
-)
+import sqlc "github.com/JosunHK/josun-go.git/db/generated"
 
-templ Select(menu []sqlc.MenuItem, selectProps SelectProps) {
+templ Select(menu []sqlc.MenuItem, selectProps BodyProps) {
 	@SelectBody(selectProps) {
-		@SelectTrigger(base.Props{}) {
-			@SelectDisplay(base.Props{})
+		@SelectTrigger(Props{}) {
+			@SelectDisplay(Props{})
 		}
-        if len(menu) > 0 {
-            @SelectContent(base.Props{}) {
-                for _, item := range menu {
-                    @SelectItem(base.Props{}, item) {
-				        { item.Label }
-                    }
-                }
-            }
+		if len(menu) > 0 {
+			@SelectContent(Props{}) {
+				for _, item := range menu {
+					@SelectItem(Props{}, item) {
+						{ item.Label }
+					}
+				}
+			}
 		}
 	}
 }
 
-templ LabeledSelect(label string, menu []sqlc.MenuItem, selectProps SelectProps) {
+templ LabeledSelect(label string, menu []sqlc.MenuItem, selectProps BodyProps) {
 	@SelectBody(selectProps) {
-		@SelectTrigger(base.Props{}) {
-			@SelectDisplay(base.Props{})
+		@SelectTrigger(Props{}) {
+			@SelectDisplay(Props{})
 		}
-		@SelectContent(base.Props{}) {
-			@SelectLabel(base.Props{}) {
+		@SelectContent(Props{}) {
+			@SelectLabel(Props{}) {
 				{ label }
 			}
-			@SelectSeparator(base.Props{})
-            if len(menu) > 0 {
-                for _, item := range menu {
-                    @SelectItem(base.Props{}, item) {
-				        { item.Label }
-                    }
-                }
-            }
+			@SelectSeparator(Props{})
+			if len(menu) > 0 {
+				for _, item := range menu {
+					@SelectItem(Props{}, item) {
+						{ item.Label }
+					}
+				}
+			}
 		}
 	}
 }

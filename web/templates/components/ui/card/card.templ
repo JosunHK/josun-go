@@ -5,91 +5,87 @@ import (
 	button "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	input "github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
 	label "github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
-	base "github.com/JosunHK/josun-go.git/web/templates/props"
 	"github.com/gungun974/gocva"
 )
 
 var M = twmerge.Merge
 
-type CardProps struct {
+type Props struct {
+	Name  string
+	Class string
+	Attrs templ.Attributes
 	Title       string
 	Description string
 	Footer      string
 }
 
-templ LoginCard(cardProps CardProps) {
-	@Card(base.Props{}) {
-		@Header(base.Props{}) {
-			@Title(base.Props{}) {
+templ LoginCard(cardProps Props) {
+	@Card(Props{}) {
+		@Header(Props{}) {
+			@Title(Props{}) {
 				{ cardProps.Title }
 			}
 		}
-		@Content(base.Props{}) {
+		@Content(Props{}) {
 			@label.Label(
-                label.LabelProps{
-                    Variant: gocva.Variant{"variant": "default"},
-                },
-            ) { 
-                Username 
-            }
+				label.LabelProps{
+					Variant: gocva.Variant{"variant": "default"},
+				},
+			) {
+				Username 
+			}
 			@input.Input(
 				input.InputProps{
-                    Type: "text", 
-                    Props: base.Props{
-                        Class:"my-2",
-                    },
-                },
+					Type:  "text",
+					Class: "my-2",
+				},
 			)
 			@label.Label(
-                label.LabelProps{Variant: gocva.Variant{"variant": "default"}},
-            ) { 
-               Password 
-            }
+				label.LabelProps{Variant: gocva.Variant{"variant": "default"}},
+			) {
+				Password 
+			}
 			@input.Input(
 				input.InputProps{
-                    Type: "password",
-                    Props: base.Props{
-                        Class:"my-2",
-                    },
-                },
+					Type:  "password",
+					Class: "my-2",
+				},
 			)
 		}
-		@Footer(base.Props{}) {
-			@button.Button(button.ButtonProps{}) {
+		@Footer(Props{}) {
+			@button.Button(button.Props{}) {
 				Login
 			}
 		}
 	}
 }
 
-templ InfoCard(cardProps CardProps) {
-	@Card(base.Props{}) {
-		@Header(base.Props{}) {
-			@Title(base.Props{}) {
+templ InfoCard(cardProps Props) {
+	@Card(Props{}) {
+		@Header(Props{}) {
+			@Title(Props{}) {
 				{ cardProps.Title }
 			}
-			@Description(base.Props{}) {
+			@Description(Props{}) {
 				{ cardProps.Description }
 			}
 		}
-		@Content(base.Props{}) {
-            @input.Input(
-                input.InputProps{
-                    Type: "text",
-                    Props: base.Props{
-                        Class:"my-2",
-                    },
-                },
-            )
+		@Content(Props{}) {
+			@input.Input(
+				input.InputProps{
+					Type:  "text",
+					Class: "my-2",
+				},
+			)
 			{ children... }
 		}
-		@Footer(base.Props{}) {
+		@Footer(Props{}) {
 			{ cardProps.Footer }
 		}
 	}
 }
 
-templ Card(props base.Props) {
+templ Card(props Props) {
 	<div
 		class={ M("w-[350px] rounded-lg border bg-card text-card-foreground shadow-sm", props.Class) }
 		{ props.Attrs... }
@@ -98,7 +94,7 @@ templ Card(props base.Props) {
 	</div>
 }
 
-templ Header(props base.Props) {
+templ Header(props Props) {
 	<div
 		class={ M("flex flex-col space-y-1.5 p-6", props.Class) }
 		{ props.Attrs... }
@@ -107,7 +103,7 @@ templ Header(props base.Props) {
 	</div>
 }
 
-templ Title(props base.Props) {
+templ Title(props Props) {
 	<h3
 		class={ M("text-2xl font-semibold leading-none tracking-tight", props.Class) }
 		{ props.Attrs... }
@@ -116,7 +112,7 @@ templ Title(props base.Props) {
 	</h3>
 }
 
-templ Description(props base.Props) {
+templ Description(props Props) {
 	<p
 		class={ M("text-sm text-muted-foreground", props.Class) }
 		{ props.Attrs... }
@@ -125,7 +121,7 @@ templ Description(props base.Props) {
 	</p>
 }
 
-templ Content(props base.Props) {
+templ Content(props Props) {
 	<div
 		class={ M("p-6 pt-0", props.Class) }
 		{ props.Attrs... }
@@ -134,7 +130,7 @@ templ Content(props base.Props) {
 	</div>
 }
 
-templ Footer(props base.Props) {
+templ Footer(props Props) {
 	<div
 		class={ M("flex items-center p-6 pt-0", props.Class) }
 		{ props.Attrs... }

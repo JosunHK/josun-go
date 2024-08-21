@@ -19,7 +19,7 @@ func GetItems(c echo.Context) error {
 	locale := c.Param("locale")
 	items := i18nUtil.GetItems(locale)
 	slices.Reverse(items)
-	return util.HTML(c, i18nTemplates.I18nTableItems((items)))
+	return util.HTML(c, i18nTemplates.I18nTableItems(items))
 }
 
 func AddItems(c echo.Context) error {
