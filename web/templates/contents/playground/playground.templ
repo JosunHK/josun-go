@@ -5,6 +5,7 @@ import (
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 	cmp "github.com/JosunHK/josun-go.git/web/templates/components/common/dropDownMenu"
 	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/odometer"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/datepicker"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
@@ -43,6 +44,7 @@ templ Playground() {
 			4,
 		)
 		@settings.I18n()
+		@odometer.Odometer(odometer.Props{})
 		@card.InfoCard(card.Props{
 			Title:       "Title",
 			Description: "example of a card",

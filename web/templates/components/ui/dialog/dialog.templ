@@ -1,0 +1,53 @@
+package dialog
+
+import twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
+
+var M = twmerge.Merge
+
+type Props struct {
+	Class string
+	Attrs templ.Attributes
+	Title string
+}
+
+templ Dialog(props Props) {
+	<div
+		class={ M("fixed top-0 left-0 h-screen w-screen inset-0 z-50 bg-black/80", props.Class) }
+        x-show="open"
+        x-transition.opacity.duration.150ms
+	>
+        <div class="h-full w-full flex justify-center items-center">
+            <div
+                class="h-min w-min"
+                x-on:click.outside="dialogClose($el);"
+            >
+		    { children... }
+            </div>
+        </div>
+	</div>
+}
+
+templ WithDialog(props Props) {
+    <div
+        Class={ props.Class }
+		x-data="{
+            open: false,
+            dialogToggle() {
+                if (this.open) {
+                    return this.dialogClose()
+                }
+ 
+                this.open = true
+            },
+            dialogClose(focusAfter) {
+                if (! this.open) return
+ 
+                this.open = false
+ 
+                focusAfter && focusAfter.focus()
+            },
+        }"
+    >
+        { children... }
+    </div>
+}

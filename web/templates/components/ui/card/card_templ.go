@@ -137,7 +137,7 @@ func LoginCard(cardProps Props) templ.Component {
 					return templ_7745c5c3_Err
 				})
 				templ_7745c5c3_Err = label.Label(
-					label.LabelProps{
+					label.Props{
 						Variant: gocva.Variant{"variant": "default"},
 					},
 				).Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
@@ -180,7 +180,11 @@ func LoginCard(cardProps Props) templ.Component {
 					return templ_7745c5c3_Err
 				})
 				templ_7745c5c3_Err = label.Label(
-					label.LabelProps{Variant: gocva.Variant{"variant": "default"}},
+					label.Props{
+						Variant: gocva.Variant{
+							"variant": "default",
+						},
+					},
 				).Render(templ.WithChildren(ctx, templ_7745c5c3_Var8), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -315,7 +319,7 @@ func InfoCard(cardProps Props) templ.Component {
 					var templ_7745c5c3_Var15 string
 					templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(cardProps.Title)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/card/card.templ`, Line: 67, Col: 21}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/card/card.templ`, Line: 71, Col: 21}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 					if templ_7745c5c3_Err != nil {
@@ -346,7 +350,7 @@ func InfoCard(cardProps Props) templ.Component {
 					var templ_7745c5c3_Var17 string
 					templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(cardProps.Description)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/card/card.templ`, Line: 70, Col: 27}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/card/card.templ`, Line: 74, Col: 27}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 					if templ_7745c5c3_Err != nil {
@@ -422,7 +426,7 @@ func InfoCard(cardProps Props) templ.Component {
 				var templ_7745c5c3_Var20 string
 				templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(cardProps.Footer)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/card/card.templ`, Line: 83, Col: 21}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/card/card.templ`, Line: 87, Col: 21}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 				if templ_7745c5c3_Err != nil {

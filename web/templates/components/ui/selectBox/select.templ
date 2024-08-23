@@ -1,6 +1,9 @@
 package selectBox
 
-import sqlc "github.com/JosunHK/josun-go.git/db/generated"
+import (
+    sqlc "github.com/JosunHK/josun-go.git/db/generated"
+
+)
 
 templ Select(menu []sqlc.MenuItem, selectProps BodyProps) {
 	@SelectBody(selectProps) {

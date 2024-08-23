@@ -637,7 +637,7 @@ func NewRow(locale string) templ.Component {
 						return templ_7745c5c3_Err
 					})
 					templ_7745c5c3_Err = label.Label(
-						label.LabelProps{
+						label.Props{
 							Variant: gocva.Variant{"variant": "title"},
 						},
 					).Render(templ.WithChildren(ctx, templ_7745c5c3_Var24), templ_7745c5c3_Buffer)

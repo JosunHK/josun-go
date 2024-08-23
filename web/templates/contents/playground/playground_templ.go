@@ -16,6 +16,7 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/datepicker"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/odometer"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
 )
 
@@ -89,6 +90,10 @@ func Playground() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = settings.I18n().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = odometer.Odometer(odometer.Props{}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

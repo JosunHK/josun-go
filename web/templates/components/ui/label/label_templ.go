@@ -15,7 +15,7 @@ import (
 
 var M = twmerge.Merge
 
-type LabelProps struct {
+type Props struct {
 	Name    string
 	Class   string
 	Attrs   templ.Attributes
@@ -32,7 +32,7 @@ var cva = gocva.CVA{
 	},
 }
 
-func Label(props LabelProps) templ.Component {
+func Label(props Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)

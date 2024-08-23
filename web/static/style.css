@@ -451,10 +451,10 @@ video {
   --foreground: 82 14% 74%;
   --card: 52 42% 91%;
   --card-foreground: 240 10% 3.9%;
-  --popover:52 42% 91%;
+  --popover: 52 42% 91%;
   --popover-foreground: 240 10% 3.9%;
   --primary: 240 5.9% 10%;
-  --primary-foreground:52 42% 91%;
+  --primary-foreground: 52 42% 91%;
   --secondary: 240 4.8% 95.9%;
   --secondary-foreground: 240 5.9% 10%;
   --muted: 52 14% 74%;
@@ -479,7 +479,7 @@ video {
   --eBlue: 172 31% 62%;
 }
 
-.dark{
+.dark {
   --background: 0 1% 5%;
   --foreground: 41 38% 75%;
   --card: 0 1% 5%;
@@ -491,14 +491,14 @@ video {
   --secondary: 0 1% 5%;
   --secondary-foreground: 41 38% 75%;
   --muted: 240 3.7% 15.9%;
-  --muted-foreground: 41 38% 74.9%;
+  --muted-foreground: 41 15% 65%;
   --accent: 240 3.7% 15.9%;
   --accent-foreground: 41 38% 75%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 0 85.7% 97.3%;
   --border: 0 1% 18%;
-  --input:  0 1% 18%;
-  --ring:   83.4, 33.7%, 62.7%;
+  --input: 0 1% 18%;
+  --ring: 83.4, 33.7%, 62.7%;
   --chart-1: 220 70% 50%;
   --chart-2: 160 60% 45%;
   --chart-3: 30 80% 55%;
@@ -516,7 +516,7 @@ video {
 }
 
 input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+    input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -544,6 +544,102 @@ body {
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.odometer.odometer-auto-theme,
+    .odometer.odometer-theme-default {
+  display: inline-block;
+  vertical-align: middle;
+  vertical-align: auto;
+  zoom: 1;
+  display: inline;
+  position: relative;
+}
+
+.odometer.odometer-auto-theme .odometer-digit,
+    .odometer.odometer-theme-default .odometer-digit {
+  display: inline-block;
+  vertical-align: middle;
+  vertical-align: auto;
+  zoom: 1;
+  display: inline;
+  position: relative;
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,
+    .odometer.odometer-theme-default .odometer-digit .odometer-digit-spacer {
+  display: inline-block;
+  vertical-align: middle;
+  vertical-align: auto;
+  zoom: 1;
+  display: inline;
+  visibility: hidden;
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,
+    .odometer.odometer-theme-default .odometer-digit .odometer-digit-inner {
+  text-align: left;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,
+    .odometer.odometer-theme-default .odometer-digit .odometer-ribbon {
+  display: block;
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,
+    .odometer.odometer-theme-default .odometer-digit .odometer-ribbon-inner {
+  display: block;
+  -webkit-backface-visibility: hidden;
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-value,
+    .odometer.odometer-theme-default .odometer-digit .odometer-value {
+  display: block;
+  -webkit-transform: translateZ(0);
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-value.odometer-last-value,
+    .odometer.odometer-theme-default .odometer-digit .odometer-value.odometer-last-value {
+  position: absolute;
+}
+
+.odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,
+    .odometer.odometer-theme-default.odometer-animating-up .odometer-ribbon-inner {
+  transition: transform 2s;
+}
+
+.odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner,
+    .odometer.odometer-theme-default.odometer-animating-up.odometer-animating .odometer-ribbon-inner {
+  transform: translateY(-100%);
+}
+
+.odometer.odometer-auto-theme.odometer-animating-down .odometer-ribbon-inner,
+    .odometer.odometer-theme-default.odometer-animating-down .odometer-ribbon-inner {
+  transform: translateY(-100%);
+}
+
+.odometer.odometer-auto-theme.odometer-animating-down.odometer-animating .odometer-ribbon-inner,
+    .odometer.odometer-theme-default.odometer-animating-down.odometer-animating .odometer-ribbon-inner {
+  transition: transform 2s;
+  transform: translateY(0);
+}
+
+.odometer.odometer-auto-theme,
+    .odometer.odometer-theme-default {
+  font-family: "Helvetica Neue", sans-serif;
+  line-height: 1.1em;
+}
+
+.odometer.odometer-auto-theme .odometer-value,
+    .odometer.odometer-theme-default .odometer-value {
+  text-align: center;
 }
 
 *, ::before, ::after {
@@ -674,6 +770,10 @@ body {
   position: sticky;
 }
 
+.inset-0 {
+  inset: 0px;
+}
+
 .left-0 {
   left: 0px;
 }
@@ -698,8 +798,8 @@ body {
   top: 0.3rem;
 }
 
-.top-1 {
-  top: 0.25rem;
+.bottom-0 {
+  bottom: 0px;
 }
 
 .z-10 {
@@ -798,10 +898,6 @@ body {
   display: grid;
 }
 
-.contents {
-  display: contents;
-}
-
 .hidden {
   display: none;
 }
@@ -883,6 +979,10 @@ body {
   height: 100vh;
 }
 
+.h-\[200vh\] {
+  height: 200vh;
+}
+
 .max-h-\[500px\] {
   max-height: 500px;
 }
@@ -950,6 +1050,18 @@ body {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-\[500px\] {
+  width: 500px;
+}
+
+.w-\[400px\] {
+  width: 400px;
+}
+
+.w-\[200vw\] {
+  width: 200vw;
 }
 
 .min-w-\[max-content\] {
@@ -1027,6 +1139,10 @@ body {
   gap: 0.5rem;
 }
 
+.gap-4 {
+  gap: 1rem;
+}
+
 .space-y-1\.5 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));
@@ -1078,6 +1194,10 @@ body {
   border-bottom-width: 1px;
 }
 
+.border-l-8 {
+  border-left-width: 8px;
+}
+
 .border-t {
   border-top-width: 1px;
 }
@@ -1096,6 +1216,26 @@ body {
 
 .border-transparent {
   border-color: transparent;
+}
+
+.border-l-eBlue {
+  border-left-color: hsl(var(--eBlue));
+}
+
+.border-l-eGreen {
+  border-left-color: hsl(var(--eGreen));
+}
+
+.border-l-eOrange {
+  border-left-color: hsl(var(--eOrange));
+}
+
+.border-l-eRed {
+  border-left-color: hsl(var(--eRed));
+}
+
+.border-l-eYellow {
+  border-left-color: hsl(var(--eYellow));
 }
 
 .bg-accent {
@@ -1150,6 +1290,10 @@ body {
   background-color: hsl(var(--primary));
 }
 
+.bg-black\/80 {
+  background-color: rgb(0 0 0 / 0.8);
+}
+
 .fill-current {
   fill: currentColor;
 }
@@ -1164,6 +1308,10 @@ body {
 
 .p-6 {
   padding: 1.5rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .px-0 {
@@ -1206,6 +1354,10 @@ body {
   padding-bottom: 0.5rem;
 }
 
+.pl-4 {
+  padding-left: 1rem;
+}
+
 .pl-8 {
   padding-left: 2rem;
 }
@@ -1237,6 +1389,14 @@ body {
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+.text-\[2rem\] {
+  font-size: 2rem;
+}
+
+.text-\[4rem\] {
+  font-size: 4rem;
 }
 
 .text-sm {
@@ -1355,6 +1515,11 @@ body {
   --tw-ring-offset-color: hsl(var(--background));
 }
 
+.drop-shadow-md {
+  --tw-drop-shadow: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 .transition-all {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -1376,7 +1541,7 @@ body {
 }
 
 @view-transition {
-  navigation:auto;
+  navigation: auto;
 }
 
 .file\:border-0::file-selector-button {
@@ -1430,12 +1595,12 @@ body {
   background-color: hsl(var(--eGreen) / 0.8);
 }
 
-.hover\:bg-muted\/50:hover {
-  background-color: hsl(var(--muted) / 0.5);
+.hover\:bg-eYellow\/80:hover {
+  background-color: hsl(var(--eYellow) / 0.8);
 }
 
-.hover\:bg-primary\/90:hover {
-  background-color: hsl(var(--primary) / 0.9);
+.hover\:bg-muted\/50:hover {
+  background-color: hsl(var(--muted) / 0.5);
 }
 
 .hover\:text-accent-foreground:hover {

@@ -11,9 +11,9 @@ import (
 var M = twmerge.Merge
 
 type Props struct {
-	Name  string
-	Class string
-	Attrs templ.Attributes
+	Name        string
+	Class       string
+	Attrs       templ.Attributes
 	Title       string
 	Description string
 	Footer      string
@@ -28,7 +28,7 @@ templ LoginCard(cardProps Props) {
 		}
 		@Content(Props{}) {
 			@label.Label(
-				label.LabelProps{
+				label.Props{
 					Variant: gocva.Variant{"variant": "default"},
 				},
 			) {
@@ -41,7 +41,11 @@ templ LoginCard(cardProps Props) {
 				},
 			)
 			@label.Label(
-				label.LabelProps{Variant: gocva.Variant{"variant": "default"}},
+				label.Props{
+					Variant: gocva.Variant{
+						"variant": "default",
+					},
+				},
 			) {
 				Password 
 			}

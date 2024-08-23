@@ -6,7 +6,7 @@ module.exports = {
     darkMode: "class",
     content: [
         './web/static/global.css',
-        './web/templates/**/*.{go,js,templ,html}',
+        './web/templates/**/*.{go,js,html}',
     ],
     theme: {
         container: {

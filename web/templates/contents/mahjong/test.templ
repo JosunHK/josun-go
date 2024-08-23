@@ -1,0 +1,147 @@
+package mahjongTemplates
+
+import (
+	"fmt"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dialog"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/odometer"
+	"github.com/gungun974/gocva"
+)
+
+type Player struct {
+	name string
+}
+
+var players = []Player{
+	{name: "Ger Ger"},
+	{name: "GC"},
+	{name: "A Ho"},
+	{name: "Meat"},
+}
+
+func getPlayerColor(i int) string {
+	switch i {
+	case 0:
+		return "border-l-eRed"
+	case 1:
+		return "border-l-eOrange"
+	case 2:
+		return "border-l-eYellow"
+	case 3:
+		return "border-l-eGreen"
+	case 4:
+		return "border-l-eBlue"
+	default:
+		return "border-l-eRed"
+	}
+}
+
+templ Test() {
+	@dialog.WithDialog(dialog.Props{
+		Class: "w-full h-full flex flex-col",
+	}) {
+		<div
+			Class="w-full h-full flex flex-col"
+			x-data="{
+                player0: {
+                    name: '',
+                    score: 25000,
+                },
+                player1: {
+                    name: '',
+                    score: 25000,
+                },
+                player2: {
+                    name: '',
+                    score: 25000,
+                },
+                player3: {
+                    name: '',
+                    score: 25000,
+                },
+                dialogPlayer: null,
+                setDialogPlayer: function(player) {
+                    this.dialogPlayer = player;
+                },
+            }"
+		>
+			@ScoreDialog()
+			<div class="h-auto flex justify-center items-center grow">
+				@ScoreDisplay()
+			</div>
+		</div>
+	}
+}
+
+templ ScoreDisplay() {
+	<div
+		class="px-4 flex flex-col gap-4"
+	>
+		for i, player := range players {
+			@playerCard(i, player)
+		}
+	</div>
+}
+
+templ playerCard(i int, player Player) {
+	@card.Card(card.Props{
+		Class: fmt.Sprintf("drop-shadow-md border-l-8 %v", getPlayerColor(i)),
+		Attrs: templ.Attributes{
+			"@click": fmt.Sprintf("dialogToggle();setDialogPlayer(player%v);console.log(dialogPlayer)", i),
+			"x-init": fmt.Sprintf("player%v.name = '%v'", i, player.name),
+		},
+	}) {
+		@label.Label(label.Props{
+			Class: "text-[2rem] pl-4 text-muted-foreground",
+			Attrs: templ.Attributes{
+			},
+		}) {
+			{ player.name }
+		}
+		@label.Label(label.Props{
+			Class: "text-[4rem] pl-4",
+		}) {
+			@odometer.Odometer(odometer.Props{
+				Attrs: templ.Attributes{
+					"x-init":   fmt.Sprintf("$el.innerHTML = player%d.score", i),
+					"x-effect": fmt.Sprintf("$el.innerHTML = player%d.score", i),
+				},
+			})
+		}
+	}
+}
+
+templ ScoreDialog() {
+	@dialog.Dialog(dialog.Props{}) {
+		@card.Card(card.Props{
+			Class: "w-[400px]",
+		}) {
+			@card.Header(card.Props{}) {
+				@card.Title(card.Props{
+					Attrs: templ.Attributes{
+						"x-text": "dialogPlayer? dialogPlayer.name : ''",
+					},
+				}) {
+				}
+			}
+			@card.Content(card.Props{}) {
+				Content
+			}
+			<div class="p-2 flex flex-row justify-end w-full">
+				@button.Button(button.Props{
+					Class: "w-min",
+					Attrs: templ.Attributes{
+						"@click": "dialogToggle($el);dialogPlayer.score += 1000;",
+					},
+					Variant: gocva.Variant{
+						"variant": "default",
+					},
+				}) {
+					Confirm 
+				}
+			</div>
+		}
+	}
+}

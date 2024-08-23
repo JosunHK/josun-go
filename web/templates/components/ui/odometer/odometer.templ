@@ -1,0 +1,12 @@
+package odometer
+
+type Props struct {
+	Attrs templ.Attributes
+}
+
+templ Odometer(props Props) {
+	<div
+		class="odometer"
+		{ props.Attrs... }
+	></div>
+}

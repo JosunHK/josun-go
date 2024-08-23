@@ -16,5 +16,5 @@ func RoomCreate(c echo.Context) error {
 }
 
 func Test(c echo.Context) templ.Component {
-	return mahjongTemplates.RoomSelect()
+	return mahjongTemplates.Test()
 }

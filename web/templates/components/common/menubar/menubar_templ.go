@@ -97,7 +97,7 @@ func Menubar() templ.Component {
 				}
 				return templ_7745c5c3_Err
 			})
-			templ_7745c5c3_Err = label.Label(label.LabelProps{
+			templ_7745c5c3_Err = label.Label(label.Props{
 				Variant: gocva.Variant{
 					"variant": "title",
 				},
