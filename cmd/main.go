@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
+	"github.com/JosunHK/josun-go.git/cmd/handlers/dummy"
 	"github.com/JosunHK/josun-go.git/cmd/handlers/i18n"
 	"github.com/JosunHK/josun-go.git/cmd/handlers/mahjong"
 	"github.com/JosunHK/josun-go.git/cmd/handlers/user"
@@ -62,6 +63,7 @@ func main() {
 	i18n.RegisterRoutes(e)
 	mahjong.RegisterRoutes(e)
 	user.RegisterRoutes(e)
+	dummy.RegisterRoutes(e)
 
 	//exit ->
 	e.Logger.Fatal(e.Start(PORT))
