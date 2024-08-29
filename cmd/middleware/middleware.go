@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"github.com/JosunHK/josun-go.git/cmd/util/cookie"
 	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
 
@@ -20,7 +21,7 @@ func StaticPages(next pageHandler, content templ.Component) echo.HandlerFunc {
 
 func Pages(next pageHandler, p PageHandler) echo.HandlerFunc {
 	return func(c echo.Context) error {
-
+		cookie.ManageGuestSession(&c)
 		return next(c, p(c))
 	}
 }

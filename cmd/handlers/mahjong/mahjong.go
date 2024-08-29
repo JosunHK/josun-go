@@ -3,7 +3,9 @@ package mahjong
 import (
 	"fmt"
 
-	"github.com/JosunHK/josun-go.git/cmd/util"
+	mgr "github.com/JosunHK/josun-go.git/cmd/manager/mahjong"
+	responseUtil "github.com/JosunHK/josun-go.git/cmd/util/response"
+	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 	mahjongTemplates "github.com/JosunHK/josun-go.git/web/templates/contents/mahjong"
 	"github.com/a-h/templ"
 	"github.com/gorilla/schema"
@@ -18,7 +20,7 @@ func RoomSelect(c echo.Context) templ.Component {
 }
 
 func RoomSetting(c echo.Context) error {
-	return util.HTML(c, mahjongTemplates.RoomCreate())
+	return responseUtil.HTML(c, mahjongTemplates.RoomCreate())
 }
 
 func Test(c echo.Context) templ.Component {
@@ -45,6 +47,21 @@ func RoomCreate(c echo.Context) error {
 		log.Error(fmt.Errorf("Failed to decode roomSetting", err))
 		return err
 	}
+
+	ownerId, err := mgr.CreateRoomOwner(c)
+	if err != nil {
+		log.Error(fmt.Errorf("Failed to create room owner", err))
+		return err
+	}
+
+	//TODO: create game state first
+	//TODO: create craete generator for room code
+	mgr.CreateRoom(c, sqlc.CreateMahjongRoomParams{
+		GameStateID: 0,
+		RoomCode:    1234,
+		GameLength:  roomSetting.GameLength,
+		OwnerID:     ownerId,
+	})
 
 	return fmt.Errorf("Not implemented") // TODO: Implement this;
 }

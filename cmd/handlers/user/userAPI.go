@@ -10,7 +10,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func PostUser(ctx echo.Context) (err error, statusCode int, resObj interface{}) {
+func PostUser(c echo.Context) (err error, statusCode int, resObj interface{}) {
 	type res struct {
 		ID int64 `json:"id"`
 	}
@@ -18,7 +18,7 @@ func PostUser(ctx echo.Context) (err error, statusCode int, resObj interface{}) 
 	DB := database.DB
 	queries := sqlc.New(DB)
 
-	result, err := queries.CreateUser(ctx.Request().Context(), sqlc.CreateUserParams{
+	result, err := queries.CreateUser(c.Request().Context(), sqlc.CreateUserParams{
 		Name:     "test",
 		Email:    "bruh@bruh",
 		Password: "test",
@@ -42,7 +42,7 @@ func PostUser(ctx echo.Context) (err error, statusCode int, resObj interface{}) 
 	return nil, http.StatusCreated, resObj
 }
 
-func GetUsers(ctx echo.Context) (err error, statusCode int, resObj interface{}) {
+func GetUsers(c echo.Context) (err error, statusCode int, resObj interface{}) {
 	type response struct {
 		ID   int64  `json:"id"`
 		Name string `json:"name"`
@@ -51,7 +51,7 @@ func GetUsers(ctx echo.Context) (err error, statusCode int, resObj interface{}) 
 	DB := database.DB
 	queries := sqlc.New(DB)
 
-	users, err := queries.ListUsers(ctx.Request().Context())
+	users, err := queries.ListUsers(c.Request().Context())
 	if err != nil {
 		return err, http.StatusInternalServerError, nil
 	}
