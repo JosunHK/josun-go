@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"slices"
 
-	i18nStructs "github.com/JosunHK/josun-go.git/cmd/structs/i18n"
-	"github.com/JosunHK/josun-go.git/cmd/util"
+	i18nStruct "github.com/JosunHK/josun-go.git/cmd/struct/i18n"
 	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	responseUtil "github.com/JosunHK/josun-go.git/cmd/util/response"
 	i18nTemplates "github.com/JosunHK/josun-go.git/web/templates/contents/i18n"
 	"github.com/gorilla/schema"
 	"github.com/labstack/echo/v4"
@@ -19,7 +19,7 @@ func GetItems(c echo.Context) error {
 	locale := c.Param("locale")
 	items := i18nUtil.GetItems(locale)
 	slices.Reverse(items)
-	return util.HTML(c, i18nTemplates.I18nTableItems(items))
+	return responseUtil.HTML(c, i18nTemplates.I18nTableItems(items))
 }
 
 func AddItems(c echo.Context) error {
@@ -30,7 +30,7 @@ func AddItems(c echo.Context) error {
 		return err
 	}
 
-	var item i18nStructs.Item
+	var item i18nStruct.Item
 
 	err = decoder.Decode(&item, c.Request().PostForm)
 	if err != nil {
@@ -61,7 +61,7 @@ func DeleteItems(c echo.Context) error {
 		return err
 	}
 
-	var item i18nStructs.Item
+	var item i18nStruct.Item
 
 	err = decoder.Decode(&item, c.Request().PostForm)
 	if err != nil {
@@ -78,7 +78,7 @@ func DeleteItems(c echo.Context) error {
 
 }
 
-func isItemValid(item i18nStructs.Item, items []i18nStructs.Item) bool {
+func isItemValid(item i18nStruct.Item, items []i18nStruct.Item) bool {
 	if item.Key == "" || item.Default == "" {
 		return false
 	}

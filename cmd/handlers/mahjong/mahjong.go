@@ -58,7 +58,7 @@ func RoomCreate(c echo.Context) error {
 	//TODO: create craete generator for room code
 	mgr.CreateRoom(c, sqlc.CreateMahjongRoomParams{
 		GameStateID: 0,
-		RoomCode:    1234,
+		RoomCode:    "1234",
 		GameLength:  roomSetting.GameLength,
 		OwnerID:     ownerId,
 	})

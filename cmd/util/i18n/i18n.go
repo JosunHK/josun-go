@@ -7,7 +7,7 @@ import (
 	"io"
 	"os"
 
-	i18nStructs "github.com/JosunHK/josun-go.git/cmd/structs/i18n"
+	i18nStruct "github.com/JosunHK/josun-go.git/cmd/struct/i18n"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 	"github.com/eduardolat/goeasyi18n"
 	log "github.com/sirupsen/logrus"
@@ -95,12 +95,12 @@ func getLocaleFromCookie(c context.Context) string {
 	return "zh"
 }
 
-func GetItems(locale string) []i18nStructs.Item {
-	var items []i18nStructs.Item
+func GetItems(locale string) []i18nStruct.Item {
+	var items []i18nStruct.Item
 	table, err := readJSON(locale)
 	if err != nil {
 		log.Error("Error reading json file: ", err)
-		return []i18nStructs.Item{}
+		return []i18nStruct.Item{}
 	}
 
 	json.Unmarshal([]byte(table), &items)
@@ -108,7 +108,7 @@ func GetItems(locale string) []i18nStructs.Item {
 	return items
 }
 
-func AddItem(locale string, item i18nStructs.Item) error {
+func AddItem(locale string, item i18nStruct.Item) error {
 	items := GetItems(locale)
 	for _, i := range items {
 		if i.Key == item.Key {

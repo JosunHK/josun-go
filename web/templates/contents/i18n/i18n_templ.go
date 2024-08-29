@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	i18nStructs "github.com/JosunHK/josun-go.git/cmd/structs/i18n"
+	i18nStruct "github.com/JosunHK/josun-go.git/cmd/struct/i18n"
 	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	button "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
@@ -676,7 +676,7 @@ func NewRow(locale string) templ.Component {
 	})
 }
 
-func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
+func I18nTableItems(tableItems []i18nStruct.Item) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)

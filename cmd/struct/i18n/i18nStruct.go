@@ -1,4 +1,4 @@
-package i18nStructs
+package i18nStruct
 
 type Item struct {
 	Key     string `json:"Key"`
