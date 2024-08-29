@@ -33,7 +33,7 @@ func DatePickerTrigger() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = input.Input(input.InputProps{
+		templ_7745c5c3_Err = input.Input(input.Props{
 			Type:  "text",
 			Class: "pl-[2.5rem] focus-visible:ring-0 focus-visible:ring-offset-0 hover:bg-accent transition-colors",
 			Attrs: templ.Attributes{

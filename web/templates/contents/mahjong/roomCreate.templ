@@ -1,14 +1,25 @@
 package mahjongTemplates
 
 import (
-	"github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	"fmt"
+	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	"github.com/JosunHK/josun-go.git/cmd/util/menuProvider"
+	button "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
-	//selectBox "github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
+	input "github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
+	label "github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
 	separator "github.com/JosunHK/josun-go.git/web/templates/components/ui/separator"
+	gocva "github.com/gungun974/gocva"
+	"strconv"
 )
 
+var T = i18nUtil.T
+
 templ RoomCreate() {
-	@card.Card(card.Props{}) {
+	@card.Card(card.Props{
+		Class: "w-[1000px]",
+	}) {
 		@card.Header(card.Props{}) {
 			@card.Title(card.Props{
 				Class: "text-center",
@@ -17,9 +28,83 @@ templ RoomCreate() {
 			}
 		}
 		@separator.Separator(separator.Props{}, "horizontal")
-		@card.Content(card.Props{
-			Class: "flex flex-col ",
-		}) {
-		}
+		<form
+			id="create-form"
+			hx-post="mahjong/room/create"
+			hx-trigger="click from:#create-btn"
+		>
+			@card.Content(card.Props{
+				Class: "flex flex-col ",
+			}) {
+				@RoomOptions()
+			}
+		</form>
+		<div class="flex justify-end">
+			@Submitbutton()
+		</div>
 	}
+}
+
+templ Submitbutton() {
+	@button.Button(button.Props{
+		Variant: gocva.Variant{"variant": "default"},
+		Class:   "w-20 m-3",
+		Id:      "create-btn",
+	}) {
+		{ T(ctx, "create_room") }
+	}
+}
+
+templ RoomOptions() {
+	<div class="grid grid-cols-4 gap-2">
+		for i := 1; i <= 4; i++ {
+			@NameInput(i)
+		}
+		@GameLength()
+		@StartPoints()
+	</div>
+}
+
+templ StartPoints() {
+	<div>
+		@label.Label(label.Props{
+			Class:   "text-md font-bold py-2",
+			Variant: gocva.Variant{"variant": "default"},
+		}) {
+			{ T(ctx, "start_points") }
+		}
+		@input.NumberInput(input.Props{
+			Name:  "startPoints",
+			Value: "25000",
+		})
+	</div>
+}
+
+templ GameLength() {
+	<div>
+		@label.Label(label.Props{
+			Class:   "text-md font-bold py-2",
+			Variant: gocva.Variant{"variant": "default"},
+		}) {
+			{ T(ctx, "game_length") }
+		}
+		@selectBox.Select(menuProvider.GetMenu(ctx, "mahjong_game_length"), selectBox.BodyProps{
+			Name: "gameLength",
+		})
+	</div>
+}
+
+templ NameInput(num int) {
+	<div>
+		@label.Label(label.Props{
+			Class:   "text-md font-bold py-2",
+			Variant: gocva.Variant{"variant": "default"},
+		}) {
+			{ T(ctx, "player_name") + " " + strconv.Itoa(num) }
+		}
+		@input.Input(input.Props{
+			Name: fmt.Sprintf("playerNames"),
+			Type: "text",
+		})
+	</div>
 }

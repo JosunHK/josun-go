@@ -95,7 +95,7 @@ templ NewRow(locale string) {
 		}) {
 			@table.Cell(table.Props{}) {
 				@input.Input(
-					input.InputProps{
+					input.Props{
 						Type: "text",
 							Name:  "key",
 							Class: "my-2",
@@ -104,7 +104,7 @@ templ NewRow(locale string) {
 			}
 			@table.Cell(table.Props{}) {
 				@input.Input(
-					input.InputProps{
+					input.Props{
 						Type: "text",
                         Name:  "default",
                         Class: "my-2",
@@ -113,7 +113,7 @@ templ NewRow(locale string) {
 			}
 			@table.Cell(table.Props{}) {
 				@input.Input(
-					input.InputProps{
+					input.Props{
 						Type: "text",
                         Name:  "one",
                         Class: "my-2",
@@ -122,7 +122,7 @@ templ NewRow(locale string) {
 			}
 			@table.Cell(table.Props{}) {
 				@input.Input(
-					input.InputProps{
+					input.Props{
 						Type: "text",
                         Name:  "many",
                         Class: "my-2",
@@ -131,6 +131,7 @@ templ NewRow(locale string) {
 			}
 			@table.Cell(table.Props{}) {
 				@button.Button(button.Props{
+                    Type: "submit",
 					Class: "mt-2 mb-2.5",
 					Variant: gocva.Variant{"variant": "secondary"},
 				}) {

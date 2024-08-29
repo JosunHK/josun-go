@@ -34,17 +34,21 @@ var cva = gocva.CVA{
 }
 
 type Props struct {
-	Name  string
-	Class string
-	Attrs templ.Attributes
+	Id      string
+	Name    string
+	Class   string
+	Attrs   templ.Attributes
 	Variant gocva.Variant
+	Type    string
 }
 
 templ Button(props Props) {
 	<button
+        id={ props.Id }
+		type={ props.Type }
 		name={ props.Name }
 		class={ M(cva.Render(props.Variant), props.Class) }
-        { props.Attrs... }
+		{ props.Attrs... }
 	>
 		{ children... }
 	</button>

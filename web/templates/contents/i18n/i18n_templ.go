@@ -461,7 +461,7 @@ func NewRow(locale string) templ.Component {
 				}
 				ctx = templ.InitializeContext(ctx)
 				templ_7745c5c3_Err = input.Input(
-					input.InputProps{
+					input.Props{
 						Type:  "text",
 						Name:  "key",
 						Class: "my-2",
@@ -493,7 +493,7 @@ func NewRow(locale string) templ.Component {
 				}
 				ctx = templ.InitializeContext(ctx)
 				templ_7745c5c3_Err = input.Input(
-					input.InputProps{
+					input.Props{
 						Type:  "text",
 						Name:  "default",
 						Class: "my-2",
@@ -525,7 +525,7 @@ func NewRow(locale string) templ.Component {
 				}
 				ctx = templ.InitializeContext(ctx)
 				templ_7745c5c3_Err = input.Input(
-					input.InputProps{
+					input.Props{
 						Type:  "text",
 						Name:  "one",
 						Class: "my-2",
@@ -557,7 +557,7 @@ func NewRow(locale string) templ.Component {
 				}
 				ctx = templ.InitializeContext(ctx)
 				templ_7745c5c3_Err = input.Input(
-					input.InputProps{
+					input.Props{
 						Type:  "text",
 						Name:  "many",
 						Class: "my-2",
@@ -647,6 +647,7 @@ func NewRow(locale string) templ.Component {
 					return templ_7745c5c3_Err
 				})
 				templ_7745c5c3_Err = button.Button(button.Props{
+					Type:    "submit",
 					Class:   "mt-2 mb-2.5",
 					Variant: gocva.Variant{"variant": "secondary"},
 				}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var23), templ_7745c5c3_Buffer)
@@ -721,7 +722,7 @@ func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
 					var templ_7745c5c3_Var29 string
 					templ_7745c5c3_Var29, templ_7745c5c3_Err = templ.JoinStringErrs(item.Key)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 156, Col: 14}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 157, Col: 14}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var29))
 					if templ_7745c5c3_Err != nil {
@@ -752,7 +753,7 @@ func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
 					var templ_7745c5c3_Var31 string
 					templ_7745c5c3_Var31, templ_7745c5c3_Err = templ.JoinStringErrs(item.Default)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 159, Col: 18}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 160, Col: 18}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var31))
 					if templ_7745c5c3_Err != nil {
@@ -783,7 +784,7 @@ func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
 					var templ_7745c5c3_Var33 string
 					templ_7745c5c3_Var33, templ_7745c5c3_Err = templ.JoinStringErrs(item.One)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 162, Col: 14}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 163, Col: 14}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var33))
 					if templ_7745c5c3_Err != nil {
@@ -814,7 +815,7 @@ func I18nTableItems(tableItems []i18nStructs.Item) templ.Component {
 					var templ_7745c5c3_Var35 string
 					templ_7745c5c3_Var35, templ_7745c5c3_Err = templ.JoinStringErrs(item.Many)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 165, Col: 15}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/i18n/i18n.templ`, Line: 166, Col: 15}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var35))
 					if templ_7745c5c3_Err != nil {

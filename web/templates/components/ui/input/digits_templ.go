@@ -14,13 +14,13 @@ import (
 
 var scriptHandle = templ.NewOnceHandle()
 
-type Props struct {
+type DigitsProps struct {
 	Name  string
 	Class string
 	Attrs templ.Attributes
 }
 
-func Digits(props Props, digits int) templ.Component {
+func Digits(props DigitsProps, digits int) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -81,7 +81,7 @@ func Digits(props Props, digits int) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = Input(InputProps{
+		templ_7745c5c3_Err = Input(Props{
 			Class: "otpInput w-[2.5rem] h-[2.5rem] text-center text-md border focus:border-2 focus:border-primary focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-bold rounded-none first-of-type:rounded-l-md first-of-type:border-l last:rounded-r-md transition-all caret-transparent ease-in-out duration-[30ms]",
 			Attrs: templ.Attributes{
 				"type":                   "tel",

@@ -149,7 +149,7 @@ func LoginCard(cardProps Props) templ.Component {
 					return templ_7745c5c3_Err
 				}
 				templ_7745c5c3_Err = input.Input(
-					input.InputProps{
+					input.Props{
 						Type:  "text",
 						Class: "my-2",
 					},
@@ -194,7 +194,7 @@ func LoginCard(cardProps Props) templ.Component {
 					return templ_7745c5c3_Err
 				}
 				templ_7745c5c3_Err = input.Input(
-					input.InputProps{
+					input.Props{
 						Type:  "password",
 						Class: "my-2",
 					},
@@ -385,7 +385,7 @@ func InfoCard(cardProps Props) templ.Component {
 				}
 				ctx = templ.InitializeContext(ctx)
 				templ_7745c5c3_Err = input.Input(
-					input.InputProps{
+					input.Props{
 						Type:  "text",
 						Class: "my-2",
 					},

@@ -1,25 +1,58 @@
 package input
 
-import (
-	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
-)
+import twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
 
 var M = twmerge.Merge
 
-type InputProps struct {
+type Props struct {
 	Name  string
 	Class string
 	Attrs templ.Attributes
-	Type string
+	Type  string
 	Value string
 }
 
-templ Input(props InputProps) {
+//use normal input with number type instead if you wish to use in combination with alpinejs' mask
+templ Input(props Props) {
 	<input
 		type={ props.Type }
 		name={ props.Name }
-        value={ props.Value }
-		class={ M("flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50", props.Class) }
+		value={ props.Value }
+        x-on:input="function($event){
+            let type = $event.target.getAttribute('type');
+            if (type === 'number') {
+                $event.target.value = $event.target.value.replace(/[^0-9]/, '');
+            }
+        }"
+		class={ M(
+            `flex h-10 w-full rounded-md border border-input bg-background
+            px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent
+            file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none
+            focus-visible:border-2 focus-visible:border-ring 
+            disabled:cursor-not-allowed disabled:opacity-50`,
+            props.Class,
+        )}
+		{ props.Attrs... }
+	/>
+}
+
+//general number input with decimal point 
+templ NumberInput(props Props) {
+	<input
+		type="text"
+		name={ props.Name }
+		value={ props.Value }
+        x-on:input="function($event){
+            $event.target.value = $event.target.value.replace(/[^0-9.]/, '');
+        }"
+		class={ M(
+            `flex h-10 w-full rounded-md border border-input bg-background
+            px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent
+            file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none
+            focus-visible:border-2 focus-visible:border-ring 
+            disabled:cursor-not-allowed disabled:opacity-50`,
+            props.Class,
+        )}
 		{ props.Attrs... }
 	/>
 }

@@ -6,13 +6,13 @@ import (
 
 var scriptHandle = templ.NewOnceHandle()
 
-type Props struct {
+type DigitsProps struct {
 	Name  string
 	Class string
 	Attrs templ.Attributes
 }
 
-templ Digits(props Props, digits int) {
+templ Digits(props DigitsProps, digits int) {
 	<div
         x-data={ fmt.Sprintf("{length :  %v}", digits) }
         class={ props.Class }
@@ -66,7 +66,7 @@ templ Digits(props Props, digits int) {
 				x-ref="otpInputContainer"
 			>
 				<template x-for="(input, index) in length" :key="index">
-					@Input(InputProps{
+					@Input(Props{
                         Class: "otpInput w-[2.5rem] h-[2.5rem] text-center text-md border focus:border-2 focus:border-primary focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-bold rounded-none first-of-type:rounded-l-md first-of-type:border-l last:rounded-r-md transition-all caret-transparent ease-in-out duration-[30ms]",
                         Attrs: templ.Attributes{
                             "type":                   "tel",

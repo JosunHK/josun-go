@@ -44,7 +44,7 @@ templ SelectIcon(props Props) {
 templ SelectDisplay(props Props) {
 	<div
 		x-text="selectedLabel"
-		:style="`width: calc(${maxLength} * 0.6rem)`"
+		:style="`width: calc(${maxLength} * 1rem`"
 		class={ M("flex items-center", props.Class) }
 		{ props.Attrs... }
 	></div>
@@ -90,7 +90,7 @@ templ SelectItem(props Props, item sqlc.MenuItem) {
 	<div
 		x-init={ fmt.Sprintf("setLength('%v'.length);setDefault('%v', '%v');", item.Label, item.Label, item.Value) }
 		@click={ fmt.Sprintf("toggle(); selectedLabel = '%v'; selectedValue = '%v'; $dispatch('item-clicked')", item.Label, item.Value) }
-		:style="`width: calc(${maxLength} * 0.6rem + 40px)`"
+		:style="`width: calc(${maxLength} * 1rem + 40px)`"
 		label={ item.Label }
 		value={ item.Value }
 		class={ M("relative flex cursor-default select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
@@ -122,7 +122,7 @@ var scriptHandle = templ.NewOnceHandle()
 
 templ SelectBody(props BodyProps) {
 	<div
-		class={ props.Class }
+		class={ M("max-w-min", props.Class) }
 		x-init={ fmt.Sprintf("setDefault('%v', '%v')", props.Selected.Label, props.Selected.Value) }
 		x-data="{
                     open: false,
@@ -173,6 +173,6 @@ templ SelectBody(props BodyProps) {
 templ SelectSeparator(props Props) {
 	<hr
 		class={ M("-mx-1 my-1 h-px bg-muted", props.Class) }
-		{ props.Attrs... }
+		    { props.Attrs... }
 	/>
 }

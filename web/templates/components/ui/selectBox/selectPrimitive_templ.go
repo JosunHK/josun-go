@@ -174,7 +174,7 @@ func SelectDisplay(props Props) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div x-text=\"selectedLabel\" :style=\"`width: calc(${maxLength} * 0.6rem)`\" class=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div x-text=\"selectedLabel\" :style=\"`width: calc(${maxLength} * 1rem`\" class=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -394,7 +394,7 @@ func SelectItem(props Props, item sqlc.MenuItem) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" :style=\"`width: calc(${maxLength} * 0.6rem + 40px)`\" label=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" :style=\"`width: calc(${maxLength} * 1rem + 40px)`\" label=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -564,7 +564,7 @@ func SelectBody(props BodyProps) templ.Component {
 			templ_7745c5c3_Var28 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		var templ_7745c5c3_Var29 = []any{props.Class}
+		var templ_7745c5c3_Var29 = []any{M("max-w-min", props.Class)}
 		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var29...)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

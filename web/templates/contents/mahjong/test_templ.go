@@ -39,8 +39,6 @@ func getPlayerColor(i int) string {
 		return "border-l-eYellow"
 	case 3:
 		return "border-l-eGreen"
-	case 4:
-		return "border-l-eBlue"
 	default:
 		return "border-l-eRed"
 	}
@@ -189,7 +187,7 @@ func playerCard(i int, player Player) templ.Component {
 				var templ_7745c5c3_Var7 string
 				templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(player.name)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/test.templ`, Line: 101, Col: 16}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/test.templ`, Line: 99, Col: 16}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 				if templ_7745c5c3_Err != nil {

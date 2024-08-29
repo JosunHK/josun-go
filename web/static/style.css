@@ -810,6 +810,10 @@ body {
   margin: 0.25rem;
 }
 
+.m-3 {
+  margin: 0.75rem;
+}
+
 .-mx-1 {
   margin-left: -0.25rem;
   margin-right: -0.25rem;
@@ -1048,6 +1052,14 @@ body {
   width: 100vw;
 }
 
+.w-12 {
+  width: 3rem;
+}
+
+.w-20 {
+  width: 5rem;
+}
+
 .min-w-\[max-content\] {
   min-width: -moz-max-content;
   min-width: max-content;
@@ -1055,6 +1067,11 @@ body {
 
 .max-w-lg {
   max-width: 32rem;
+}
+
+.max-w-min {
+  max-width: -moz-min-content;
+  max-width: min-content;
 }
 
 .shrink-0 {
@@ -1085,6 +1102,14 @@ body {
 
 .grid-cols-7 {
   grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .flex-row {
@@ -1358,6 +1383,10 @@ body {
   padding-top: 0px;
 }
 
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -1627,9 +1656,25 @@ body {
   --tw-ring-offset-width: 2px;
 }
 
+.focus-visible\:border-2:focus-visible {
+  border-width: 2px;
+}
+
+.focus-visible\:border-ring:focus-visible {
+  border-color: hsl(var(--ring));
+}
+
 .focus-visible\:outline-none:focus-visible {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.focus-visible\:outline-1:focus-visible {
+  outline-width: 1px;
+}
+
+.focus-visible\:outline-ring:focus-visible {
+  outline-color: hsl(var(--ring));
 }
 
 .focus-visible\:ring-0:focus-visible {
