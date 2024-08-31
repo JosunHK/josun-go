@@ -1,6 +1,6 @@
 CREATE TABLE mahjong_game_state(
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    room_id BIGINT NOT NULL,
-    wind varchar(50) NOT NULL,
+    round_wind ENUM ('east', 'south', 'west', 'north') NOT NULL,
+    seat_wind ENUM ('east', 'south', 'west', 'north') NOT NULL,
     round INT NOT NULL
 )

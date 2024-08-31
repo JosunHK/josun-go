@@ -15,3 +15,26 @@ INSERT INTO mahjong_room_owner(
 ) VALUES (
     ?, ?
 );
+
+-- name: CreateMahjongGameState :execresult
+INSERT INTO mahjong_game_state(
+    round_wind,
+    seat_wind,
+    round 
+) VALUES (
+    ?, ?, ? 
+);
+
+-- name: CreateMahjongPlayer :execresult
+INSERT INTO mahjong_player(
+    room_id,
+    name,
+    score,
+    wind
+) VALUES (
+    ?, ?, ?, ?
+);
+
+-- name: GetRoomWithCode :one
+SELECT * FROM mahjong_room 
+WHERE room_code = ? LIMIT 1;
