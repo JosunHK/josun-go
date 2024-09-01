@@ -991,6 +991,10 @@ body {
   width: 0.5rem;
 }
 
+.w-20 {
+  width: 5rem;
+}
+
 .w-3\.5 {
   width: 0.875rem;
 }
@@ -1009,6 +1013,10 @@ body {
 
 .w-8 {
   width: 2rem;
+}
+
+.w-8\/12 {
+  width: 66.666667%;
 }
 
 .w-\[1000px\] {
@@ -1052,12 +1060,8 @@ body {
   width: 100vw;
 }
 
-.w-12 {
-  width: 3rem;
-}
-
-.w-20 {
-  width: 5rem;
+.w-7\/12 {
+  width: 58.333333%;
 }
 
 .min-w-\[max-content\] {
@@ -1100,16 +1104,12 @@ body {
           user-select: none;
 }
 
-.grid-cols-7 {
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-}
-
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
 .grid-cols-4 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-cols-7 {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
 .flex-row {
@@ -1225,10 +1225,6 @@ body {
 
 .border-transparent {
   border-color: transparent;
-}
-
-.border-l-eBlue {
-  border-left-color: hsl(var(--eBlue));
 }
 
 .border-l-eGreen {
@@ -1383,10 +1379,6 @@ body {
   padding-top: 0px;
 }
 
-.pb-2 {
-  padding-bottom: 0.5rem;
-}
-
 .text-left {
   text-align: left;
 }
@@ -1474,6 +1466,15 @@ body {
   color: hsl(var(--primary-foreground));
 }
 
+.text-red-900 {
+  --tw-text-opacity: 1;
+  color: rgb(127 29 29 / var(--tw-text-opacity));
+}
+
+.text-eRed {
+  color: hsl(var(--eRed));
+}
+
 .underline-offset-4 {
   text-underline-offset: 4px;
 }
@@ -1541,6 +1542,14 @@ body {
 
 .transition-colors {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
@@ -1667,14 +1676,6 @@ body {
 .focus-visible\:outline-none:focus-visible {
   outline: 2px solid transparent;
   outline-offset: 2px;
-}
-
-.focus-visible\:outline-1:focus-visible {
-  outline-width: 1px;
-}
-
-.focus-visible\:outline-ring:focus-visible {
-  outline-color: hsl(var(--ring));
 }
 
 .focus-visible\:ring-0:focus-visible {

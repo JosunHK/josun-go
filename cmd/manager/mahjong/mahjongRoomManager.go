@@ -92,7 +92,7 @@ func GetRandomRoomCode(c echo.Context) string {
 	DB := database.DB
 	queries := sqlc.New(DB)
 
-	for _, err := queries.GetRoomWithCode(c.Request().Context(), code); err == nil; {
+	for _, err := queries.GetRoomByCode(c.Request().Context(), code); err == nil; {
 		code = genCode()
 	}
 

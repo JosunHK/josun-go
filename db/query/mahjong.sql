@@ -35,6 +35,18 @@ INSERT INTO mahjong_player(
     ?, ?, ?, ?
 );
 
--- name: GetRoomWithCode :one
+-- name: GetRoomByCode :one
 SELECT * FROM mahjong_room 
 WHERE room_code = ? LIMIT 1;
+
+-- name: GetGameStateById :one
+SELECT * FROM mahjong_game_state 
+WHERE id = ? LIMIT 1;
+
+-- name: GetPlayerByRoomId :many
+SELECT * FROM mahjong_player
+WHERE room_id = ? LIMIT 1;
+
+-- name: GetOwnerById :one
+SELECT * FROM mahjong_room_owner
+WHERE id = ? LIMIT 1;

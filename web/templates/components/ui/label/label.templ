@@ -27,6 +27,7 @@ var cva = gocva.CVA{
 templ Label(props Props) {
 	<label
 		class={ M(cva.Render(props.Variant), props.Class) }
+        { props.Attrs... }
 	>
 		{ children... }
 	</label>

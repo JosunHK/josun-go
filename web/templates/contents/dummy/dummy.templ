@@ -1,33 +1,17 @@
 package dummyTemplates
 
-import (
-	"fmt"
-	odometer "github.com/JosunHK/josun-go.git/web/templates/components/ui/odometer"
-)
+import ()
 
 templ Dummy() {
-	<div
-		name="dummy-div"
-		class="w-full h-full flex flex-col justify-center items-center"
-		x-data="{ number: 0 }"
-		hx-get="/dummy/odometer"
-		hx-target="#test"
-		hx-trigger="every 2s"
-	>
-		<div id="test"></div>
-		@odometer.Odometer(odometer.Props{
-			Attrs: templ.Attributes{
-				"x-text": "number",
-			},
-		})
+	<div hx-ext="sse" sse-connect="/mahjong/room/2428/state" sse-swap="data">
 	</div>
 }
 
+//empty div
+templ InitialRes() {
+    <div></div>
+}
+
 templ Update(num string) {
-	<div
-		x-data="{count: 0}"
-		x-init={ fmt.Sprintf("$nextTick(() => { count = %v})", num) }
-		x-modelable="count"
-		x-model="number"
-	></div>
+    <div>{num}</div>
 }
