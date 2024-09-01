@@ -4,6 +4,7 @@ go 1.22.5
 
 require (
 	github.com/ThreeDotsLabs/watermill v1.3.7
+	github.com/ThreeDotsLabs/watermill-http/v2 v2.3.1
 	github.com/ThreeDotsLabs/watermill-sql/v3 v3.0.3
 	github.com/a-h/templ v0.2.747
 	github.com/eduardolat/goeasyi18n v1.3.0
@@ -18,7 +19,7 @@ require (
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
-	github.com/ThreeDotsLabs/watermill-http/v2 v2.3.1 // indirect
+	github.com/Oudwins/tailwind-merge-go v0.1.1 // indirect
 	github.com/ajg/form v1.5.1 // indirect
 	github.com/cenkalti/backoff/v3 v3.2.2 // indirect
 	github.com/go-chi/chi v4.1.2+incompatible // indirect
