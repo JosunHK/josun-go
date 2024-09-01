@@ -9,10 +9,10 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
 	button "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	input "github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
 	label "github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
+	twmerge "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
 	"github.com/gungun974/gocva"
 )
 

@@ -9,8 +9,8 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	twmerge "github.com/JosunHK/josun-go.git/pkg/twmerge"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
+	twmerge "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
 )
 
 var M = twmerge.Merge

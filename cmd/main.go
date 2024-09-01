@@ -14,8 +14,8 @@ import (
 	"github.com/JosunHK/josun-go.git/cmd/middleware"
 	"github.com/JosunHK/josun-go.git/cmd/pubsub"
 	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
-	"github.com/JosunHK/josun-go.git/pkg/twmerge"
 	playgroundTemplates "github.com/JosunHK/josun-go.git/web/templates/contents/playground"
+	twmerge "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
 	eMiddleware "github.com/labstack/echo/v4/middleware"
 
 	"github.com/joho/godotenv"
