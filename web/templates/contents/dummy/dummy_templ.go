@@ -8,7 +8,7 @@ package dummyTemplates
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import ()
+import switchToggle "github.com/JosunHK/josun-go.git/web/templates/components/ui/swtichToggle"
 
 func Dummy() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -28,7 +28,11 @@ func Dummy() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div hx-ext=\"sse\" sse-connect=\"/mahjong/room/2428/state\" sse-swap=\"data\"></div>")
+		templ_7745c5c3_Err = switchToggle.Toggle(switchToggle.Props{}, false).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = Palette().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -36,8 +40,7 @@ func Dummy() templ.Component {
 	})
 }
 
-// empty div
-func InitialRes() templ.Component {
+func Palette() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -55,7 +58,7 @@ func InitialRes() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"grid grid-cols-2 w-[32rem]\"><span>bg-background</span><div class=\"w-4 h-4 bg-background\"></div><span>bg-foreground</span><div class=\"w-4 h-4 bg-foreground\"></div><span>bg-card</span><div class=\"w-4 h-4 bg-card\"></div><span>bg-card-foreground</span><div class=\"w-4 h-4 bg-card-foreground\"></div><span>bg-popover</span><div class=\"w-4 h-4 bg-popover\"></div><span>bg-popover-foreground</span><div class=\"w-4 h-4 bg-popover-foreground\"></div><span>bg-primary</span><div class=\"w-4 h-4 bg-primary\"></div><span>bg-primary-foreground</span><div class=\"w-4 h-4 bg-primary-foreground\"></div><span>bg-secondary</span><div class=\"w-4 h-4 bg-secondary\"></div><span>bg-secondary-foreground</span><div class=\"w-4 h-4 bg-secondary-foreground\"></div><span>bg-muted</span><div class=\"w-4 h-4 bg-muted\"></div><span>bg-muted-foreground</span><div class=\"w-4 h-4 bg-muted-foreground\"></div><span>bg-accent</span><div class=\"w-4 h-4 bg-accent\"></div><span>bg-accent-foreground</span><div class=\"w-4 h-4 bg-accent-foreground\"></div><span>bg-destructive</span><div class=\"w-4 h-4 bg-destructive\"></div><span>bg-destructive-foreground</span><div class=\"w-4 h-4 bg-destructive-foreground\"></div><span>bg-border</span><div class=\"w-4 h-4 bg-border\"></div><span>bg-input</span><div class=\"w-4 h-4 bg-input\"></div><span>bg-ring</span><div class=\"w-4 h-4 bg-ring\"></div><span>bg-radius</span><div class=\"w-4 h-4 bg-radius\"></div><span>bg-chart-1</span><div class=\"w-4 h-4 bg-chart-1\"></div><span>bg-chart-2</span><div class=\"w-4 h-4 bg-chart-2\"></div><span>bg-chart-3</span><div class=\"w-4 h-4 bg-chart-3\"></div><span>bg-chart-4</span><div class=\"w-4 h-4 bg-chart-4\"></div><span>bg-chart-5</span><div class=\"w-4 h-4 bg-chart-5\"></div><span>bg-eRed</span><div class=\"w-4 h-4 bg-eRed\"></div><span>bg-eOrange</span><div class=\"w-4 h-4 bg-eOrange\"></div><span>bg-eYellow</span><div class=\"w-4 h-4 bg-eYellow\"></div><span>bg-eGreen</span><div class=\"w-4 h-4 bg-eGreen\"></div><span>bg-eBlue</span><div class=\"w-4 h-4 bg-eBlue\"></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -63,7 +66,7 @@ func InitialRes() templ.Component {
 	})
 }
 
-func Update(num string) templ.Component {
+func Update(asd string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -81,23 +84,28 @@ func Update(num string) templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
+		return templ_7745c5c3_Err
+	})
+}
+
+func InitialRes() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
 		}
-		var templ_7745c5c3_Var4 string
-		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(num)
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/dummy/dummy.templ`, Line: 16, Col: 13}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var4 == nil {
+			templ_7745c5c3_Var4 = templ.NopComponent
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
+		ctx = templ.ClearChildren(ctx)
 		return templ_7745c5c3_Err
 	})
 }

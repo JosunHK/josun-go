@@ -432,7 +432,7 @@ func NewRow(locale string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-on::after-request=\"this.reset()\" hx-swap=\"outerHTML transition:true\" hx-target=\"#i18n-table\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-on::after-request=\"this.reset()\" hx-swap=\"innerHTML transition:true\" hx-target=\"#i18n-table\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

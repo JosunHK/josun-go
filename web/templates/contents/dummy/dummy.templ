@@ -1,17 +1,79 @@
 package dummyTemplates
 
-import ()
+import switchToggle "github.com/JosunHK/josun-go.git/web/templates/components/ui/swtichToggle"
 
 templ Dummy() {
-	<div hx-ext="sse" sse-connect="/mahjong/room/2428/state" sse-swap="data">
-	</div>
+	@switchToggle.Toggle(switchToggle.Props{}, false)
+    @Palette()
 }
 
-//empty div
+templ Palette() {
+    <div class="grid grid-cols-2 w-[32rem]">
+        <span>bg-background</span>
+        <div class="w-4 h-4 bg-background"></div>
+        <span>bg-foreground</span>
+        <div class="w-4 h-4 bg-foreground"></div>
+        <span>bg-card</span>
+        <div class="w-4 h-4 bg-card"></div>
+        <span>bg-card-foreground</span>
+        <div class="w-4 h-4 bg-card-foreground"></div>
+        <span>bg-popover</span>
+        <div class="w-4 h-4 bg-popover"></div>
+        <span>bg-popover-foreground</span>
+        <div class="w-4 h-4 bg-popover-foreground"></div>
+        <span>bg-primary</span>
+        <div class="w-4 h-4 bg-primary"></div>
+        <span>bg-primary-foreground</span>
+        <div class="w-4 h-4 bg-primary-foreground"></div>
+        <span>bg-secondary</span>
+        <div class="w-4 h-4 bg-secondary"></div>
+        <span>bg-secondary-foreground</span>
+        <div class="w-4 h-4 bg-secondary-foreground"></div>
+        <span>bg-muted</span>
+        <div class="w-4 h-4 bg-muted"></div>
+        <span>bg-muted-foreground</span>
+        <div class="w-4 h-4 bg-muted-foreground"></div>
+        <span>bg-accent</span>
+        <div class="w-4 h-4 bg-accent"></div>
+        <span>bg-accent-foreground</span>
+        <div class="w-4 h-4 bg-accent-foreground"></div>
+        <span>bg-destructive</span>
+        <div class="w-4 h-4 bg-destructive"></div>
+        <span>bg-destructive-foreground</span>
+        <div class="w-4 h-4 bg-destructive-foreground"></div>
+        <span>bg-border</span>
+        <div class="w-4 h-4 bg-border"></div>
+        <span>bg-input</span>
+        <div class="w-4 h-4 bg-input"></div>
+        <span>bg-ring</span>
+        <div class="w-4 h-4 bg-ring"></div>
+        <span>bg-radius</span>
+        <div class="w-4 h-4 bg-radius"></div>
+        <span>bg-chart-1</span>
+        <div class="w-4 h-4 bg-chart-1"></div>
+        <span>bg-chart-2</span>
+        <div class="w-4 h-4 bg-chart-2"></div>
+        <span>bg-chart-3</span>
+        <div class="w-4 h-4 bg-chart-3"></div>
+        <span>bg-chart-4</span>
+        <div class="w-4 h-4 bg-chart-4"></div>
+        <span>bg-chart-5</span>
+        <div class="w-4 h-4 bg-chart-5"></div>
+        <span>bg-eRed</span>
+        <div class="w-4 h-4 bg-eRed"></div>
+        <span>bg-eOrange</span>
+        <div class="w-4 h-4 bg-eOrange"></div>
+        <span>bg-eYellow</span>
+        <div class="w-4 h-4 bg-eYellow"></div>
+        <span>bg-eGreen</span>
+        <div class="w-4 h-4 bg-eGreen"></div>
+        <span>bg-eBlue</span>
+        <div class="w-4 h-4 bg-eBlue"></div>
+    </div>
+}
+
+templ Update(asd string) {
+}
+
 templ InitialRes() {
-    <div></div>
-}
-
-templ Update(num string) {
-    <div>{num}</div>
 }

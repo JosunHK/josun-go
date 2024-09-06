@@ -13,7 +13,9 @@ templ Select(menu []sqlc.MenuItem, selectProps BodyProps) {
 		if len(menu) > 0 {
 			@SelectContent(Props{}) {
 				for _, item := range menu {
-					@SelectItem(Props{}, item) {
+					@SelectItem(Props{
+                            Attrs: selectProps.ItemAttrs,
+                        }, item) {
 						{ item.Label }
 					}
 				}

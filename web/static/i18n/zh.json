@@ -72,30 +72,6 @@
         "Many": ""
     },
     {
-        "Key": "bruh",
-        "Default": "老兄",
-        "One": "",
-        "Many": ""
-    },
-    {
-        "Key": "real",
-        "Default": "真",
-        "One": "",
-        "Many": ""
-    },
-    {
-        "Key": "read",
-        "Default": "",
-        "One": "",
-        "Many": ""
-    },
-    {
-        "Key": "huh",
-        "Default": "吓",
-        "One": "",
-        "Many": ""
-    },
-    {
         "Key": "three_ma",
         "Default": "三麻",
         "One": "",
@@ -158,6 +134,198 @@
     {
         "Key": "start_points",
         "Default": "起始點數",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "confirm",
+        "Default": "確認",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "1_han",
+        "Default": "一飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "2_han",
+        "Default": "兩飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "3_han",
+        "Default": "三飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "4_han",
+        "Default": "四飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "5_han",
+        "Default": "五飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "6-7_han",
+        "Default": "六 ~ 七飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "8-10_han",
+        "Default": "八 ~ 十飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "11-12_han",
+        "Default": "十一 ~ 十二飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "13_han",
+        "Default": "十三飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "20_fu",
+        "Default": "二十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "25_fu",
+        "Default": "二十五符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "30_fu",
+        "Default": "三十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "40_fu",
+        "Default": "四十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "50_fu",
+        "Default": "五十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "60_fu",
+        "Default": "六十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "70_fu",
+        "Default": "七十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "80_fu",
+        "Default": "八十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "90_fu",
+        "Default": "九十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "100_fu",
+        "Default": "一百符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "110_fu",
+        "Default": "一百一十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_winner",
+        "Default": "和牌者",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "tsu_mo",
+        "Default": "自摸",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_loser",
+        "Default": "放銃",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "han",
+        "Default": "飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "fu",
+        "Default": "符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_win",
+        "Default": "和牌",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_draw",
+        "Default": "流局",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_manual",
+        "Default": "自訂",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "please_select_player_draw",
+        "Default": "請選擇未有聽牌的玩家",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "please_select_player_manual",
+        "Default": "手動調整分數",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "score",
+        "Default": "分數",
         "One": "",
         "Many": ""
     }

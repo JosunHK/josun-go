@@ -1,0 +1,271 @@
+package mahjongTemplates
+
+import (
+	"fmt"
+	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	menuProvider "github.com/JosunHK/josun-go.git/cmd/util/menuProvider"
+	sqlc "github.com/JosunHK/josun-go.git/db/generated"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dialog"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
+	switchToggle "github.com/JosunHK/josun-go.git/web/templates/components/ui/swtichToggle"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/tabs"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/toggle"
+	"github.com/gungun974/gocva"
+)
+
+templ ScoreDialog(players []sqlc.MahjongPlayer, code string) {
+	<form
+		hx-post={ fmt.Sprintf("/mahjong/updateScore/%v", code) }
+        hx-params="not confirm"
+        hx-swap="none"
+	>
+		@dialog.Dialog(dialog.Props{}) {
+			@card.Card(card.Props{
+				Class: "w-[400px] drop-shadow-xl",
+			}) {
+				@card.Header(card.Props{}) {
+					@card.Title(card.Props{}) {
+						@label.Label(label.Props{}) {
+							{ i18nUtil.T(ctx, "score") }
+						}
+					}
+				}
+				@DialogContent(players)
+				<div class="p-2 flex flex-row justify-end w-full">
+					@button.Button(button.Props{
+                        Name: "confirm",
+						Class: "w-min",
+						Attrs: templ.Attributes{
+							"@click": "dialogToggle($el);",
+						},
+						Variant: gocva.Variant{
+							"variant": "default",
+						},
+					}) {
+						{ i18nUtil.T(ctx, "confirm") }
+					}
+				</div>
+			}
+		}
+	</form>
+}
+
+templ DialogContent(players []sqlc.MahjongPlayer) {
+	@tabs.TabsContext(tabs.Props{}, "game_win") {
+		<div class="w-full h-full flex flex-col p-2">
+			<div>
+				@tabs.TabsList(tabs.Props{
+					Class: "w-full flex flex-row justify-center items-center gap-4",
+				}) {
+					@tabs.TabsTrigger(tabs.Props{
+						Class: "grow",
+					}, "game_win") {
+						{ i18nUtil.T(ctx, "game_win") }
+					}
+					@tabs.TabsTrigger(tabs.Props{
+						Class: "grow",
+					}, "game_draw") {
+						{ i18nUtil.T(ctx, "game_draw") }
+					}
+					@tabs.TabsTrigger(tabs.Props{
+						Class: "grow",
+					}, "game_manual") {
+						{ i18nUtil.T(ctx, "game_manual") }
+					}
+				}
+			</div>
+			<div class="h-[15rem] min-h-[15rem]">
+				@tabs.TabsContent(tabs.Props{}, "game_win") {
+					<fieldset
+						:disabled="activeTab !== 'game_win'"
+					>
+                        <input type="hidden" name="updateType" value="win"/>
+						@DialogContentWin(players)
+					</fieldset>
+				}
+				@tabs.TabsContent(tabs.Props{}, "game_draw") {
+					<fieldset
+						:disabled="activeTab !== 'game_draw'"
+					>
+                        <input type="hidden" name="updateType" value="draw"/>
+						@DialogContentDraw(players)
+					</fieldset>
+				}
+				@tabs.TabsContent(tabs.Props{}, "game_manual") {
+					<fieldset
+						:disabled="activeTab !== 'game_manual'"
+					>
+                        <input type="hidden" name="updateType" value="manual"/>
+						@DialogContentManual(players)
+					</fieldset>
+				}
+			</div>
+		</div>
+	}
+}
+
+templ DialogContentWin(players []sqlc.MahjongPlayer) {
+	@card.Card(card.Props{
+		Class: "w-full h-full border-0 shadow-none",
+	}) {
+		@card.Content(card.Props{
+			Class: "flex flex-col gap-1",
+			Attrs: templ.Attributes{
+				"x-data": `{
+                        currentOption: '',
+                        isTsumo: false,
+                    }`,
+			},
+		}) {
+			@WinnerSelect(players)
+			@TsumoToggle()
+			@LoserSelect(players)
+			@ScoreSelect()
+		}
+	}
+}
+
+templ WinnerSelect(players []sqlc.MahjongPlayer) {
+	<div class="flex flex-row items-center justify-between">
+		@label.Label(label.Props{
+			Variant: gocva.Variant{
+				"variant": "default",
+			}}) {
+			{ i18nUtil.T(ctx, "game_winner") }
+		}
+		@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
+            Name: "winnerId",
+			Attrs: templ.Attributes{
+				"x-effect": "currentOption = selectedValue",
+			}})
+	</div>
+}
+
+templ TsumoToggle() {
+	<div class="flex flex-row items-center justify-between">
+		@label.Label(label.Props{
+			Variant: gocva.Variant{
+				"variant": "default",
+			}}) {
+			{ i18nUtil.T(ctx, "tsu_mo") }
+		}
+		@switchToggle.Toggle(switchToggle.Props{
+            Name: "isTsumo",
+			Attrs: templ.Attributes{
+				"x-effect": "isTsumo = checked",
+			},
+		}, false)
+	</div>
+}
+
+templ LoserSelect(players []sqlc.MahjongPlayer) {
+	<div
+		class="flex flex-row items-center justify-between"
+		x-show="isTsumo? $el.style.opacity = '0' : $el.style.opacity = '1'"
+		x-transition
+	>
+		@label.Label(label.Props{
+			Variant: gocva.Variant{
+				"variant": "default",
+			}}) {
+			{ i18nUtil.T(ctx, "game_loser") }
+		}
+		@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
+            Name: "loserId",
+			Attrs: templ.Attributes{
+				"x-effect": "clearDisabled();disableOption(currentOption)",
+			},
+		})
+	</div>
+}
+
+templ ScoreSelect() {
+	<div
+		class="flex flex-row items-center justify-between"
+	>
+		@label.Label(label.Props{
+			Variant: gocva.Variant{
+				"variant": "default",
+			}}) {
+			{ i18nUtil.T(ctx, "han") }
+		}
+		@selectBox.Select(menuProvider.GetMenu(ctx, "han"), selectBox.BodyProps{
+            Name: "han",
+			Attrs: templ.Attributes{},
+		})
+	</div>
+	<div
+		class="flex flex-row items-center justify-between"
+	>
+		@label.Label(label.Props{
+            Name: "fu",
+			Variant: gocva.Variant{
+				"variant": "default",
+			}}) {
+			{ i18nUtil.T(ctx, "fu") }
+		}
+		@selectBox.Select(menuProvider.GetMenu(ctx, "fu"), selectBox.BodyProps{
+			Attrs: templ.Attributes{},
+		})
+	</div>
+}
+
+templ DialogContentDraw(players []sqlc.MahjongPlayer) {
+	@card.Card(card.Props{
+		Class: "w-full h-full border-0 shadow-none",
+	}) {
+		@card.Content(card.Props{
+			Class: "flex flex-col gap-1",
+			Attrs: templ.Attributes{},
+		}) {
+			@label.Label(label.Props{
+				Class: "text-xl font-semibold mb-2",
+				Variant: gocva.Variant{
+					"variant": "default",
+				}}) {
+				{ i18nUtil.T(ctx, "please_select_player_draw") }
+			}
+			for _, player := range players {
+				@toggle.Toggle(toggle.Props{
+					Name: fmt.Sprintf("%v", player.ID),
+					Variant: gocva.Variant{
+						"variant": "outline-destructive",
+						"size":    "sm",
+					},
+				}, false) {
+					{ player.Name }
+				}
+			}
+		}
+	}
+}
+
+templ DialogContentManual(players []sqlc.MahjongPlayer) {
+	<div>
+		@label.Label(label.Props{
+			Class: "text-xl font-semibold mb-2",
+			Variant: gocva.Variant{
+				"variant": "default",
+			}}) {
+			{ i18nUtil.T(ctx, "please_select_player_manual") }
+		}
+		<div
+			class="flex flex-row items-center justify-between gap-1"
+		>
+			@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
+				Name: "playerId",
+			})
+			@input.Input(input.Props{
+				Class: "w-full",
+				Name:  "score",
+				Attrs: templ.Attributes{
+					"placeholder":    i18nUtil.T(ctx, "score"),
+				},
+			})
+		</div>
+	</div>
+}

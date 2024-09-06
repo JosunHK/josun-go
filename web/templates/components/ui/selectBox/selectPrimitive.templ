@@ -3,8 +3,8 @@ package selectBox
 import (
 	"fmt"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
-    twmerge "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
+	twmerge "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
 )
 
 var M = twmerge.Merge
@@ -17,10 +17,12 @@ type Props struct {
 }
 
 type BodyProps struct {
-	Selected sqlc.MenuItem
-	Name     string
-	Class    string
-	Attrs    templ.Attributes
+	Selected  sqlc.MenuItem
+	Name      string
+	Id        string
+	Class     string
+	Attrs     templ.Attributes
+	ItemAttrs templ.Attributes
 }
 
 templ SelectTriggerIcon(props Props) {
@@ -54,7 +56,7 @@ templ SelectTrigger(props Props) {
 	<div
 		class={ M("lex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1", props.Class) }
 		x-ref="button"
-		x-on:click="toggle()"
+		x-on:click="toggle();"
 		:aria-expanded="open"
 		:aria-controls="$id('dropdown-button')"
 		type="button"
@@ -79,7 +81,7 @@ templ SelectContent(props Props) {
 		x-on:click.outside="close($refs.button)"
 		:id="$id('dropdown-button')"
 		style="display: none;"
-		class={ M("z-50 rounded-md border bg-popover p-1 text-popover-foreground shadow-md absolute", props.Class) }
+		class={ M("z-50 rounded-md border bg-popover p-1 text-popover-foreground shadow-md absolute max-h-[12rem] overflow-y-auto", props.Class) }
 		{ props.Attrs... }
 	>
 		{ children... }
@@ -88,19 +90,24 @@ templ SelectContent(props Props) {
 
 templ SelectItem(props Props, item sqlc.MenuItem) {
 	<div
-		x-init={ fmt.Sprintf("setLength('%v'.length);setDefault('%v', '%v');", item.Label, item.Label, item.Value) }
-		@click={ fmt.Sprintf("toggle(); selectedLabel = '%v'; selectedValue = '%v'; $dispatch('item-clicked')", item.Label, item.Value) }
+		x-data={ fmt.Sprintf(`{
+            label : '%s',
+            value : '%s',
+        }`, item.Label, item.Value) }
+		x-init="options.set(value,$el);setLength(label.length);setDefault(label, value);"
+		@click="toggle(); selectedLabel = label; selectedValue = value; $dispatch('item-clicked')"
 		:style="`width: calc(${maxLength} * 1rem + 40px)`"
 		label={ item.Label }
 		value={ item.Value }
 		class={ M("relative flex cursor-default select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
+		:class="disabled.has(value) ? 'pointer-events-none opacity-50' : ''"
 		{ props.Attrs... }
 	>
 		{ children... }
 		@SelectIcon(Props{
 			Class: "ml-2",
 			Attrs: templ.Attributes{
-				"x-show": fmt.Sprintf("selectedValue === '%v'", item.Value),
+				"x-show": "selectedValue === value",
 			},
 		}) {
 			@icon.Check()
@@ -123,17 +130,39 @@ var scriptHandle = templ.NewOnceHandle()
 templ SelectBody(props BodyProps) {
 	<div
 		class={ M("max-w-min", props.Class) }
-		x-init={ fmt.Sprintf("setDefault('%v', '%v')", props.Selected.Label, props.Selected.Value) }
+		x-init={ fmt.Sprintf("setDefault('%v', '%v');", props.Selected.Label, props.Selected.Value) }
 		x-data="{
                     open: false,
                     selectedLabel: '',
                     selectedValue: '',
                     maxLength: 0,
+                    options: new Map(),
+                    disabled: new Map(),
                     setDefault(label, value){
                         if (this.selectedLabel === '') {
                             this.selectedLabel = label 
                             this.selectedValue = value
                         }
+                    },
+                    disableOption: function(value){
+                        let opt = this.options.get(value);
+                        this.disabled.set(value, opt);
+                        if(this.selectedValue === value){
+                            for (let [key, val] of this.options) {
+                                if(!this.disabled.has(key)){
+                                    this.selectedLabel = val.getAttribute('label');
+                                    this.selectedValue = val.getAttribute('value');
+                                    break;
+                                }
+                            }
+                            if(this.selectedValue === value){
+                                this.selectedLabel = '';
+                                this.selectedValue = '';
+                            }
+                        }
+                    },
+                    clearDisabled: function(){
+                        this.disabled = new Map();
                     },
                     toggle() {
                         if (this.open) {
@@ -173,6 +202,6 @@ templ SelectBody(props BodyProps) {
 templ SelectSeparator(props Props) {
 	<hr
 		class={ M("-mx-1 my-1 h-px bg-muted", props.Class) }
-		    { props.Attrs... }
+		{ props.Attrs... }
 	/>
 }

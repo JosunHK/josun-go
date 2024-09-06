@@ -140,7 +140,7 @@ func I18n() templ.Component {
 					var templ_7745c5c3_Var8 string
 					templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "english"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/i18n.templ`, Line: 29, Col: 31}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/i18n.templ`, Line: 32, Col: 31}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 					if templ_7745c5c3_Err != nil {
@@ -149,7 +149,10 @@ func I18n() templ.Component {
 					return templ_7745c5c3_Err
 				})
 				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
-					Attrs: templ.Attributes{},
+					Attrs: templ.Attributes{
+						"hx-post":              "/i18n/set/en",
+						"hx-on::after-request": "window.location.reload()",
+					},
 				}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -173,7 +176,7 @@ func I18n() templ.Component {
 					var templ_7745c5c3_Var10 string
 					templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "chinese"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/i18n.templ`, Line: 34, Col: 31}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/common/settings/i18n.templ`, Line: 40, Col: 31}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 					if templ_7745c5c3_Err != nil {
@@ -182,7 +185,10 @@ func I18n() templ.Component {
 					return templ_7745c5c3_Err
 				})
 				templ_7745c5c3_Err = dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
-					Attrs: templ.Attributes{},
+					Attrs: templ.Attributes{
+						"hx-post":              "/i18n/set/zh",
+						"hx-on::after-request": "window.location.reload()",
+					},
 				}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var9), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err

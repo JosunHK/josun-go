@@ -28,7 +28,7 @@ func header() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html class=\"bg-background dark\" x-data x-cloak :class=\"{&#39;dark&#39; : Alpine.store(&#39;darkMode&#39;).on }\"><head><title>bruh</title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><link rel=\"stylesheet\" href=\"/static/style.css\"><script defer src=\"/static/countup.js\"></script><script src=\"/static/htmx-min.js\"></script><script defer src=\"/static/htmx-sse-ext.js\"></script><script defer src=\"https://unpkg.com/htmx.org@1.9.12/dist/ext/alpine-morph.js\"></script><script defer src=\"https://unpkg.com/@alpinejs/morph@3.x.x/dist/cdn.min.js\"></script><script src=\"https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js\"></script></head><body class=\"bg-background w-screen h-screen\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html class=\"bg-background dark\" x-data x-cloak :class=\"{&#39;dark&#39; : Alpine.store(&#39;darkMode&#39;).on }\"><head><title>bruh</title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><link rel=\"stylesheet\" href=\"/static/style.css\"><script defer src=\"/static/countup.js\"></script><script src=\"/static/htmx-min.js\"></script><script defer src=\"/static/htmx-sse-ext.js\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js\"></script><script defer src=\"https://unpkg.com/@alpinejs/morph@3.x.x/dist/cdn.min.js\"></script><script defer src=\"https://unpkg.com/htmx.org@1.9.12/dist/ext/alpine-morph.js\"></script><script src=\"https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js\"></script></head><body class=\"bg-background w-dvw h-dvh flex flex-col\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -36,11 +36,15 @@ func header() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"mt-[3rem] h-[100% - 3rem]\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Err = templ_7745c5c3_Var1.Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

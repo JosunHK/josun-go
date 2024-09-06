@@ -14,8 +14,6 @@ import (
 	"strconv"
 )
 
-var T = i18nUtil.T
-
 templ RoomCreate() {
 	@card.Card(card.Props{
 		Class: "w-[1000px]",
@@ -51,7 +49,7 @@ templ Submitbutton() {
 		Class:   "w-20 m-3",
 		Id:      "create-btn",
 	}) {
-		{ T(ctx, "create_room") }
+		{ i18nUtil.T(ctx, "create_room") }
 	}
 }
 
@@ -71,7 +69,7 @@ templ StartPoints() {
 			Class:   "text-md font-bold py-2",
 			Variant: gocva.Variant{"variant": "default"},
 		}) {
-			{ T(ctx, "start_points") }
+			{ i18nUtil.T(ctx, "start_points") }
 		}
 		@input.NumberInput(input.Props{
 			Name:  "startPoints",
@@ -86,7 +84,7 @@ templ GameLength() {
 			Class:   "text-md font-bold py-2",
 			Variant: gocva.Variant{"variant": "default"},
 		}) {
-			{ T(ctx, "game_length") }
+			{ i18nUtil.T(ctx, "game_length") }
 		}
 		@selectBox.Select(menuProvider.GetMenu(ctx, "mahjong_game_length"), selectBox.BodyProps{
 			Name: "gameLength",
@@ -100,7 +98,7 @@ templ NameInput(num int) {
 			Class:   "text-md font-bold py-2",
 			Variant: gocva.Variant{"variant": "default"},
 		}) {
-			{ T(ctx, "player_name") + " " + strconv.Itoa(num) }
+			{ i18nUtil.T(ctx, "player_name") + " " + strconv.Itoa(num) }
 		}
 		@input.Input(input.Props{
 			Name: fmt.Sprintf("playerNames"),

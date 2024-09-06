@@ -52,11 +52,17 @@ templ RoomSelectCard() {
 					{ i18nUtil.T(ctx, "create_new_room") }
 				}
 			}
-			<div class="flex flex-row justify-between items-end">
+			<div
+				class="flex flex-row justify-between items-end"
+				x-data="{ roomNo: '' }"
+			>
 				<div class="flex justify-center items-center grow">
 					@input.Digits(input.DigitsProps{
 						Class: "mt-3",
 						Name:  "roomNo",
+						Attrs: templ.Attributes{
+							"x-effect": "roomNo = value",
+						},
 					},
 						4,
 					)
@@ -64,6 +70,9 @@ templ RoomSelectCard() {
 				@button.Button(button.Props{
 					Class:   "w-min",
 					Variant: gocva.Variant{"variant": "secondary"},
+					Attrs: templ.Attributes{
+						"@click": "window.location= '/mahjong/room/' + roomNo",
+					},
 				}) {
 					{ i18nUtil.T(ctx, "join") }
 				}

@@ -24,12 +24,18 @@ templ I18n() {
 		}
 		@dropDownMenu.DropDownMenuContent(dropDownMenu.Props{}) {
 			@dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
-				Attrs: templ.Attributes{},
+				Attrs: templ.Attributes{
+                    "hx-post": "/i18n/set/en",
+                    "hx-on::after-request":"window.location.reload()",
+                },
 			}) {
 				{ i18nUtil.T(ctx,"english") }
 			}
 			@dropDownMenu.DropDownMenuItem(dropDownMenu.Props{
-				Attrs: templ.Attributes{},
+				Attrs: templ.Attributes{
+                    "hx-post": "/i18n/set/zh",
+                    "hx-on::after-request":"window.location.reload()",
+                },
 			}) {
 				{ i18nUtil.T(ctx,"chinese") }
 			}

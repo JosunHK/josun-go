@@ -36,7 +36,7 @@ func Dialog(props Props) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		var templ_7745c5c3_Var2 = []any{M("fixed top-0 left-0 h-screen w-screen inset-0 z-50 bg-black/80", props.Class)}
+		var templ_7745c5c3_Var2 = []any{M("fixed top-0 left-0 h-screen w-screen inset-0 z-50 bg-zinc-800/50", props.Class)}
 		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

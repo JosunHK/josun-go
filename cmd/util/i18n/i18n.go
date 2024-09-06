@@ -15,6 +15,8 @@ import (
 
 type Transl func(s string) string
 
+const LOCALE_SETTING_ID = "locale"
+
 var I18n *goeasyi18n.I18n
 
 var T_LIST = []string{"en", "zh"}
@@ -40,7 +42,7 @@ func GetMenuItem(locale string) sqlc.MenuItem {
 }
 
 func T(ctx context.Context, key string) string {
-	locale := getLocaleFromCookie(ctx)
+	locale := getLocaleFromContext(ctx)
 	res := I18n.T(locale, key)
 	if res == "" {
 		log.Error("Translation not found for key: ", key)
@@ -91,8 +93,14 @@ func readJSON(locale string) (string, error) {
 	return string(byteValue), nil
 }
 
-func getLocaleFromCookie(c context.Context) string {
-	return "zh"
+func getLocaleFromContext(c context.Context) string {
+	localeAny := c.Value(LOCALE_SETTING_ID)
+	locale, ok := localeAny.(string)
+	if !ok {
+		return "en"
+	}
+
+	return locale
 }
 
 func GetItems(locale string) []i18nStruct.Item {

@@ -99,6 +99,18 @@ func GetRandomRoomCode(c echo.Context) string {
 	return code
 }
 
+func GetRoomByCode(c echo.Context, code string) (sqlc.MahjongRoom, error) {
+	DB := database.DB
+	queries := sqlc.New(DB)
+
+	room, err := queries.GetRoomByCode(c.Request().Context(), code)
+	if err != nil {
+		return sqlc.MahjongRoom{}, fmt.Errorf("Unable to get room with code", err)
+	}
+
+	return room, nil
+}
+
 func genCode() string {
 	code := rand.IntN(CODE_UPPER_BOUND+1-CODE_LOWER_BOUND) + CODE_LOWER_BOUND
 	return fmt.Sprintf("%04d", code)

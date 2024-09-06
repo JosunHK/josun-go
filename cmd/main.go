@@ -64,25 +64,15 @@ func main() {
 		panic(err)
 	}
 
-	go func() {
-		err := routers.EventsRouter.Run(context.Background())
-		if err != nil {
-			panic(err)
-		}
-	}()
-
-	go func() {
-		err := routers.SSERouter.Run(context.Background())
-		if err != nil {
-			panic(err)
-		}
-	}()
-
 	//static files
 	e := echo.New()
 	e.Use(eMiddleware.Recover())
+	e.Pre(eMiddleware.RemoveTrailingSlash())
+
 	e.Static("/static", "web/static")
 	e.GET("/", middleware.StaticPages(layout.Layout, playgroundTemplates.Playground()))
+	go pubsub.StartEventsRouter(context.Background(), routers)
+	go pubsub.StartSSERouter(context.Background(), routers)
 
 	pubsub.NewHandler(e, routers.EventBus, routers.SSERouter)
 	i18n.RegisterRoutes(e)

@@ -1,0 +1,43 @@
+package switchToggle
+
+import (
+	"fmt"
+	twmerge "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+)
+
+var M = twmerge.Merge
+
+type Props struct {
+	Class string
+	Name  string
+	Attrs templ.Attributes
+}
+
+templ Toggle(props Props, checked bool) {
+	<div
+		x-data={ fmt.Sprintf("{checked: %v}", checked) }
+		class={ M(
+          `peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors
+          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+          focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50`,
+          props.Class,
+        ) }
+		:class="checked ? 'bg-eGreen' : 'bg-eRed'"
+		@click="checked = !checked"
+		{ props.Attrs... }
+	>
+		<div
+			class={ M(
+                "pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform",
+                props.Class,
+            ) }
+			:class="checked ? 'translate-x-5' : 'translate-x-0'"
+		></div>
+		<input
+			type="text"
+			style="display:none"
+			name={ props.Name }
+			x-model="checked"
+		/>
+	</div>
+}

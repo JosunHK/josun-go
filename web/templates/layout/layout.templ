@@ -16,16 +16,19 @@ templ header() {
             //htmx 
 			<script src="/static/htmx-min.js"></script>
 			<script defer src="/static/htmx-sse-ext.js"></script>
-            <script defer src="https://unpkg.com/htmx.org@1.9.12/dist/ext/alpine-morph.js"></script>
 
             //alpine js
+            <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
             <script defer src="https://unpkg.com/@alpinejs/morph@3.x.x/dist/cdn.min.js"></script>
+            <script defer src="https://unpkg.com/htmx.org@1.9.12/dist/ext/alpine-morph.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js"></script>
 			<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 		</head>
-		<body class="bg-background w-screen h-screen">
-			@menubar.Menubar()
-			{ children... }
+		<body class="bg-background w-dvw h-dvh flex flex-col">
+            @menubar.Menubar()
+            <div class="mt-[3rem] h-[100% - 3rem]">
+                { children... }
+            </div>
 		</body>
 	</html>
 }

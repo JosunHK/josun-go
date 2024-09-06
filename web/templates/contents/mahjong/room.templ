@@ -1,0 +1,200 @@
+package mahjongTemplates
+
+import (
+	"fmt"
+	mahjongStruct "github.com/JosunHK/josun-go.git/cmd/struct/mahjong"
+	sqlc "github.com/JosunHK/josun-go.git/db/generated"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dialog"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
+)
+
+func getPlayerColor(i int) string {
+	switch i {
+	case 0:
+		return "border-l-eRed"
+	case 1:
+		return "border-l-eOrange"
+	case 2:
+		return "border-l-eYellow"
+	case 3:
+		return "border-l-eGreen"
+	default:
+		return "border-l-eRed"
+	}
+}
+
+func getCardData(player sqlc.MahjongPlayer) string {
+	playerJSON := getPlayerJSON(player)
+	return fmt.Sprintf(`{
+        player : %s,
+        counter : new countUp.CountUp('player-%d', 0, {duration: 0.75}),
+    }`, playerJSON, player.ID)
+}
+
+func getPlayerJSON(player sqlc.MahjongPlayer) string {
+	playerJSON, err := templ.JSONString(player)
+	if err != nil {
+		playerJSON = "{}"
+	}
+
+	return playerJSON
+}
+
+func getPlayersJSON(players []sqlc.MahjongPlayer) string {
+	playersJSON, err := templ.JSONString(players)
+	if err != nil {
+		playersJSON = "{}"
+	}
+
+	return playersJSON
+}
+
+func getPlayerMenu(players []sqlc.MahjongPlayer) []sqlc.MenuItem {
+	items := []sqlc.MenuItem{}
+	for _, player := range players {
+		items = append(items, sqlc.MenuItem{
+			Label: player.Name,
+			Value: fmt.Sprintf("%v", player.ID),
+		})
+
+	}
+	return items
+}
+
+templ Room(players []sqlc.MahjongPlayer, code string) {
+	@dialog.WithDialog(dialog.Props{
+		Class: "w-full h-full flex flex-col mt-1",
+	}) {
+		@dialog.Dialog(dialog.Props{}) {
+			@ScoreDialog(players, code)
+		}
+		<div
+			Class="w-full h-full flex flex-col"
+            x-ref="room"
+			x-data="{
+                    players: new Map(),
+                    delta: 0,
+                    isShowDelta: false,
+                    focused: false,
+                    updatePlayers: function(newPlayers) {
+                        let oriPlayers = this.players;
+                        newPlayers.forEach((newPlayer) => {
+                            let player = oriPlayers.get(newPlayer.id)
+                            player.score = newPlayer.score
+                        });
+                    },
+                    showDelta: function(eventType, score) {
+                        // prevents when there is a 'enter event' after another 'enter event' without 'leave event'
+                        if (this.focused && (eventType === 'mousedown' || eventType === 'touchstart')) {
+                            return;
+                        }else if (eventType === 'mouseup' || eventType === 'touchend') {
+                            this.focused = false;
+                        }else if (eventType === 'mousedown' || eventType === 'touchstart') {
+                            this.focused = true;
+                        }
+                        this.delta = score;
+                        this.isShowDelta = !this.isShowDelta;
+                    }
+                }"
+		>
+			@AddButton()
+			<div class="h-auto flex justify-center items-center grow">
+				@ScoreDisplay(players)
+			</div>
+            <div
+                hx-ext="sse"
+                sse-connect={ fmt.Sprintf("/mahjong/room/%v/state", code) }
+                sse-swap="data"
+            ></div>
+		</div>
+	}
+}
+
+templ AddButton() {
+	@button.Button(button.Props{
+		Class: "w-min",
+		Attrs: templ.Attributes{
+			"@click": "dialogToggle()",
+		},
+	}) {
+		@icon.Wrapper(icon.Props{}) {
+			@icon.Plus()
+		}
+	}
+}
+
+templ ScoreDisplay(players []sqlc.MahjongPlayer) {
+	<div
+		class="px-4 flex flex-col gap-4"
+	>
+		for i, player := range players {
+			@playerCard(i, player)
+		}
+	</div>
+}
+
+templ playerCard(i int, player sqlc.MahjongPlayer) {
+	@card.Card(card.Props{
+		Class: fmt.Sprintf("drop-shadow-md border-l-8 max-w-[90dvw] %s", getPlayerColor(i)),
+		Attrs: templ.Attributes{
+			"x-data":      getCardData(player),
+			"@mousedown":  "showDelta($event.type, player.score)",
+			"@mouseup":    "showDelta($event.type, player.score)",
+			"@touchstart": "showDelta($event.type, player.score)",
+			"@touchend":   "showDelta($event.type, player.score)",
+		},
+	}) {
+		@label.Label(label.Props{
+			Class: "text-[2rem] pl-4 text-muted-foreground text-ellipsis text-nowrap overflow-hidden",
+			Attrs: templ.Attributes{},
+		}) {
+			{ player.Name }
+		}
+		@label.Label(label.Props{
+			Class: "text-[3.5rem] pl-4 text-ellipsis overflow-hidden",
+			Attrs: templ.Attributes{
+				"x-show":                   "!isShowDelta",
+				"x-transition:enter":       "transition ease-out duration-300",
+				"x-transition:enter-start": "opacity-0",
+				"x-transition:enter-end":   "opacity-100",
+				":class":                   "{ 'text-eRed' : player.score < 0 }",
+			},
+		}) {
+			<div
+				id={ fmt.Sprintf("player-%d", player.ID) }
+				x-init={ "counter.start();counter.update(player.score);players.set(player.id, player)" }
+				x-effect={ "counter.update(player.score)" }
+			></div>
+		}
+		@label.Label(label.Props{
+			Class: "text-[3.5rem] pl-4 text-ellipsis text-nowrap overflow-hidden",
+			Attrs: templ.Attributes{
+				"x-show":                   "isShowDelta",
+				"x-transition:enter":       "transition ease-out duration-300",
+				"x-transition:enter-start": "opacity-0",
+				"x-transition:enter-end":   "opacity-100",
+				":class":                   "player.score - delta > 0 ? 'text-eRed' : player.score - delta < 0 ? 'text-eGreen' : '' ",
+			},
+		}) {
+			<div
+				x-text="(player.score - delta > 0 ? '+' : '') + (player.score - delta).toLocaleString()"
+			></div>
+		}
+	}
+}
+
+templ Update(event mahjongStruct.GameStateUpdated) {
+	<x-script
+		x-init={ fmt.Sprintf(`$nextTick(() => {
+            updatePlayers(%v)
+        })`, getPlayersJSON(event.Players)) }
+	></x-script>
+}
+
+//empty div just for handling init sse connection
+templ InitRes() {
+	<x-script></x-script>
+}

@@ -9,7 +9,7 @@ import (
 func RegisterRoutes(e *echo.Echo) {
 	//main endpoints
 	e.GET("/mahjong", middleware.Pages(layout.Layout, RoomSelect))
-	e.GET("/mahjong/room/:id", middleware.Pages(layout.Layout, Test))
+	e.GET("/mahjong/room/:code", middleware.Pages(layout.Layout, Room))
 
 	//api endpoints
 	e.GET("/mahjong/room/create", middleware.HTML(RoomSetting))

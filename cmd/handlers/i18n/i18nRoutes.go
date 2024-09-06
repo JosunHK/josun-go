@@ -8,6 +8,7 @@ import (
 
 func RegisterRoutes(e *echo.Echo) {
 	//main endpoints
+	e.POST("/i18n/set/:locale", middleware.NoContent(SetLocale))
 	e.GET("/i18n/:locale", middleware.Pages(layout.Layout, Table))
 
 	//api endpoints

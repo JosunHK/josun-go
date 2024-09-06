@@ -69,7 +69,7 @@ func Digits(props DigitsProps, digits int) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><div x-data=\"{\n                    value: &#39;&#39;,\n                    get inputs() {\n                        return this.$refs.otpInputContainer.querySelectorAll(&#39;.otpInput&#39;);\n                    },\n                    handleInput(e, index) {\n                        if (isNaN(e.target.value)) {\n                            e.target.value = &#39;&#39;\n                            return\n                        }\n                        const inputValues = [...this.inputs].map(input =&gt; input.value);\n                        this.value = inputValues.join(&#39;&#39;);\n                        if (e.target.value) {\n                            const nextInput = this.inputs[index + 1];\n                            if (nextInput) {\n                                nextInput.focus();\n                                nextInput.select();\n                            }\n                        }\n                    },\n\n                    handlePaste(e) {\n                        const paste = e.clipboardData.getData(&#39;text&#39;).slice(0, this.length);\n                        paste.split(&#39;&#39;).forEach((char, i) =&gt; {\n                            if (this.inputs[i]) {\n                                this.inputs[i].value = char;\n                            }\n                        });\n                        this.value = [...this.inputs].map(input =&gt; input.value).join(&#39;&#39;);\n                    },\n\n                    handleBackspace(e, index) {\n                        if (index &gt; 0) {\n                            this.inputs[index - 1].focus();\n                            this.inputs[index - 1].select();\n                        }\n                    },\n                    resetCaret(el) {\n                        var val = el.value; \n                        el.value = &#39;&#39;; \n                        el.value = val; \n                    }\n                }\" class=\"flex justify-center\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -77,11 +77,11 @@ func Digits(props DigitsProps, digits int) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("><div x-data=\"{\n                    value: &#39;&#39;,\n                    get inputs() {\n                        return this.$refs.otpInputContainer.querySelectorAll(&#39;.otpInput&#39;);\n                    },\n                    handleInput(e, index) {\n                        if (isNaN(e.target.value)) {\n                            e.target.value = &#39;&#39;\n                            return\n                        }\n                        const inputValues = [...this.inputs].map(input =&gt; input.value);\n                        this.value = inputValues.join(&#39;&#39;);\n                        if (e.target.value) {\n                            const nextInput = this.inputs[index + 1];\n                            if (nextInput) {\n                                nextInput.focus();\n                                nextInput.select();\n                            }\n                        }\n                    },\n\n                    handlePaste(e) {\n                        const paste = e.clipboardData.getData(&#39;text&#39;).slice(0, this.length);\n                        paste.split(&#39;&#39;).forEach((char, i) =&gt; {\n                            if (this.inputs[i]) {\n                                this.inputs[i].value = char;\n                            }\n                        });\n                        this.value = [...this.inputs].map(input =&gt; input.value).join(&#39;&#39;);\n                    },\n\n                    handleBackspace(e, index) {\n                        if (index &gt; 0) {\n                            this.inputs[index - 1].focus();\n                            this.inputs[index - 1].select();\n                        }\n                    },\n                    resetCaret(el) {\n                        var val = el.value; \n                        el.value = &#39;&#39;; \n                        el.value = val; \n                    }\n                }\" class=\"flex justify-center\"><div class=\"flex justify-center w-min\" x-ref=\"otpInputContainer\"><template x-for=\"(input, index) in length\" :key=\"index\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("><div class=\"flex justify-center w-min\" x-ref=\"otpInputContainer\"><template x-for=\"(input, index) in length\" :key=\"index\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = Input(Props{
+		templ_7745c5c3_Err = InputRaw(Props{
 			Class: "otpInput w-[2.5rem] h-[2.5rem] text-center text-md border focus:border-2 focus:border-primary focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-bold rounded-none first-of-type:rounded-l-md first-of-type:border-l last:rounded-r-md transition-all caret-transparent ease-in-out duration-[30ms]",
 			Attrs: templ.Attributes{
 				"type":                   "tel",
@@ -102,7 +102,7 @@ func Digits(props DigitsProps, digits int) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(props.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/input/digits.templ`, Line: 82, Col: 41}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/input/digits.templ`, Line: 84, Col: 41}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {

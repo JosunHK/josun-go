@@ -9,7 +9,9 @@ import (
 	"net/http"
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
-	dummyTemplates "github.com/JosunHK/josun-go.git/web/templates/contents/dummy"
+	"github.com/JosunHK/josun-go.git/cmd/handlers/mahjong"
+	mahjongStruct "github.com/JosunHK/josun-go.git/cmd/struct/mahjong"
+	mahjongTemplates "github.com/JosunHK/josun-go.git/web/templates/contents/mahjong"
 	watermillhttp "github.com/ThreeDotsLabs/watermill-http/v2/pkg/http"
 	"github.com/ThreeDotsLabs/watermill/components/cqrs"
 	"github.com/ThreeDotsLabs/watermill/message"
@@ -27,10 +29,10 @@ func NewHandler(e *echo.Echo, eventBus *cqrs.EventBus, sseRouter watermillhttp.S
 	}
 
 	marshaler := cqrs.JSONMarshaler{}
-	topic := marshaler.Name(GameStateUpdated{})
+	topic := marshaler.Name(mahjongStruct.GameStateUpdated{})
 	stateHandler := sseRouter.AddHandler(topic, &Streamer{db: database.DB})
 
-	e.POST("/mahjong/room/:code/state", h.UpdateScore)
+	e.POST("/mahjong/updateScore/:code", h.UpdateScore)
 	e.GET("/mahjong/room/:code/state", func(c echo.Context) error {
 		c.Request().SetPathValue("code", c.Param("code"))
 		stateHandler(c.Response(), c.Request())
@@ -44,12 +46,15 @@ func (h Handler) UpdateScore(c echo.Context) error {
 		return c.String(http.StatusBadRequest, "invalid room ID")
 	}
 
-	event := GameUpdated{
+	if err := mahjong.UpdateScore(c); err != nil {
+		return err
+	}
+
+	event := mahjongStruct.GameUpdated{
 		RoomCode: roomCode,
 	}
 
-	err := h.eventBus.Publish(c.Request().Context(), event)
-	if err != nil {
+	if err := h.eventBus.Publish(c.Request().Context(), event); err != nil {
 		return err
 	}
 
@@ -87,7 +92,7 @@ func (s *Streamer) NextStreamResponse(r *http.Request, msg *message.Message) (re
 		return nil, false
 	}
 
-	var event GameStateUpdated
+	var event mahjongStruct.GameStateUpdated
 	err := json.Unmarshal(msg.Payload, &event)
 	if err != nil {
 		fmt.Println("cannot unmarshal: " + err.Error())
@@ -107,13 +112,13 @@ func (s *Streamer) NextStreamResponse(r *http.Request, msg *message.Message) (re
 	return resp, true
 }
 
-func (s *Streamer) getResponse(ctx context.Context, roomCode string, event *GameStateUpdated) (interface{}, error) {
+func (s *Streamer) getResponse(ctx context.Context, roomCode string, event *mahjongStruct.GameStateUpdated) (interface{}, error) {
 	var buffer bytes.Buffer
 	var err error
 	if event == nil {
-		err = dummyTemplates.InitialRes().Render(ctx, &buffer)
+		err = mahjongTemplates.InitRes().Render(ctx, &buffer)
 	} else {
-		err = dummyTemplates.Update(event.RoomCode).Render(ctx, &buffer)
+		err = mahjongTemplates.Update(*event).Render(ctx, &buffer)
 	}
 
 	if err != nil {

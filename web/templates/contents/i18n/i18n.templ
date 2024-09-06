@@ -87,7 +87,7 @@ templ NewRow(locale string) {
 	<form
 		hx-post={ "/i18n/items/" + locale }
 		hx-on::after-request="this.reset()"
-		hx-swap="outerHTML transition:true"
+		hx-swap="innerHTML transition:true"
 		hx-target="#i18n-table"
 	>
 		@table.Row(table.Props{

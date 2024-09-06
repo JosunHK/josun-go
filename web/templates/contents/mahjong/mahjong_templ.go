@@ -219,13 +219,16 @@ func RoomSelectCard() templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <div class=\"flex flex-row justify-between items-end\"><div class=\"flex justify-center items-center grow\">")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <div class=\"flex flex-row justify-between items-end\" x-data=\"{ roomNo: &#39;&#39; }\"><div class=\"flex justify-center items-center grow\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				templ_7745c5c3_Err = input.Digits(input.DigitsProps{
 					Class: "mt-3",
 					Name:  "roomNo",
+					Attrs: templ.Attributes{
+						"x-effect": "roomNo = value",
+					},
 				},
 					4,
 				).Render(ctx, templ_7745c5c3_Buffer)
@@ -251,7 +254,7 @@ func RoomSelectCard() templ.Component {
 					var templ_7745c5c3_Var12 string
 					templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "join"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 68, Col: 30}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 77, Col: 30}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 					if templ_7745c5c3_Err != nil {
@@ -262,6 +265,9 @@ func RoomSelectCard() templ.Component {
 				templ_7745c5c3_Err = button.Button(button.Props{
 					Class:   "w-min",
 					Variant: gocva.Variant{"variant": "secondary"},
+					Attrs: templ.Attributes{
+						"@click": "window.location= '/mahjong/room/' + roomNo",
+					},
 				}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var11), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err

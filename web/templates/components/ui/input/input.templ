@@ -12,6 +12,23 @@ type Props struct {
 	Value string
 }
 
+templ InputRaw(props Props) {
+	<input
+		type={ props.Type }
+		name={ props.Name }
+		value={ props.Value }
+		class={ M(
+            `flex h-10 w-full rounded-md border ring-primary bg-background
+            px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent
+            file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none
+            focus-visible:ring-2 focus-visible:border-ring 
+            disabled:cursor-not-allowed disabled:opacity-50`,
+            props.Class,
+        )}
+		{ props.Attrs... }
+	/>
+}
+
 //use normal input with number type instead if you wish to use in combination with alpinejs' mask
 templ Input(props Props) {
 	<input
@@ -25,10 +42,10 @@ templ Input(props Props) {
             }
         }"
 		class={ M(
-            `flex h-10 w-full rounded-md border border-input bg-background
+            `flex h-10 w-full rounded-md border ring-primary bg-background
             px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent
             file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none
-            focus-visible:border-2 focus-visible:border-ring 
+            focus-visible:ring-2 focus-visible:border-ring 
             disabled:cursor-not-allowed disabled:opacity-50`,
             props.Class,
         )}
@@ -43,7 +60,7 @@ templ NumberInput(props Props) {
 		name={ props.Name }
 		value={ props.Value }
         x-on:input="function($event){
-            $event.target.value = $event.target.value.replace(/[^0-9.]/, '');
+            $event.target.value = $event.target.value.replace(/[^0-9.-]/, '');
         }"
 		class={ M(
             `flex h-10 w-full rounded-md border border-input bg-background

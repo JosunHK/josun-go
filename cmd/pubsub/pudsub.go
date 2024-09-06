@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
+	mahjongStruct "github.com/JosunHK/josun-go.git/cmd/struct/mahjong"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 	"github.com/ThreeDotsLabs/watermill"
 	"github.com/ThreeDotsLabs/watermill-http/v2/pkg/http"
@@ -15,20 +16,24 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-type GameUpdated struct {
-	RoomCode string `json:"room_id"`
-}
-
-type GameStateUpdated struct {
-	RoomCode  string                `json:"room_id"`
-	GameState sqlc.MahjongGameState `json:"game_state"`
-	Players   []sqlc.MahjongPlayer  `json:"players"`
-}
-
 type Routers struct {
 	EventsRouter *message.Router
 	SSERouter    http.SSERouter
 	EventBus     *cqrs.EventBus
+}
+
+func StartEventsRouter(ctx context.Context, routers Routers) {
+	err := routers.EventsRouter.Run(context.Background())
+	if err != nil {
+		panic(err)
+	}
+}
+
+func StartSSERouter(ctx context.Context, routers Routers) {
+	err := routers.SSERouter.Run(context.Background())
+	if err != nil {
+		panic(err)
+	}
 }
 
 func NewRouters() (Routers, error) {
@@ -96,7 +101,7 @@ func NewRouters() (Routers, error) {
 	err = eventProcessor.AddHandlers(
 		cqrs.NewEventHandler(
 			"UpdateGame",
-			func(ctx context.Context, event *GameUpdated) error {
+			func(ctx context.Context, event *mahjongStruct.GameUpdated) error {
 				gameState, err := GetGameStateEventByCode(ctx, event.RoomCode)
 				if err != nil {
 					log.Info("Error getting game state event by code\n", err)
@@ -142,29 +147,29 @@ func NewRouters() (Routers, error) {
 	}, nil
 }
 
-func GetGameStateEventByCode(c context.Context, code string) (GameStateUpdated, error) {
+func GetGameStateEventByCode(c context.Context, code string) (mahjongStruct.GameStateUpdated, error) {
 	DB := database.DB
 	queries := sqlc.New(DB)
 
 	room, err := queries.GetRoomByCode(c, code)
 	if err != nil {
 		log.Info("Error getting room by code\n", err)
-		return GameStateUpdated{}, fmt.Errorf("Unable to get room with code", err)
+		return mahjongStruct.GameStateUpdated{}, fmt.Errorf("Unable to get room with code", err)
 	}
 
 	gameState, err := queries.GetGameStateById(c, room.GameStateID)
 	if err != nil {
 		log.Info("Error getting game state by id\n", err)
-		return GameStateUpdated{}, fmt.Errorf("Unable to get room with code", err)
+		return mahjongStruct.GameStateUpdated{}, fmt.Errorf("Unable to get room with code", err)
 	}
 
-	players, err := queries.GetPlayerByRoomId(c, room.ID)
+	players, err := queries.GetPlayersByRoomId(c, room.ID)
 	if err != nil {
 		log.Info("Error getting players by room id\n", err)
-		return GameStateUpdated{}, fmt.Errorf("Unable to get room with code", err)
+		return mahjongStruct.GameStateUpdated{}, fmt.Errorf("Unable to get room with code", err)
 	}
 
-	return GameStateUpdated{
+	return mahjongStruct.GameStateUpdated{
 		RoomCode:  code,
 		GameState: gameState,
 		Players:   players,

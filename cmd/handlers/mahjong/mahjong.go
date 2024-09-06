@@ -7,6 +7,7 @@ import (
 	mgr "github.com/JosunHK/josun-go.git/cmd/manager/mahjong"
 	responseUtil "github.com/JosunHK/josun-go.git/cmd/util/response"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
+	errorTemplate "github.com/JosunHK/josun-go.git/web/templates/contents/errorAlert"
 	mahjongTemplates "github.com/JosunHK/josun-go.git/web/templates/contents/mahjong"
 	"github.com/a-h/templ"
 	"github.com/gorilla/schema"
@@ -24,10 +25,20 @@ func RoomSetting(c echo.Context) error {
 	return responseUtil.HTML(c, mahjongTemplates.RoomCreate())
 }
 
-func Test(c echo.Context) templ.Component {
-	return mahjongTemplates.Test()
-}
+func Room(c echo.Context) templ.Component {
+	code := c.Param("code")
+	DB := database.DB
+	queries := sqlc.New(DB)
 
+	players, err := queries.GetPlayersByRoomCode(c.Request().Context(), code)
+	if err != nil {
+		return errorTemplate.ErrorAlert("Room Not Found", "The room you are looking for does not exist.")
+	}
+
+	log.Debug("players: ", players)
+
+	return mahjongTemplates.Room(players, code)
+}
 func RoomCreate(c echo.Context) (string, error) {
 	DB := database.DB
 	tx, err := DB.Begin()
