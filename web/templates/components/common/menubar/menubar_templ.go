@@ -91,7 +91,7 @@ func Menubar() templ.Component {
 					}()
 				}
 				ctx = templ.InitializeContext(ctx)
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("Goofy ")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("Goofy Ahh Site")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

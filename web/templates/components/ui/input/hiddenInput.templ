@@ -1,0 +1,21 @@
+package input
+
+import (
+    "fmt"
+)
+
+templ HiddenInput(name string, value string) {
+    <input class="hidden" name={ name } value={ value } />
+}
+
+templ HiddenInputArray(arrayName string, index int, name string, value string) {
+    <input class="hidden" name={ fmt.Sprintf("%s.%d.%s", arrayName, index, name) } value={ value } />
+}
+
+templ HiddenXInputArray(arrayName string, index int, name string, value string) {
+    <input class="hidden" name={ fmt.Sprintf("%s.%d.%s", arrayName, index, name) } :value={ value } />
+}
+
+templ HiddenXInput(name string, value string) {
+    <input class="hidden" name={ name } :value={ value } />
+}

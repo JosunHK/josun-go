@@ -39,6 +39,10 @@ INSERT INTO mahjong_player(
 SELECT * FROM mahjong_room 
 WHERE room_code = ? LIMIT 1;
 
+-- name: GetRoomById :one
+SELECT * FROM mahjong_room 
+WHERE id = ? LIMIT 1;
+
 -- name: GetGameStateById :one
 SELECT * FROM mahjong_game_state 
 WHERE id = ? LIMIT 1;
@@ -60,6 +64,14 @@ OR guest_id = ? LIMIT 1;
 SELECT * FROM mahjong_player
 WHERE id = ? LIMIT 1;
 
+-- name: GetGameStateByRoomCode :one
+SELECT * FROM mahjong_game_state
+WHERE EXISTS (
+    SELECT * FROM mahjong_room 
+    WHERE room_code = ? 
+    AND mahjong_game_state.id = mahjong_room.game_state_id
+) LIMIT 1;
+
 -- name: GetPlayersByRoomCode :many
 SELECT * FROM mahjong_player
 WHERE EXISTS (
@@ -75,4 +87,13 @@ WHERE id IN (sqlc.slice(ids)) AND room_id = ?;
 -- name: UpdatePlayerScore :exec
 UPDATE mahjong_player 
 SET score = ? 
+WHERE id = ?;
+
+-- name: UpdateGameState :exec
+UPDATE mahjong_game_state 
+SET round_wind = ?,
+    seat_wind = ?,
+    round = ?,
+    kyoutaku = ?,
+    ended = ?
 WHERE id = ?;

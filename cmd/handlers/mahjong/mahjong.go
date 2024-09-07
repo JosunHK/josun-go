@@ -31,13 +31,16 @@ func Room(c echo.Context) templ.Component {
 	queries := sqlc.New(DB)
 
 	players, err := queries.GetPlayersByRoomCode(c.Request().Context(), code)
-	if err != nil {
+	if err != nil || len(players) == 0 {
 		return errorTemplate.ErrorAlert("Room Not Found", "The room you are looking for does not exist.")
 	}
 
-	log.Debug("players: ", players)
+	gameState, err := queries.GetGameStateByRoomCode(c.Request().Context(), code)
+	if err != nil || len(players) == 0 {
+		return errorTemplate.ErrorAlert("Room Not Found", "The room you are looking for does not exist.")
+	}
 
-	return mahjongTemplates.Room(players, code)
+	return mahjongTemplates.Room(players, code, gameState)
 }
 func RoomCreate(c echo.Context) (string, error) {
 	DB := database.DB

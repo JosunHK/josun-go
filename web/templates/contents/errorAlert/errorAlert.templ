@@ -3,19 +3,26 @@ package errorTemplate
 import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/alert"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
-    "github.com/gungun974/gocva"
+	"github.com/gungun974/gocva"
 )
 
 templ ErrorAlert(title, desc string) {
-	@alert.Alert(alert.Props{Variant: gocva.Variant{"variant": "destructive"}}) {
-		@icon.Wrapper(icon.Props{}) {
-			@icon.Terminal()
-		}
-		@alert.AlertTitle(alert.Props{}) {
-			title 
-		}
-		@alert.AlertDescription(alert.Props{}) {
-			desc 
-		}
-	}
+    <div
+        class="w-full h-full flex flex-row justify-center items-center"
+    >
+        @alert.Alert(alert.Props{
+            Class: "w-[400px]",
+            Variant: gocva.Variant{"variant": "destructive"},
+        }) {
+            @icon.Wrapper(icon.Props{}) {
+                @icon.Croissant()
+            }
+            @alert.AlertTitle(alert.Props{}) {
+                { title }
+            }
+            @alert.AlertDescription(alert.Props{}) {
+                { desc }
+            }
+        }
+    </div>
 }

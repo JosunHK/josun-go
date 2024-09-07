@@ -71,3 +71,13 @@ func JSON(handler serviceHandler) echo.HandlerFunc {
 		return c.JSON(statusCode, resObj)
 	}
 }
+
+func Logger(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		err := next(c)
+		if err != nil {
+			log.Error(err)
+		}
+		return err
+	}
+}

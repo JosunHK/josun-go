@@ -67,6 +67,7 @@ func main() {
 	//static files
 	e := echo.New()
 	e.Use(eMiddleware.Recover())
+	e.Use(middleware.Logger)
 	e.Pre(eMiddleware.RemoveTrailingSlash())
 
 	e.Static("/static", "web/static")

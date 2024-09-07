@@ -23,7 +23,6 @@ func TranslMenu(ctx context.Context, rawMenu []sqlc.MenuItem) []sqlc.MenuItem {
 func GetMenu(ctx context.Context, key string) []sqlc.MenuItem {
 	rawMenu := GetRawMenu(ctx, key)
 
-	log.Debug("menu size: ", len(rawMenu))
 	return TranslMenu(ctx, rawMenu)
 }
 

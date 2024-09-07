@@ -17,73 +17,91 @@ import (
 	"github.com/gungun974/gocva"
 )
 
-templ ScoreDialog(players []sqlc.MahjongPlayer, code string) {
+templ DialogForm(code string) {
 	<form
 		hx-post={ fmt.Sprintf("/mahjong/updateScore/%v", code) }
-        hx-params="not confirm"
-        hx-swap="none"
+		hx-params="not confirm"
+		hx-swap="none"
 	>
-		@dialog.Dialog(dialog.Props{}) {
-			@card.Card(card.Props{
-				Class: "w-[400px] drop-shadow-xl",
-			}) {
-				@card.Header(card.Props{}) {
-					@card.Title(card.Props{}) {
-						@label.Label(label.Props{}) {
-							{ i18nUtil.T(ctx, "score") }
-						}
+		{ children... }
+	</form>
+}
+
+templ ScoreDialogLayout() {
+	@dialog.Dialog(dialog.Props{}) {
+		@card.Card(card.Props{
+			Class: "w-[400px] drop-shadow-xl",
+		}) {
+			@card.Header(card.Props{}) {
+				@card.Title(card.Props{}) {
+					@label.Label(label.Props{}) {
+						{ i18nUtil.T(ctx, "score") }
 					}
 				}
-				@DialogContent(players)
-				<div class="p-2 flex flex-row justify-end w-full">
-					@button.Button(button.Props{
-                        Name: "confirm",
-						Class: "w-min",
-						Attrs: templ.Attributes{
-							"@click": "dialogToggle($el);",
-						},
-						Variant: gocva.Variant{
-							"variant": "default",
-						},
-					}) {
-						{ i18nUtil.T(ctx, "confirm") }
-					}
-				</div>
 			}
+			{ children... }
+			<div class="p-2 flex flex-row justify-end w-full">
+				@button.Button(button.Props{
+					Name:  "confirm",
+					Class: "w-min",
+					Attrs: templ.Attributes{
+						"@click": "dialogToggle($el);",
+					},
+					Variant: gocva.Variant{
+						"variant": "default",
+					},
+				}) {
+					{ i18nUtil.T(ctx, "confirm") }
+				}
+			</div>
 		}
-	</form>
+	}
+}
+
+templ ScoreDialog(players []sqlc.MahjongPlayer, code string) {
+	@DialogForm(code) {
+		@ScoreDialogLayout() {
+			@DialogContent(players)
+		}
+	}
+}
+
+templ DialogTabs() {
+	<div class="w-full h-full flex flex-col p-2">
+		<div>
+			@tabs.TabsList(tabs.Props{
+				Class: "w-full flex flex-row justify-center items-center gap-4",
+			}) {
+				@tabs.TabsTrigger(tabs.Props{
+					Class: "grow",
+				}, "game_win") {
+					{ i18nUtil.T(ctx, "game_win") }
+				}
+				@tabs.TabsTrigger(tabs.Props{
+					Class: "grow",
+				}, "game_draw") {
+					{ i18nUtil.T(ctx, "game_draw") }
+				}
+				@tabs.TabsTrigger(tabs.Props{
+					Class: "grow",
+				}, "game_manual") {
+					{ i18nUtil.T(ctx, "game_manual") }
+				}
+			}
+		</div>
+		{ children... }
+	</div>
 }
 
 templ DialogContent(players []sqlc.MahjongPlayer) {
 	@tabs.TabsContext(tabs.Props{}, "game_win") {
-		<div class="w-full h-full flex flex-col p-2">
-			<div>
-				@tabs.TabsList(tabs.Props{
-					Class: "w-full flex flex-row justify-center items-center gap-4",
-				}) {
-					@tabs.TabsTrigger(tabs.Props{
-						Class: "grow",
-					}, "game_win") {
-						{ i18nUtil.T(ctx, "game_win") }
-					}
-					@tabs.TabsTrigger(tabs.Props{
-						Class: "grow",
-					}, "game_draw") {
-						{ i18nUtil.T(ctx, "game_draw") }
-					}
-					@tabs.TabsTrigger(tabs.Props{
-						Class: "grow",
-					}, "game_manual") {
-						{ i18nUtil.T(ctx, "game_manual") }
-					}
-				}
-			</div>
+		@DialogTabs() {
 			<div class="h-[15rem] min-h-[15rem]">
 				@tabs.TabsContent(tabs.Props{}, "game_win") {
 					<fieldset
 						:disabled="activeTab !== 'game_win'"
 					>
-                        <input type="hidden" name="updateType" value="win"/>
+						<input type="hidden" name="updateType" value="win"/>
 						@DialogContentWin(players)
 					</fieldset>
 				}
@@ -91,7 +109,7 @@ templ DialogContent(players []sqlc.MahjongPlayer) {
 					<fieldset
 						:disabled="activeTab !== 'game_draw'"
 					>
-                        <input type="hidden" name="updateType" value="draw"/>
+						<input type="hidden" name="updateType" value="draw"/>
 						@DialogContentDraw(players)
 					</fieldset>
 				}
@@ -99,12 +117,12 @@ templ DialogContent(players []sqlc.MahjongPlayer) {
 					<fieldset
 						:disabled="activeTab !== 'game_manual'"
 					>
-                        <input type="hidden" name="updateType" value="manual"/>
+						<input type="hidden" name="updateType" value="manual"/>
 						@DialogContentManual(players)
 					</fieldset>
 				}
 			</div>
-		</div>
+		}
 	}
 }
 
@@ -138,7 +156,7 @@ templ WinnerSelect(players []sqlc.MahjongPlayer) {
 			{ i18nUtil.T(ctx, "game_winner") }
 		}
 		@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
-            Name: "winnerId",
+			Name: "winnerId",
 			Attrs: templ.Attributes{
 				"x-effect": "currentOption = selectedValue",
 			}})
@@ -154,7 +172,7 @@ templ TsumoToggle() {
 			{ i18nUtil.T(ctx, "tsu_mo") }
 		}
 		@switchToggle.Toggle(switchToggle.Props{
-            Name: "isTsumo",
+			Name: "isTsumo",
 			Attrs: templ.Attributes{
 				"x-effect": "isTsumo = checked",
 			},
@@ -164,22 +182,26 @@ templ TsumoToggle() {
 
 templ LoserSelect(players []sqlc.MahjongPlayer) {
 	<div
-		class="flex flex-row items-center justify-between"
-		x-show="isTsumo? $el.style.opacity = '0' : $el.style.opacity = '1'"
-		x-transition
+		class="h-10"
 	>
-		@label.Label(label.Props{
-			Variant: gocva.Variant{
-				"variant": "default",
-			}}) {
-			{ i18nUtil.T(ctx, "game_loser") }
-		}
-		@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
-            Name: "loserId",
-			Attrs: templ.Attributes{
-				"x-effect": "clearDisabled();disableOption(currentOption)",
-			},
-		})
+		<div
+			class="flex flex-row items-center justify-between"
+			x-show="!isTsumo"
+			x-transition.duration.500ms
+		>
+			@label.Label(label.Props{
+				Variant: gocva.Variant{
+					"variant": "default",
+				}}) {
+				{ i18nUtil.T(ctx, "game_loser") }
+			}
+			@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
+				Name: "loserId",
+				Attrs: templ.Attributes{
+					"x-effect": "clearDisabled();disableOption(currentOption)",
+				},
+			})
+		</div>
 	</div>
 }
 
@@ -194,7 +216,7 @@ templ ScoreSelect() {
 			{ i18nUtil.T(ctx, "han") }
 		}
 		@selectBox.Select(menuProvider.GetMenu(ctx, "han"), selectBox.BodyProps{
-            Name: "han",
+			Name:  "han",
 			Attrs: templ.Attributes{},
 		})
 	</div>
@@ -202,7 +224,7 @@ templ ScoreSelect() {
 		class="flex flex-row items-center justify-between"
 	>
 		@label.Label(label.Props{
-            Name: "fu",
+			Name: "fu",
 			Variant: gocva.Variant{
 				"variant": "default",
 			}}) {
@@ -229,19 +251,41 @@ templ DialogContentDraw(players []sqlc.MahjongPlayer) {
 				}}) {
 				{ i18nUtil.T(ctx, "please_select_player_draw") }
 			}
-			for _, player := range players {
-				@toggle.Toggle(toggle.Props{
-					Name: fmt.Sprintf("%v", player.ID),
-					Variant: gocva.Variant{
-						"variant": "outline-destructive",
-						"size":    "sm",
-					},
-				}, false) {
-					{ player.Name }
-				}
-			}
+			@DrawPlayerSelect(players)
+			@KyoutakuSelect(players)
 		}
 	}
+}
+
+templ KyoutakuSelect(players []sqlc.MahjongPlayer) {
+	<div class="flex flex-row items-center justify-between">
+		@label.Label(label.Props{
+			Variant: gocva.Variant{
+				"variant": "default",
+			}}) {
+			{ i18nUtil.T(ctx, "kyoutaku") }
+		}
+		@selectBox.Select(menuProvider.GetMenu(ctx, "kyoutaku"), selectBox.BodyProps{
+			Name: "kyoutaku",
+		})
+	</div>
+}
+
+templ DrawPlayerSelect(players []sqlc.MahjongPlayer) {
+    <div class="grid-cols-2 grid gap-1">
+        for i, player := range players {
+            @toggle.Toggle(toggle.Props{
+                Variant: gocva.Variant{
+                    "variant": "outline-destructive",
+                    "size":    "sm",
+                },
+            }, false) {
+                @input.HiddenInputArray("drawPlayers", i, "playerId", fmt.Sprintf("%v", player.ID))
+                @input.HiddenXInputArray("drawPlayers", i, "tenpai", "toggled")
+                { player.Name }
+            }
+        }
+    </div>
 }
 
 templ DialogContentManual(players []sqlc.MahjongPlayer) {
@@ -263,7 +307,7 @@ templ DialogContentManual(players []sqlc.MahjongPlayer) {
 				Class: "w-full",
 				Name:  "score",
 				Attrs: templ.Attributes{
-					"placeholder":    i18nUtil.T(ctx, "score"),
+					"placeholder": i18nUtil.T(ctx, "score"),
 				},
 			})
 		</div>

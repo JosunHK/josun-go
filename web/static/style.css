@@ -1017,6 +1017,10 @@ body {
   min-width: max-content;
 }
 
+.min-w-\[400px\] {
+  min-width: 400px;
+}
+
 .max-w-\[90dvw\] {
   max-width: 90dvw;
 }

@@ -49,7 +49,6 @@ func T(ctx context.Context, key string) string {
 		return key
 	}
 
-	log.Info("Translated into ", res)
 	return res
 }
 

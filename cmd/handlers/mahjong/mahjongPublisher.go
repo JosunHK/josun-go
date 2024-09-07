@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
+	manager "github.com/JosunHK/josun-go.git/cmd/manager/mahjong"
+	MahjongStruct "github.com/JosunHK/josun-go.git/cmd/struct/mahjong"
 	"github.com/JosunHK/josun-go.git/cmd/util/cookie"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 
@@ -94,6 +96,29 @@ func UpdateScoreWin(c echo.Context, code string, roomId int64) error {
 
 func UpdateScoreDraw(c echo.Context, code string, roomId int64) error {
 	type DrawForm struct {
+		UpdateType  string                     `schema:"updateType,required"`
+		Kyoutaku    int                        `schema:"kyoutaku,required"`
+		DrawPlayers []MahjongStruct.DrawPlayer `schema:"drawPlayers,required"`
+	}
+
+	var drawForm DrawForm
+	err := decoder.Decode(&drawForm, c.Request().PostForm)
+	if err != nil {
+		return fmt.Errorf("Failed to decode drawform", err)
+	}
+
+	ids := []int64{}
+	for _, player := range drawForm.DrawPlayers {
+		ids = append(ids, player.PlayerId)
+	}
+
+	if err := validatePlayers(c, ids, roomId); err != nil {
+		err = fmt.Errorf("Invalid player", err)
+		return err
+	}
+
+	if err := manager.HandleGameDraw(c, drawForm.DrawPlayers, code); err != nil {
+		return fmt.Errorf("Failed to handle game draw", err)
 	}
 
 	return nil
@@ -110,8 +135,7 @@ func UpdateScoreManual(c echo.Context, code string, roomId int64) error {
 	}
 
 	var manualForm ManualForm
-	err := decoder.Decode(&manualForm, c.Request().PostForm)
-	if err != nil {
+	if err := decoder.Decode(&manualForm, c.Request().PostForm); err != nil {
 		return fmt.Errorf("Failed to decode roomSetting", err)
 	}
 

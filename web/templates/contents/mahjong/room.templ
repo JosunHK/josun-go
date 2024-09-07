@@ -3,6 +3,7 @@ package mahjongTemplates
 import (
 	"fmt"
 	mahjongStruct "github.com/JosunHK/josun-go.git/cmd/struct/mahjong"
+	templUtil "github.com/JosunHK/josun-go.git/cmd/util/templ"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
@@ -27,29 +28,11 @@ func getPlayerColor(i int) string {
 }
 
 func getCardData(player sqlc.MahjongPlayer) string {
-	playerJSON := getPlayerJSON(player)
+	playerJSON := templUtil.ToJSONString(player)
 	return fmt.Sprintf(`{
         player : %s,
         counter : new countUp.CountUp('player-%d', 0, {duration: 0.75}),
     }`, playerJSON, player.ID)
-}
-
-func getPlayerJSON(player sqlc.MahjongPlayer) string {
-	playerJSON, err := templ.JSONString(player)
-	if err != nil {
-		playerJSON = "{}"
-	}
-
-	return playerJSON
-}
-
-func getPlayersJSON(players []sqlc.MahjongPlayer) string {
-	playersJSON, err := templ.JSONString(players)
-	if err != nil {
-		playersJSON = "{}"
-	}
-
-	return playersJSON
 }
 
 func getPlayerMenu(players []sqlc.MahjongPlayer) []sqlc.MenuItem {
@@ -64,7 +47,7 @@ func getPlayerMenu(players []sqlc.MahjongPlayer) []sqlc.MenuItem {
 	return items
 }
 
-templ Room(players []sqlc.MahjongPlayer, code string) {
+templ Room(players []sqlc.MahjongPlayer, code string, gameState sqlc.MahjongGameState) {
 	@dialog.WithDialog(dialog.Props{
 		Class: "w-full h-full flex flex-col mt-1",
 	}) {
@@ -73,10 +56,11 @@ templ Room(players []sqlc.MahjongPlayer, code string) {
 		}
 		<div
 			Class="w-full h-full flex flex-col"
-            x-ref="room"
+			x-ref="room"
 			x-data="{
                     players: new Map(),
                     delta: 0,
+                    gameState: {},
                     isShowDelta: false,
                     focused: false,
                     updatePlayers: function(newPlayers) {
@@ -96,21 +80,36 @@ templ Room(players []sqlc.MahjongPlayer, code string) {
                             this.focused = true;
                         }
                         this.delta = score;
-                        this.isShowDelta = !this.isShowDelta;
+                        this.isShowDelta = !this.isShowDelta; 
+                        if (this.isShowDelta !== this.focused) { //should always be in sync
+                            this.isShowDelta = false;
+                            this.focused = false;
+                        }
                     }
                 }"
 		>
 			@AddButton()
+			@GameStateDisplay(gameState)
 			<div class="h-auto flex justify-center items-center grow">
 				@ScoreDisplay(players)
 			</div>
-            <div
-                hx-ext="sse"
-                sse-connect={ fmt.Sprintf("/mahjong/room/%v/state", code) }
-                sse-swap="data"
-            ></div>
+			<div
+				hx-ext="sse"
+				sse-connect={ fmt.Sprintf("/mahjong/room/%v/state", code) }
+				sse-swap="data"
+			></div>
 		</div>
 	}
+}
+
+templ GameStateDisplay(gameState sqlc.MahjongGameState) {
+	<div
+        x-init={ fmt.Sprintf("gameState = %v", templUtil.ToJSONString(gameState)) }
+    >
+        <div x-text="gameState.round_wind"></div>
+        <div x-text="gameState.seat_wind"></div>
+        <div x-text="gameState.round"> </div>
+	</div>
 }
 
 templ AddButton() {
@@ -190,7 +189,7 @@ templ Update(event mahjongStruct.GameStateUpdated) {
 	<x-script
 		x-init={ fmt.Sprintf(`$nextTick(() => {
             updatePlayers(%v)
-        })`, getPlayersJSON(event.Players)) }
+        })`, templUtil.ToJSONString(event.Players)) }
 	></x-script>
 }
 

@@ -6,7 +6,7 @@ templ header() {
 	<!DOCTYPE html>
 	<html class="bg-background dark" x-data x-cloak :class="{'dark' : Alpine.store('darkMode').on }">
 		<head>
-			<title>bruh</title>
+			<title>Goofy Ahh Site</title>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			<link rel="stylesheet" href="/static/style.css"/>
@@ -34,6 +34,7 @@ templ header() {
 }
 
 templ Layout(content templ.Component) {
-	@header()
-	@content
+	@header(){
+	    @content
+    }
 }
