@@ -46,7 +46,7 @@ templ SelectIcon(props Props) {
 templ SelectDisplay(props Props) {
 	<div
 		x-text="selectedLabel"
-		:style="`width: calc(${maxLength} * 1rem`"
+		:style="`width: calc(${maxLength}px`"
 		class={ M("flex items-center", props.Class) }
 		{ props.Attrs... }
 	></div>
@@ -56,7 +56,7 @@ templ SelectTrigger(props Props) {
 	<div
 		class={ M("lex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1", props.Class) }
 		x-ref="button"
-		x-on:click="toggle();"
+		x-on:click.stop="toggle();"
 		:aria-expanded="open"
 		:aria-controls="$id('dropdown-button')"
 		type="button"
@@ -74,18 +74,21 @@ templ SelectTrigger(props Props) {
 }
 
 templ SelectContent(props Props) {
-	<div
-		x-ref="panel"
-		x-show="open"
-		x-transition.origin.top
-		x-on:click.outside="close($refs.button)"
-		:id="$id('dropdown-button')"
-		style="display: none;"
-		class={ M("z-50 rounded-md border bg-popover p-1 text-popover-foreground shadow-md absolute max-h-[12rem] overflow-y-auto", props.Class) }
-		{ props.Attrs... }
-	>
-		{ children... }
-	</div>
+	<template x-teleport="body">
+		<div
+			x-ref="panel"
+			x-show="open"
+            x-anchor="$refs.button"
+			x-transition.origin.top
+			x-on:mousedown.outside="close($refs.button);"
+			:id="$id('dropdown-button')"
+			style="display: none;"
+			class={ M("z-50 rounded-md border bg-popover p-1 text-popover-foreground shadow-md fixed max-h-[12rem] overflow-y-auto scrollbar", props.Class) }
+			{ props.Attrs... }
+		>
+			{ children... }
+		</div>
+	</template>
 }
 
 templ SelectItem(props Props, item sqlc.MenuItem) {
@@ -94,13 +97,13 @@ templ SelectItem(props Props, item sqlc.MenuItem) {
             label : '%s',
             value : '%s',
         }`, item.Label, item.Value) }
-		x-init="options.set(value,$el);setLength(label.length);setDefault(label, value);"
-		@click="toggle(); selectedLabel = label; selectedValue = value; $dispatch('item-clicked')"
-		:style="`width: calc(${maxLength} * 1rem + 40px)`"
+		x-init="options.set(value,$el);setLength(getTextWidth(label, getCanvasFont($el)));setDefault(label, value);"
+		@click.stop="toggle(); selectedLabel = label; selectedValue = value; $dispatch('item-clicked')"
+		:style="`width: calc(${maxLength}px + 40px)`"
 		label={ item.Label }
 		value={ item.Value }
-		class={ M("relative flex cursor-default select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
-		:class="disabled.has(value) ? 'pointer-events-none opacity-50' : ''"
+		class={ M("relative flex cursor-default select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }
+		:class="{'pointer-events-none opacity-50' : disabled.has(value)}"
 		{ props.Attrs... }
 	>
 		{ children... }
@@ -117,7 +120,7 @@ templ SelectItem(props Props, item sqlc.MenuItem) {
 
 templ SelectLabel(props Props) {
 	<div
-		x-init="setLength($el.innerText.length)"
+		x-init="setLength(getTextWidth($el.innerText, getCanvasFont($el)))"
 		class={ M("px-2 py-1.5 text-sm font-semibold", props.Class) }
 		{ props.Attrs... }
 	>
@@ -129,7 +132,7 @@ var scriptHandle = templ.NewOnceHandle()
 
 templ SelectBody(props BodyProps) {
 	<div
-		class={ M("max-w-min", props.Class) }
+		class={ M("max-w-min relative", props.Class) }
 		x-init={ fmt.Sprintf("setDefault('%v', '%v');", props.Selected.Label, props.Selected.Value) }
 		x-data="{
                     open: false,
@@ -147,6 +150,7 @@ templ SelectBody(props BodyProps) {
                     disableOption: function(value){
                         let opt = this.options.get(value);
                         this.disabled.set(value, opt);
+                        console.log('disabling option' + value);
                         if(this.selectedValue === value){
                             for (let [key, val] of this.options) {
                                 if(!this.disabled.has(key)){
@@ -182,8 +186,29 @@ templ SelectBody(props BodyProps) {
                         this.open = false
          
                         focusAfter && focusAfter.focus()
+                    },
+                    getTextWidth(text, font) {
+                        var canvas = this.getTextWidth.canvas || (this.getTextWidth.canvas = document.createElement('canvas'));
+                        var context = canvas.getContext('2d');
+                        context.font = font;
+                        var metrics = context.measureText(text);
+                        return metrics.width;
+                    },
+                    getCssStyle(element, prop) {
+                        return window.getComputedStyle(element, null).getPropertyValue(prop);
+                    },
+                    getCanvasFont(el = document.body) {
+                        const fontWeight = this.getCssStyle(el, 'font-weight') || 'normal';
+                        const fontSize = this.getCssStyle(el, 'font-size') || '16px';
+                        const fontFamily = this.getCssStyle(el, 'font-family') || 'Times New Roman';
+                        return `${fontWeight} ${fontSize} ${fontFamily}`;
+                    },
+                    test(ele){
+                        setInterval(function(){
+                            console.log(ele.getBoundingClientRect())
+                        }, 1000);
                     }
-                }"
+                 }"
 		x-on:keydown.escape.prevent.stop="close($refs.button)"
 		x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
 		x-id="['dropdown-button']"

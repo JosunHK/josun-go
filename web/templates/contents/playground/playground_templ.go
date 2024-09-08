@@ -59,6 +59,7 @@ func Playground() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = selectBox.Select(menuProvider.GetMenu(ctx, "yesNo"), selectBox.BodyProps{
+			Id:   "test",
 			Name: "bruh",
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -68,6 +69,7 @@ func Playground() templ.Component {
 			"A kida very fucking long label test",
 			menuProvider.TranslMenu(ctx, addresses),
 			selectBox.BodyProps{
+				Id:   "test2",
 				Name: "hehe",
 				Attrs: templ.Attributes{
 					"@item-clicked": "window.location('i18n/' + selectedValue)",

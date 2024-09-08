@@ -109,6 +109,8 @@ templ GameStateDisplay(gameState sqlc.MahjongGameState) {
         <div x-text="gameState.round_wind"></div>
         <div x-text="gameState.seat_wind"></div>
         <div x-text="gameState.round"> </div>
+        <div x-text="gameState.kyoutaku"> </div>
+        <div x-text="gameState.ended"> </div>
 	</div>
 }
 
@@ -188,8 +190,9 @@ templ playerCard(i int, player sqlc.MahjongPlayer) {
 templ Update(event mahjongStruct.GameStateUpdated) {
 	<x-script
 		x-init={ fmt.Sprintf(`$nextTick(() => {
-            updatePlayers(%v)
-        })`, templUtil.ToJSONString(event.Players)) }
+            updatePlayers(%v),
+            gameState = %v
+        })`, templUtil.ToJSONString(event.Players), templUtil.ToJSONString(event.GameState)) }
 	></x-script>
 }
 

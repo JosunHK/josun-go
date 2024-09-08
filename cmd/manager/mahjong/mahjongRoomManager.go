@@ -5,7 +5,7 @@ import (
 	"math/rand/v2"
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
-	mahjongStruct "github.com/JosunHK/josun-go.git/cmd/struct/mahjong"
+	ms "github.com/JosunHK/josun-go.git/cmd/struct/mahjong"
 	"github.com/JosunHK/josun-go.git/cmd/util/cookie"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 	"github.com/labstack/echo/v4"
@@ -14,15 +14,17 @@ import (
 const CODE_UPPER_BOUND = 9999
 const CODE_LOWER_BOUND = 0
 
-func CreateGameState(c echo.Context) (int64, error) {
+func CreateGameState(c echo.Context, queries *sqlc.Queries) (int64, error) {
 	params := sqlc.CreateMahjongGameStateParams{
 		RoundWind: sqlc.MahjongGameStateRoundWindEast,
 		SeatWind:  sqlc.MahjongGameStateSeatWindEast,
 		Round:     0,
 	}
 
-	DB := database.DB
-	queries := sqlc.New(DB)
+	if queries == nil {
+		DB := database.DB
+		queries = sqlc.New(DB)
+	}
 
 	result, err := queries.CreateMahjongGameState(c.Request().Context(), params)
 	if err != nil {
@@ -32,14 +34,23 @@ func CreateGameState(c echo.Context) (int64, error) {
 	return result.LastInsertId()
 }
 
-func CreateRoomOwner(c echo.Context) (int64, error) {
+func GetOrCreateRoomOwner(c echo.Context, queries *sqlc.Queries) (int64, error) {
 	roomOwnerParams, err := CreateMahjongRoomOwnerParams(c)
 	if err != nil {
 		return 0, fmt.Errorf("Unable to create params for room owner", err)
 	}
 
-	DB := database.DB
-	queries := sqlc.New(DB)
+	if queries == nil {
+		queries = sqlc.New(database.DB)
+	}
+
+	user, err := queries.GetOwnerByUUIDorUserId(c.Request().Context(), sqlc.GetOwnerByUUIDorUserIdParams{
+		GuestID: roomOwnerParams.GuestID,
+		UserID:  roomOwnerParams.UserID,
+	})
+	if err == nil {
+		return user.ID, nil
+	}
 
 	result, err := queries.CreateMahjongRoomOwner(c.Request().Context(), roomOwnerParams)
 	if err != nil {
@@ -49,32 +60,33 @@ func CreateRoomOwner(c echo.Context) (int64, error) {
 	return result.LastInsertId()
 }
 
-func GetGameData(c echo.Context, code string) (mahjongStruct.GameData, error) {
+func GetGameData(c echo.Context, code string) (ms.GameData, error) {
 	room, err := GetRoomByCode(c, code)
 	if err != nil {
-		return mahjongStruct.GameData{}, err
+		return ms.GameData{}, err
 	}
 
 	state, err := GetGameStateByRoomCode(c, code)
 	if err != nil {
-		return mahjongStruct.GameData{}, err
+		return ms.GameData{}, err
 	}
 
 	players, err := GetPlayersByRoomCode(c, code)
 	if err != nil {
-		return mahjongStruct.GameData{}, err
+		return ms.GameData{}, err
 	}
 
-	return mahjongStruct.GameData{
+	return ms.GameData{
 		Room:      room,
 		GameState: state,
 		Players:   players,
 	}, nil
 }
 
-func CreateRoom(c echo.Context, roomParams sqlc.CreateMahjongRoomParams) (int64, error) {
-	DB := database.DB
-	queries := sqlc.New(DB)
+func CreateRoom(c echo.Context, queries *sqlc.Queries, roomParams sqlc.CreateMahjongRoomParams) (int64, error) {
+	if queries == nil {
+		queries = sqlc.New(database.DB)
+	}
 
 	result, err := queries.CreateMahjongRoom(c.Request().Context(), roomParams)
 	if err != nil {
@@ -98,9 +110,10 @@ func CreateMahjongRoomOwnerParams(c echo.Context) (sqlc.CreateMahjongRoomOwnerPa
 	return params, nil
 }
 
-func CreateMahjongPlayer(c echo.Context, params sqlc.CreateMahjongPlayerParams) (int64, error) {
-	DB := database.DB
-	queries := sqlc.New(DB)
+func CreateMahjongPlayer(c echo.Context, queries *sqlc.Queries, params sqlc.CreateMahjongPlayerParams) (int64, error) {
+	if queries == nil {
+		queries = sqlc.New(database.DB)
+	}
 
 	result, err := queries.CreateMahjongPlayer(c.Request().Context(), params)
 	if err != nil {
@@ -113,8 +126,7 @@ func CreateMahjongPlayer(c echo.Context, params sqlc.CreateMahjongPlayerParams) 
 
 func GetRandomRoomCode(c echo.Context) string {
 	code := genCode()
-	DB := database.DB
-	queries := sqlc.New(DB)
+	queries := sqlc.New(database.DB)
 
 	for _, err := queries.GetRoomByCode(c.Request().Context(), code); err == nil; {
 		code = genCode()
@@ -124,8 +136,7 @@ func GetRandomRoomCode(c echo.Context) string {
 }
 
 func GetPlayersByRoomCode(c echo.Context, code string) ([]sqlc.MahjongPlayer, error) {
-	DB := database.DB
-	queries := sqlc.New(DB)
+	queries := sqlc.New(database.DB)
 
 	players, err := queries.GetPlayersByRoomCode(c.Request().Context(), code)
 	if err != nil {
@@ -136,8 +147,7 @@ func GetPlayersByRoomCode(c echo.Context, code string) ([]sqlc.MahjongPlayer, er
 }
 
 func GetGameStateByRoomCode(c echo.Context, code string) (sqlc.MahjongGameState, error) {
-	DB := database.DB
-	queries := sqlc.New(DB)
+	queries := sqlc.New(database.DB)
 
 	state, err := queries.GetGameStateByRoomCode(c.Request().Context(), code)
 	if err != nil {
@@ -148,8 +158,7 @@ func GetGameStateByRoomCode(c echo.Context, code string) (sqlc.MahjongGameState,
 }
 
 func GetRoomById(c echo.Context, Id int64) (sqlc.MahjongRoom, error) {
-	DB := database.DB
-	queries := sqlc.New(DB)
+	queries := sqlc.New(database.DB)
 
 	room, err := queries.GetRoomById(c.Request().Context(), Id)
 	if err != nil {
@@ -160,8 +169,7 @@ func GetRoomById(c echo.Context, Id int64) (sqlc.MahjongRoom, error) {
 }
 
 func GetRoomByCode(c echo.Context, code string) (sqlc.MahjongRoom, error) {
-	DB := database.DB
-	queries := sqlc.New(DB)
+	queries := sqlc.New(database.DB)
 
 	room, err := queries.GetRoomByCode(c.Request().Context(), code)
 	if err != nil {
@@ -172,8 +180,7 @@ func GetRoomByCode(c echo.Context, code string) (sqlc.MahjongRoom, error) {
 }
 
 func GetPlayerById(c echo.Context, id int64) (sqlc.MahjongPlayer, error) {
-	DB := database.DB
-	queries := sqlc.New(DB)
+	queries := sqlc.New(database.DB)
 
 	player, err := queries.GetPlayerById(c.Request().Context(), id)
 	if err != nil {
@@ -181,11 +188,6 @@ func GetPlayerById(c echo.Context, id int64) (sqlc.MahjongPlayer, error) {
 	}
 
 	return player, nil
-}
-
-func genCode() string {
-	code := rand.IntN(CODE_UPPER_BOUND+1-CODE_LOWER_BOUND) + CODE_LOWER_BOUND
-	return fmt.Sprintf("%04d", code)
 }
 
 func GetWindByIndex(index int) sqlc.MahjongPlayerWind {
@@ -203,9 +205,11 @@ func GetWindByIndex(index int) sqlc.MahjongPlayerWind {
 	return sqlc.MahjongPlayerWindEast
 
 }
-func UpdatePlayerScore(c echo.Context, id int64, score int32) error {
-	DB := database.DB
-	queries := sqlc.New(DB)
+
+func UpdatePlayerScore(c echo.Context, queries *sqlc.Queries, id int64, score int32) error {
+	if queries == nil {
+		queries = sqlc.New(database.DB)
+	}
 
 	err := queries.UpdatePlayerScore(c.Request().Context(), sqlc.UpdatePlayerScoreParams{
 		ID:    id,
@@ -219,9 +223,10 @@ func UpdatePlayerScore(c echo.Context, id int64, score int32) error {
 	return nil
 }
 
-func UpdateGameState(c echo.Context, gameState sqlc.MahjongGameState) error {
-	DB := database.DB
-	queries := sqlc.New(DB)
+func UpdateGameState(c echo.Context, queries *sqlc.Queries, gameState sqlc.MahjongGameState) error {
+	if queries == nil {
+		queries = sqlc.New(database.DB)
+	}
 
 	params := sqlc.UpdateGameStateParams{
 		RoundWind: gameState.RoundWind,
@@ -240,80 +245,64 @@ func UpdateGameState(c echo.Context, gameState sqlc.MahjongGameState) error {
 	return nil
 }
 
-func AdvanceGameRound(c echo.Context, gameState sqlc.MahjongGameState) error {
-	gameState.Round++
-	err := UpdateGameState(c, gameState)
+func HandleGameWin(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) error {
+	tx, err := database.DB.Begin()
+	defer tx.Rollback()
 	if err != nil {
 		return err
 	}
-	return nil
-}
+	_ = sqlc.New(tx)
 
-func GetNextSeatWind(seatWind sqlc.MahjongGameStateSeatWind) (newSeatWind sqlc.MahjongGameStateSeatWind, needUpdateRoundWind bool) {
-	switch seatWind {
-	case sqlc.MahjongGameStateSeatWindEast:
-		return sqlc.MahjongGameStateSeatWindSouth, false
-	case sqlc.MahjongGameStateSeatWindSouth:
-		return sqlc.MahjongGameStateSeatWindWest, false
-	case sqlc.MahjongGameStateSeatWindWest:
-		return sqlc.MahjongGameStateSeatWindNorth, false
-	case sqlc.MahjongGameStateSeatWindNorth:
-		return sqlc.MahjongGameStateSeatWindEast, true
-	}
-	return sqlc.MahjongGameStateSeatWindEast, false
-}
-
-func IsAboveEndThreshold(players []sqlc.MahjongPlayer, threshold int32) bool {
-	for _, player := range players {
-		if player.Score >= threshold {
-			return true
-		}
-	}
-	return false
-}
-
-func AdvanceGameWind(c echo.Context, gameData *mahjongStruct.GameData, threshold int32) error {
-	gameState := gameData.GameState
-	players := gameData.Players
-	gameLength := gameData.Room.GameLength
-
-	newSeatWind, needUpdateRoundWind := GetNextSeatWind(gameState.SeatWind)
-	gameState.SeatWind = newSeatWind
-	if needUpdateRoundWind {
-		gameState.Round = 0
-		switch gameState.RoundWind {
-		case sqlc.MahjongGameStateRoundWindEast:
-			if gameLength == sqlc.MahjongRoomGameLengthTonpuu && IsAboveEndThreshold(players, threshold) {
-				gameState.Ended = true
-			} else {
-				gameState.RoundWind = sqlc.MahjongGameStateRoundWindSouth
-			}
-		case sqlc.MahjongGameStateRoundWindSouth:
-			if gameLength == sqlc.MahjongRoomGameLengthTonpuu || IsAboveEndThreshold(players, threshold) {
-				gameState.Ended = true
-			} else {
-				gameState.RoundWind = sqlc.MahjongGameStateRoundWindWest
-			}
-		case sqlc.MahjongGameStateRoundWindWest:
-			gameState.Ended = true
-		}
+	if winForm.IsTsumo {
+		handleTsumo(c, winForm, gameData)
+	} else {
+		handleDirect(c, winForm, gameData)
 	}
 
-	if err := UpdateGameState(c, gameState); err != nil {
+	handleKyoutaku(c, winForm, gameData)
+
+	return tx.Commit()
+}
+
+func HandleGameDraw(c echo.Context, drawForm ms.DrawForm, gameData *ms.GameData) error {
+	tx, err := database.DB.Begin()
+	defer tx.Rollback()
+	if err != nil {
 		return err
 	}
-	return nil
+	queries := sqlc.New(tx)
+
+	needAdvance := updateDrawGameStateReturnNeedAdvance(drawForm.DrawPlayers, drawForm.Kyoutaku, gameData)
+	if needAdvance {
+		advanceGameWind(gameData, scoreThreshold(gameData.Room.GameLength))
+	} else {
+		gameData.GameState.Round += 1
+	}
+
+	err = UpdateGameState(c, queries, gameData.GameState)
+
+	for _, player := range gameData.Players {
+		err = UpdatePlayerScore(c, queries, player.ID, player.Score)
+		if err != nil {
+			return err
+		}
+	}
+
+	return tx.Commit()
 }
 
-// I dont like this func, It would look so much better if it were written in Haskell
-func HandleGameDraw(c echo.Context, rawPlayers []mahjongStruct.DrawPlayer, code string) error {
+func scoreThreshold(gameLength sqlc.MahjongRoomGameLength) int32 {
+	if gameLength == sqlc.MahjongRoomGameLengthTonpuu {
+		return 40000
+	}
+	return 30000
+}
+
+func updateDrawGameStateReturnNeedAdvance(rawPlayers []ms.DrawPlayer, kyoutaku int, gameData *ms.GameData) bool {
 	noTenpaiCount := 0
 	noTenpaiMap := make(map[int64]bool)
 
-	gameData, err := GetGameData(c, code)
-	if err != nil {
-		return err
-	}
+	gameData.GameState.Kyoutaku += int32(kyoutaku)
 
 	for _, rawPlayer := range rawPlayers {
 		if !rawPlayer.Tenpai {
@@ -327,51 +316,193 @@ func HandleGameDraw(c echo.Context, rawPlayers []mahjongStruct.DrawPlayer, code 
 	case 1:
 		for _, player := range gameData.Players {
 			if !noTenpaiMap[player.ID] {
-				continue
-			}
-			err := UpdatePlayerScore(c, player.ID, player.Score-1000)
-			if err != nil {
-				return err
+				player.Score += 1000
+			} else {
+				player.Score -= 3000
 			}
 		}
 	case 2:
 		for _, player := range gameData.Players {
 			if !noTenpaiMap[player.ID] {
-				continue
-			}
-			err := UpdatePlayerScore(c, player.ID, player.Score-1500)
-			if err != nil {
-				return err
+				player.Score += 1500
+			} else {
+				player.Score -= 1500
 			}
 		}
 	case 3:
 		for _, player := range gameData.Players {
 			if !noTenpaiMap[player.ID] {
-				err := UpdatePlayerScore(c, player.ID, player.Score-3000)
-				if err != nil {
-					return err
-				}
+				player.Score -= 3000
+			} else {
+				player.Score += 1000
 			}
 		}
 	}
 
 	for _, player := range gameData.Players {
 		if !noTenpaiMap[player.ID] && (string(player.Wind) == string(gameData.GameState.SeatWind)) {
-			err := AdvanceGameRound(c, gameData.GameState)
-			if err != nil {
-				return err
-			}
-			return nil
+			return false
 		}
 	}
 
-	var threshold int32
+	return true
+}
 
-	if gameData.Room.GameLength == sqlc.MahjongRoomGameLengthTonpuu {
-		threshold = 40000
-	} else {
-		threshold = 30000
+func genCode() string {
+	code := rand.IntN(CODE_UPPER_BOUND+1-CODE_LOWER_BOUND) + CODE_LOWER_BOUND
+	return fmt.Sprintf("%04d", code)
+}
+
+func advanceGameWind(gameData *ms.GameData, threshold int32) {
+	gameState := gameData.GameState
+	players := gameData.Players
+	gameLength := gameData.Room.GameLength
+
+	newSeatWind, needUpdateRoundWind := getNextSeatWind(gameState.SeatWind)
+	if !needUpdateRoundWind {
+		gameState.SeatWind = newSeatWind
+		return
 	}
 
-	return AdvanceGameWind(c, &gameData, threshold)
+	gameState.Round = 0
+	switch gameState.RoundWind {
+	case sqlc.MahjongGameStateRoundWindEast:
+		if gameLength == sqlc.MahjongRoomGameLengthTonpuu && isAboveEndThreshold(players, threshold) {
+			gameState.Ended = true
+		} else {
+			gameState.RoundWind = sqlc.MahjongGameStateRoundWindSouth
+		}
+	case sqlc.MahjongGameStateRoundWindSouth:
+		if gameLength == sqlc.MahjongRoomGameLengthTonpuu || isAboveEndThreshold(players, threshold) {
+			gameState.Ended = true
+		} else {
+			gameState.RoundWind = sqlc.MahjongGameStateRoundWindWest
+		}
+	case sqlc.MahjongGameStateRoundWindWest:
+		gameState.Ended = true
+	}
+}
+
+func getNextSeatWind(seatWind sqlc.MahjongGameStateSeatWind) (newSeatWind sqlc.MahjongGameStateSeatWind, needUpdateRoundWind bool) {
+	switch seatWind {
+	case sqlc.MahjongGameStateSeatWindEast:
+		return sqlc.MahjongGameStateSeatWindSouth, false
+	case sqlc.MahjongGameStateSeatWindSouth:
+		return sqlc.MahjongGameStateSeatWindWest, false
+	case sqlc.MahjongGameStateSeatWindWest:
+		return sqlc.MahjongGameStateSeatWindNorth, false
+	case sqlc.MahjongGameStateSeatWindNorth:
+		return sqlc.MahjongGameStateSeatWindEast, true
+	}
+	return sqlc.MahjongGameStateSeatWindEast, false
+}
+
+func isAboveEndThreshold(players []sqlc.MahjongPlayer, threshold int32) bool {
+	for _, player := range players {
+		if player.Score >= threshold {
+			return true
+		}
+	}
+	return false
+}
+
+func handleDirect(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) error {
+	var winner *sqlc.MahjongPlayer
+	var loser *sqlc.MahjongPlayer
+	for _, player := range gameData.Players {
+		if player.ID == winForm.WinnerId {
+			winner = &player
+		}
+		if player.ID == winForm.WinnerId {
+			loser = &player
+		}
+	}
+
+	if winner == nil {
+		return fmt.Errorf("Winner not found")
+	}
+
+	if loser == nil {
+		return fmt.Errorf("Winner not found")
+	}
+
+	scoreMap, err := getScoreMap(winForm.Han, winForm.Fu)
+	if err != nil {
+		return err
+	}
+
+	var score int
+	if string(winner.Wind) == string(gameData.GameState.SeatWind) {
+		score = scoreMap.OyaDirect
+	} else {
+		score = scoreMap.KoDirect
+	}
+
+	if score == 0 {
+		return fmt.Errorf("Invalid score")
+	}
+
+	loser.Score -= (int32(score) + gameData.GameState.Round*300)
+	winner.Score += (int32(score) + gameData.GameState.Round*300)
+
+	return nil
+}
+
+func handleTsumo(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) error {
+	var winner *sqlc.MahjongPlayer
+	for _, player := range gameData.Players {
+		if player.ID == winForm.WinnerId {
+			winner = &player
+			break
+		}
+	}
+
+	if winner == nil {
+		return fmt.Errorf("Winner not found")
+	}
+
+	scoreMap, err := getScoreMap(winForm.Han, winForm.Fu)
+	if err != nil {
+		return err
+	}
+
+	if string(winner.Wind) == string(gameData.GameState.SeatWind) {
+		score := scoreMap.OyaTsumo
+		if score == 0 {
+			return fmt.Errorf("Invalid score")
+		}
+		winner.Score += int32(score*3) + gameData.GameState.Round*100*3
+		for _, player := range gameData.Players {
+			if player.ID != winner.ID {
+				player.Score -= (int32(score) + gameData.GameState.Round*100)
+			}
+		}
+	} else {
+		scoreKo := scoreMap.KoTsumoKo
+		scoreOya := scoreMap.KoTsumoOya
+		if scoreKo == 0 || scoreOya == 0 {
+			return fmt.Errorf("Invalid score")
+		}
+		winner.Score += int32(scoreKo*2) + int32(scoreOya) + gameData.GameState.Round*100*3
+		for _, player := range gameData.Players {
+			if player.ID == winner.ID {
+				player.Score -= (int32(scoreOya) + gameData.GameState.Round*100)
+			} else {
+				player.Score -= (int32(scoreKo) + gameData.GameState.Round*100)
+			}
+		}
+	}
+
+	return nil
+}
+
+func handleKyoutaku(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) {
+}
+
+func getScoreMap(han, fu int) (ms.Score, error) {
+	if han == 1 && (fu == 20 || fu == 25) {
+		return ms.Score{}, fmt.Errorf("Invalid han and fu")
+	}
+
+	return ms.ScoreMap[han][fu], nil
 }

@@ -18,18 +18,21 @@ var M = twmerge.Merge
 
 var cva = gocva.CVA{
 	Base: `inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background 
-    transition-colors hover:bg-eGreen/20 hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2
+    transition-colors hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2
     focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50
-    data-[state=on]:bg-eGreen data-[state=on]:text-background`,
+    data-[state=on]:text-background`,
 	Variants: gocva.Variants{
 		"variant": {
-			"default":             "bg-transparent",
+			"no-color":            "",
+			"default":             "bg-transparent data-[state=on]:bg-eGreen hover:bg-eGreen/20 ",
 			"outline":             "border border-input bg-transparent hover:text-accent-foreground",
 			"outline-destructive": "outline-muted outline-1 outline bg-transparent hover:text-accent-foreground data-[state=on]:bg-eRed data-[state=on]:outline-0 hover:bg-eRed/20",
+			"outline-eOrange":     "outline-muted outline-1 outline bg-transparent hover:text-accent-foreground data-[state=on]:bg-eOrange data-[state=on]:outline-0 hover:bg-eOrange/20",
 			"destructive":         "bg-transparent data-[state=on]:bg-eRed hover:bg-eRed/20",
 		},
 		"size": {
 			"default": "h-10 px-3",
+			"xs":      "h-5 px-2.5",
 			"sm":      "h-9 px-2.5",
 			"lg":      "h-11 px-5",
 		},
@@ -79,7 +82,7 @@ func Toggle(props Props, toggled bool) templ.Component {
                 toggled: %v,
             }`, toggled))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/toggle/toggle.templ`, Line: 46, Col: 24}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/toggle/toggle.templ`, Line: 49, Col: 24}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -113,7 +116,7 @@ func Toggle(props Props, toggled bool) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(props.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/toggle/toggle.templ`, Line: 55, Col: 20}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/toggle/toggle.templ`, Line: 58, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {

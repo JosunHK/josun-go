@@ -2,6 +2,7 @@ package mahjong
 
 import (
 	"fmt"
+	"math/rand"
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
 	mgr "github.com/JosunHK/josun-go.git/cmd/manager/mahjong"
@@ -42,44 +43,53 @@ func Room(c echo.Context) templ.Component {
 
 	return mahjongTemplates.Room(players, code, gameState)
 }
+
 func RoomCreate(c echo.Context) (string, error) {
 	DB := database.DB
 	tx, err := DB.Begin()
+	if err != nil {
+		err = fmt.Errorf("Failed to begin transaction", err)
+		log.Error(err)
+		return "", err
+	}
+
 	defer tx.Rollback()
 
+	queries := sqlc.New(tx)
+
 	type RoomSetting struct {
-		PlayerNames []string                   `schema:"playerNames,default:P1|P2|P3|P4"`
+		PlayerNames []string                   `schema:"playerNames"`
 		GameLength  sqlc.MahjongRoomGameLength `schema:"gameLength,required"`
 		StartPoints int                        `schema:"startPoints,required"`
 	}
 
 	if err := c.Request().ParseForm(); err != nil {
-		err = fmt.Errorf("Failed to parse form", err)
-		log.Error(err)
-		return "", err
+		return "", fmt.Errorf("Failed to parse form", err)
 	}
 
 	var roomSetting RoomSetting
 
 	err = decoder.Decode(&roomSetting, c.Request().PostForm)
 	if err != nil {
-		err = fmt.Errorf("Failed to decode roomSetting", err)
-		log.Error(err)
-		return "", err
+		return "", fmt.Errorf("Failed to decode roomSetting", err)
 	}
 
-	ownerId, err := mgr.CreateRoomOwner(c)
-	if err != nil {
-		err = fmt.Errorf("Failed to create room owner", err)
-		log.Error(err)
-		return "", err
+	if roomSetting.GameLength == sqlc.MahjongRoomGameLengthHanChan {
+		fillOutWithRandomNames(&roomSetting.PlayerNames, 4)
 	}
 
-	stateId, err := mgr.CreateGameState(c)
+	if roomSetting.GameLength == sqlc.MahjongRoomGameLengthTonpuu {
+		fillOutWithRandomNames(&roomSetting.PlayerNames, 3)
+	}
+
+	ownerId, err := mgr.GetOrCreateRoomOwner(c, queries)
 	if err != nil {
-		err = fmt.Errorf("Failed to create game state", err)
-		log.Error(err)
-		return "", err
+		return "", fmt.Errorf("Failed to create room owner", err)
+	}
+
+	stateId, err := mgr.CreateGameState(c, queries)
+	if err != nil {
+		return "", fmt.Errorf("Failed to create game state", err)
 	}
 
 	roomCode := mgr.GetRandomRoomCode(c)
@@ -90,15 +100,13 @@ func RoomCreate(c echo.Context) (string, error) {
 		OwnerID:     ownerId,
 	}
 
-	roomId, err := mgr.CreateRoom(c, roomParams)
+	roomId, err := mgr.CreateRoom(c, queries, roomParams)
 	if err != nil {
-		err = fmt.Errorf("Failed to create room", err)
-		log.Error(err)
-		return "", err
+		return "", fmt.Errorf("Failed to create room", err)
 	}
 
 	for i, name := range roomSetting.PlayerNames {
-		_, err := mgr.CreateMahjongPlayer(c, sqlc.CreateMahjongPlayerParams{
+		_, err := mgr.CreateMahjongPlayer(c, queries, sqlc.CreateMahjongPlayerParams{
 			RoomID: roomId,
 			Name:   name,
 			Score:  int32(roomSetting.StartPoints),
@@ -106,11 +114,23 @@ func RoomCreate(c echo.Context) (string, error) {
 		})
 
 		if err != nil {
-			err = fmt.Errorf("Failed to create player", err)
-			log.Error(err)
-			return "", err
+			return "", fmt.Errorf("Failed to create player", err)
 		}
 	}
 
-	return fmt.Sprintf("/mahjong/room/%d", roomCode), nil
+	return fmt.Sprintf("/mahjong/room/%s", roomCode), tx.Commit()
+}
+
+func fillOutWithRandomNames(names *[]string, count int) {
+	randomNames := []string{
+		"Carriage Lau", "Dragon Slayer", "土田浩翔", "伊藤誠", "岩倉玲音",
+		"小島秀夫", "耶穌", "奈須蘑菇", "Ryan Gosling", "藤丸立香", "牧瀬紅莉栖(AI)",
+		"Stocking(1/999)", "成神陽太", "宮永咲", "小泉純一郎", "何屋未来", "野口英世",
+		"Boris Johnson", "Xi Jinping", "Mao Zedong", "太空希特勒", "花京院 🍩", "一姫",
+	}
+
+	for i := len(*names); i < count; i++ {
+		randomName := randomNames[rand.Intn(len(randomNames))]
+		*names = append(*names, randomName)
+	}
 }

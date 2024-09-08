@@ -57,8 +57,8 @@ WHERE id = ? LIMIT 1;
 
 -- name: GetOwnerByUUIDorUserId :one
 SELECT * FROM mahjong_room_owner
-WHERE  user_id = ? 
-OR guest_id = ? LIMIT 1;
+WHERE (user_id = ? 
+OR guest_id = ?) LIMIT 1;
 
 -- name: GetPlayerById :one
 SELECT * FROM mahjong_player

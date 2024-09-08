@@ -8,6 +8,7 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dialog"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/selectBox"
@@ -32,15 +33,8 @@ templ ScoreDialogLayout() {
 		@card.Card(card.Props{
 			Class: "w-[400px] drop-shadow-xl",
 		}) {
-			@card.Header(card.Props{}) {
-				@card.Title(card.Props{}) {
-					@label.Label(label.Props{}) {
-						{ i18nUtil.T(ctx, "score") }
-					}
-				}
-			}
 			{ children... }
-			<div class="p-2 flex flex-row justify-end w-full">
+			<div class="p-2 flex flex-row justify-end w-full ">
 				@button.Button(button.Props{
 					Name:  "confirm",
 					Class: "w-min",
@@ -94,9 +88,11 @@ templ DialogTabs() {
 }
 
 templ DialogContent(players []sqlc.MahjongPlayer) {
-	@tabs.TabsContext(tabs.Props{}, "game_win") {
+	@tabs.TabsContext(tabs.Props{
+		Class: "p-5",
+	}, "game_win") {
 		@DialogTabs() {
-			<div class="h-[15rem] min-h-[15rem]">
+			<div class="h-min min-h-[15rem]">
 				@tabs.TabsContent(tabs.Props{}, "game_win") {
 					<fieldset
 						:disabled="activeTab !== 'game_win'"
@@ -128,23 +124,119 @@ templ DialogContent(players []sqlc.MahjongPlayer) {
 
 templ DialogContentWin(players []sqlc.MahjongPlayer) {
 	@card.Card(card.Props{
-		Class: "w-full h-full border-0 shadow-none",
+		Class: "w-full h-[25rem] border-0 shadow-none overflow-auto",
 	}) {
 		@card.Content(card.Props{
 			Class: "flex flex-col gap-1",
 			Attrs: templ.Attributes{
 				"x-data": `{
-                        currentOption: '',
+                        currentOption1: '',
+                        currentOption2: '',
+                        currentOption3: '',
+                        currentLoser : '',
                         isTsumo: false,
                     }`,
 			},
 		}) {
-			@WinnerSelect(players)
-			@TsumoToggle()
-			@LoserSelect(players)
-			@ScoreSelect()
+			@KyoutakuSelectwin(players)
+			@winnerSelectMenu(players)
+			@addPlayerToggle() {
+				@winnerSelectExtra2(players)
+				@addPlayerToggle() {
+					@winnerSelectExtra3(players)
+				}
+			}
 		}
 	}
+}
+
+templ addPlayerToggle() {
+	<div x-data="{open:false}">
+		@toggle.Toggle(toggle.Props{
+			Class: "w-full my-2",
+			Attrs: templ.Attributes{
+				":Class":   "{'bg-eRed': open, 'bg-eGreen': !open}",
+				"x-effect": "open = toggled",
+			},
+			Variant: gocva.Variant{
+				"variant": "no-color",
+				"size":    "xs",
+			},
+		}, false) {
+			@icon.Wrapper(icon.Props{
+				Class: "text-foreground",
+				Attrs: templ.Attributes{
+					"x-show": "!open",
+				},
+			}) {
+				@icon.Plus()
+			}
+			@icon.Wrapper(icon.Props{
+				Class: "text-foreground",
+				Attrs: templ.Attributes{
+					"x-show": "open",
+				},
+			}) {
+				@icon.Minus()
+			}
+		}
+		<fieldset x-show="open" :disabled="!open">
+			{ children... }
+		</fieldset>
+	</div>
+}
+
+templ winnerSelectMenu(players []sqlc.MahjongPlayer) {
+	@WinnerSelect(players)
+	@TsumoToggle()
+	@LoserSelect(players)
+	@ScoreSelect()
+}
+
+templ winnerSelectExtra2(players []sqlc.MahjongPlayer) {
+	<div class="flex flex-col gap-1">
+		@WinnerSelectExtra2(players)
+		@ScoreSelect()
+	</div>
+}
+
+templ winnerSelectExtra3(players []sqlc.MahjongPlayer) {
+	<div class="flex flex-col gap-1">
+		@WinnerSelectExtra3(players)
+		@ScoreSelect()
+	</div>
+}
+
+templ WinnerSelectExtra2(players []sqlc.MahjongPlayer) {
+	<div class="flex flex-row items-center justify-between">
+		@label.Label(label.Props{
+			Variant: gocva.Variant{
+				"variant": "default",
+			}}) {
+			{ i18nUtil.T(ctx, "game_winner") }
+		}
+		@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
+			Name: "winnerId",
+			Attrs: templ.Attributes{
+				"x-effect": "currentOption2 = selectedValue;clearDisabled();disableOption(currentOption1);disableOption(currentLoser)",
+			}})
+	</div>
+}
+
+templ WinnerSelectExtra3(players []sqlc.MahjongPlayer) {
+	<div class="flex flex-row items-center justify-between">
+		@label.Label(label.Props{
+			Variant: gocva.Variant{
+				"variant": "default",
+			}}) {
+			{ i18nUtil.T(ctx, "game_winner") }
+		}
+		@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
+			Name: "winnerId",
+			Attrs: templ.Attributes{
+				"x-effect": "currentOption3 = selectedValue; clearDisabled(); disableOption(currentOption1); disableOption(currentOption2); disableOption(currentLoser);",
+			}})
+	</div>
 }
 
 templ WinnerSelect(players []sqlc.MahjongPlayer) {
@@ -158,8 +250,36 @@ templ WinnerSelect(players []sqlc.MahjongPlayer) {
 		@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
 			Name: "winnerId",
 			Attrs: templ.Attributes{
-				"x-effect": "currentOption = selectedValue",
+				"x-effect": "currentOption1 = selectedValue;",
 			}})
+	</div>
+}
+
+templ KyoutakuSelectwin(players []sqlc.MahjongPlayer) {
+	@label.Label(label.Props{
+		Class: "text-xl font-semibold my-2",
+		Variant: gocva.Variant{
+			"variant": "default",
+		}}) {
+		{ i18nUtil.T(ctx, "please_select_player_riichi") }
+	}
+	<div class="grid-cols-2 grid gap-1">
+		for i, player := range players {
+			@toggle.Toggle(toggle.Props{
+				Attrs: templ.Attributes{
+					"x-effect": fmt.Sprintf("toggled = (!currentOption1 === '%v')", player.ID),
+					":class":   fmt.Sprintf("{'pointer-events-none text-muted bg-muted/20' : currentOption1 === '%v'}", player.ID),
+				},
+				Variant: gocva.Variant{
+					"variant": "outline-eOrange",
+					"size":    "sm",
+				},
+			}, false) {
+				@input.HiddenInputArray("riichiPlayers", i, "playerId", fmt.Sprintf("%v", player.ID))
+				@input.HiddenXInputArray("riichiPlayers", i, "riichi", "toggled")
+				{ player.Name }
+			}
+		}
 	</div>
 }
 
@@ -198,7 +318,7 @@ templ LoserSelect(players []sqlc.MahjongPlayer) {
 			@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
 				Name: "loserId",
 				Attrs: templ.Attributes{
-					"x-effect": "clearDisabled();disableOption(currentOption)",
+					"x-effect": "currentLoser = selectedValue; clearDisabled();disableOption(currentOption1)",
 				},
 			})
 		</div>
@@ -224,13 +344,13 @@ templ ScoreSelect() {
 		class="flex flex-row items-center justify-between"
 	>
 		@label.Label(label.Props{
-			Name: "fu",
 			Variant: gocva.Variant{
 				"variant": "default",
 			}}) {
 			{ i18nUtil.T(ctx, "fu") }
 		}
 		@selectBox.Select(menuProvider.GetMenu(ctx, "fu"), selectBox.BodyProps{
+			Name:  "fu",
 			Attrs: templ.Attributes{},
 		})
 	</div>
@@ -244,48 +364,77 @@ templ DialogContentDraw(players []sqlc.MahjongPlayer) {
 			Class: "flex flex-col gap-1",
 			Attrs: templ.Attributes{},
 		}) {
-			@label.Label(label.Props{
-				Class: "text-xl font-semibold mb-2",
-				Variant: gocva.Variant{
-					"variant": "default",
-				}}) {
-				{ i18nUtil.T(ctx, "please_select_player_draw") }
-			}
-			@DrawPlayerSelect(players)
-			@KyoutakuSelect(players)
+			@drawPlayerContext(players)
 		}
 	}
 }
 
-templ KyoutakuSelect(players []sqlc.MahjongPlayer) {
-	<div class="flex flex-row items-center justify-between">
-		@label.Label(label.Props{
-			Variant: gocva.Variant{
-				"variant": "default",
-			}}) {
-			{ i18nUtil.T(ctx, "kyoutaku") }
+templ drawPlayerContext(players []sqlc.MahjongPlayer) {
+	<div
+		x-data="{
+        drawPlayers: new Map(),
+        riichiPlayers: new Map(),
+    }"
+	>
+		@DrawPlayerSelect(players)
+		@KyoutakuSelectDraw(players)
+	</div>
+}
+
+templ KyoutakuSelectDraw(players []sqlc.MahjongPlayer) {
+	@label.Label(label.Props{
+		Class: "text-xl font-semibold my-2",
+		Variant: gocva.Variant{
+			"variant": "default",
+		}}) {
+		{ i18nUtil.T(ctx, "please_select_player_riichi") }
+	}
+	<div class="grid-cols-2 grid gap-1">
+		for i, player := range players {
+			@toggle.Toggle(toggle.Props{
+				Attrs: templ.Attributes{
+					"x-effect": fmt.Sprintf("riichiPlayers.set(%v, toggled);", player.ID),
+					":class":   fmt.Sprintf("{'pointer-events-none text-muted bg-muted/20' : drawPlayers.get(%v)}", player.ID),
+				},
+				Variant: gocva.Variant{
+					"variant": "outline-eOrange",
+					"size":    "sm",
+				},
+			}, false) {
+				@input.HiddenInputArray("riichiPlayers", i, "playerId", fmt.Sprintf("%v", player.ID))
+				@input.HiddenXInputArray("riichiPlayers", i, "riichi", "toggled")
+				{ player.Name }
+			}
 		}
-		@selectBox.Select(menuProvider.GetMenu(ctx, "kyoutaku"), selectBox.BodyProps{
-			Name: "kyoutaku",
-		})
 	</div>
 }
 
 templ DrawPlayerSelect(players []sqlc.MahjongPlayer) {
-    <div class="grid-cols-2 grid gap-1">
-        for i, player := range players {
-            @toggle.Toggle(toggle.Props{
-                Variant: gocva.Variant{
-                    "variant": "outline-destructive",
-                    "size":    "sm",
-                },
-            }, false) {
-                @input.HiddenInputArray("drawPlayers", i, "playerId", fmt.Sprintf("%v", player.ID))
-                @input.HiddenXInputArray("drawPlayers", i, "tenpai", "toggled")
-                { player.Name }
-            }
-        }
-    </div>
+	@label.Label(label.Props{
+		Class: "text-xl font-semibold mb-2",
+		Variant: gocva.Variant{
+			"variant": "default",
+		}}) {
+		{ i18nUtil.T(ctx, "please_select_player_draw") }
+	}
+	<div class="grid-cols-2 grid gap-1">
+		for i, player := range players {
+			@toggle.Toggle(toggle.Props{
+				Attrs: templ.Attributes{
+					"x-effect": fmt.Sprintf("drawPlayers.set(%v, toggled)", player.ID),
+					":class":   fmt.Sprintf("{'pointer-events-none text-muted bg-muted/20' : riichiPlayers.get(%v)}", player.ID),
+				},
+				Variant: gocva.Variant{
+					"variant": "outline-destructive",
+					"size":    "sm",
+				},
+			}, false) {
+				@input.HiddenInputArray("drawPlayers", i, "playerId", fmt.Sprintf("%v", player.ID))
+				@input.HiddenXInputArray("drawPlayers", i, "tenpai", "toggled")
+				{ player.Name }
+			}
+		}
+	</div>
 }
 
 templ DialogContentManual(players []sqlc.MahjongPlayer) {

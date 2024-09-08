@@ -25,12 +25,14 @@ templ Playground() {
 		@datepicker.DatePicker()
 		@cmp.DemoDropDown()
 		@selectBox.Select(menuProvider.GetMenu(ctx, "yesNo"), selectBox.BodyProps{
+            Id: "test",
 			Name: "bruh",
 		})
 		@selectBox.LabeledSelect(
 			"A kida very fucking long label test",
 			menuProvider.TranslMenu(ctx, addresses),
 			selectBox.BodyProps{
+                Id: "test2",
 				Name: "hehe",
 				Attrs: templ.Attributes{
 					"@item-clicked": "window.location('i18n/' + selectedValue)",

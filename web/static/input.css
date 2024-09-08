@@ -109,4 +109,14 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
+
+    ::-webkit-scrollbar {
+      background: hsl(var(--muted));
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: hsl(var(--eGreen));
+      border-radius:8px;
+    }
 }
