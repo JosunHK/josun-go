@@ -203,11 +203,6 @@ templ SelectBody(props BodyProps) {
                         const fontFamily = this.getCssStyle(el, 'font-family') || 'Times New Roman';
                         return `${fontWeight} ${fontSize} ${fontFamily}`;
                     },
-                    test(ele){
-                        setInterval(function(){
-                            console.log(ele.getBoundingClientRect())
-                        }, 1000);
-                    }
                  }"
 		x-on:keydown.escape.prevent.stop="close($refs.button)"
 		x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
