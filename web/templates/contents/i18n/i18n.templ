@@ -31,7 +31,7 @@ templ LocaleSelect(locale string) {
 				Selected: i18nUtil.GetMenuItem(locale),
 					Class: "mt-2 mr-2",
 					Attrs: templ.Attributes{
-						"@item-clicked": "window.location.replace(selectedValue)",
+						"@item-clicked.window": "window.location.replace(selectedValue)",
 					},
 			},
 		)

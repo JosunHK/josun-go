@@ -118,7 +118,7 @@ func RoomCreate(c echo.Context) (string, error) {
 		}
 	}
 
-	return fmt.Sprintf("/mahjong/room/%s", roomCode), tx.Commit()
+	return fmt.Sprint("/mahjong/room/", roomCode), tx.Commit()
 }
 
 func fillOutWithRandomNames(names *[]string, count int) {

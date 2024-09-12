@@ -23,6 +23,8 @@ type BodyProps struct {
 	Class     string
 	Attrs     templ.Attributes
 	ItemAttrs templ.Attributes
+	Required  bool
+	ExtraInit string
 }
 
 templ SelectTriggerIcon(props Props) {
@@ -56,7 +58,8 @@ templ SelectTrigger(props Props) {
 	<div
 		class={ M("lex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1", props.Class) }
 		x-ref="button"
-		x-on:click.stop="toggle();"
+		x-intersect:leave="close($refs.button);"
+		x-on:mousedown="toggle();"
 		:aria-expanded="open"
 		:aria-controls="$id('dropdown-button')"
 		type="button"
@@ -78,7 +81,7 @@ templ SelectContent(props Props) {
 		<div
 			x-ref="panel"
 			x-show="open"
-            x-anchor="$refs.button"
+			x-anchor="$refs.button"
 			x-transition.origin.top
 			x-on:mousedown.outside="close($refs.button);"
 			:id="$id('dropdown-button')"
@@ -133,7 +136,7 @@ var scriptHandle = templ.NewOnceHandle()
 templ SelectBody(props BodyProps) {
 	<div
 		class={ M("max-w-min relative", props.Class) }
-		x-init={ fmt.Sprintf("setDefault('%v', '%v');", props.Selected.Label, props.Selected.Value) }
+		x-init={ fmt.Sprint("setDefault('"+props.Selected.Label+"', '"+props.Selected.Value+"');") + props.ExtraInit }
 		x-data="{
                     open: false,
                     selectedLabel: '',
@@ -148,9 +151,11 @@ templ SelectBody(props BodyProps) {
                         }
                     },
                     disableOption: function(value){
+                        if (value === '') {
+                            return;
+                        }
                         let opt = this.options.get(value);
                         this.disabled.set(value, opt);
-                        console.log('disabling option' + value);
                         if(this.selectedValue === value){
                             for (let [key, val] of this.options) {
                                 if(!this.disabled.has(key)){
@@ -214,6 +219,7 @@ templ SelectBody(props BodyProps) {
 			style="display:none"
 			name={ props.Name }
 			x-model="selectedValue"
+			required?={ props.Required }
 		/>
 		{ children... }
 	</div>

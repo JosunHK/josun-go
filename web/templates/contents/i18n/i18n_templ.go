@@ -110,7 +110,7 @@ func LocaleSelect(locale string) templ.Component {
 				Selected: i18nUtil.GetMenuItem(locale),
 				Class:    "mt-2 mr-2",
 				Attrs: templ.Attributes{
-					"@item-clicked": "window.location.replace(selectedValue)",
+					"@item-clicked.window": "window.location.replace(selectedValue)",
 				},
 			},
 		).Render(ctx, templ_7745c5c3_Buffer)

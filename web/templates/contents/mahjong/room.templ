@@ -2,10 +2,12 @@ package mahjongTemplates
 
 import (
 	"fmt"
+    "context"
 	mahjongStruct "github.com/JosunHK/josun-go.git/cmd/struct/mahjong"
 	templUtil "github.com/JosunHK/josun-go.git/cmd/util/templ"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
+    i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dialog"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
@@ -41,9 +43,21 @@ func getPlayerMenu(players []sqlc.MahjongPlayer) []sqlc.MenuItem {
 		items = append(items, sqlc.MenuItem{
 			Label: player.Name,
 			Value: fmt.Sprintf("%v", player.ID),
+            SortOrder: -1,
 		})
 
 	}
+	return items
+}
+
+func getPlayerMenuPlease(ctx context.Context, players []sqlc.MahjongPlayer) []sqlc.MenuItem {
+    items := append([]sqlc.MenuItem{
+        {
+            Label: i18nUtil.T(ctx, "please_select"),
+            Value: "",
+        },
+    }, getPlayerMenu(players)...)
+
 	return items
 }
 

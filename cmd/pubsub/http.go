@@ -5,12 +5,12 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
 	"github.com/JosunHK/josun-go.git/cmd/handlers/mahjong"
 	mahjongStruct "github.com/JosunHK/josun-go.git/cmd/struct/mahjong"
+	errorTemplate "github.com/JosunHK/josun-go.git/web/templates/contents/errorAlert"
 	mahjongTemplates "github.com/JosunHK/josun-go.git/web/templates/contents/mahjong"
 	watermillhttp "github.com/ThreeDotsLabs/watermill-http/v2/pkg/http"
 	"github.com/ThreeDotsLabs/watermill/components/cqrs"
@@ -43,11 +43,11 @@ func NewHandler(e *echo.Echo, eventBus *cqrs.EventBus, sseRouter watermillhttp.S
 func (h Handler) UpdateScore(c echo.Context) error {
 	roomCode := c.Param("code")
 	if roomCode == "" {
-		return c.String(http.StatusBadRequest, "invalid room ID")
+		return errorTemplate.SimpleError("Invalid Request").Render(c.Request().Context(), c.Response().Writer)
 	}
 
 	if err := mahjong.UpdateScore(c); err != nil {
-		return err
+		return errorTemplate.SimpleError("Interal Server Error, try again later!").Render(c.Request().Context(), c.Response().Writer)
 	}
 
 	event := mahjongStruct.GameUpdated{
@@ -55,9 +55,10 @@ func (h Handler) UpdateScore(c echo.Context) error {
 	}
 
 	if err := h.eventBus.Publish(c.Request().Context(), event); err != nil {
-		return err
+		return errorTemplate.SimpleError("Interal Server Error, try again later!").Render(c.Request().Context(), c.Response().Writer)
 	}
 
+	log.Info("UpdateScore for room : " + roomCode)
 	return c.NoContent(http.StatusOK)
 }
 
@@ -88,14 +89,14 @@ func (s *Streamer) NextStreamResponse(r *http.Request, msg *message.Message) (re
 	log.Info("sending NextStreamResponse")
 	roomCode := r.PathValue("code")
 	if roomCode == "" {
-		fmt.Println("invalid room ID")
+		log.Error("invalid room ID")
 		return nil, false
 	}
 
 	var event mahjongStruct.GameStateUpdated
 	err := json.Unmarshal(msg.Payload, &event)
 	if err != nil {
-		fmt.Println("cannot unmarshal: " + err.Error())
+		log.Error("cannot unmarshal: " + err.Error())
 		return "", false
 	}
 
@@ -105,7 +106,7 @@ func (s *Streamer) NextStreamResponse(r *http.Request, msg *message.Message) (re
 
 	resp, err := s.getResponse(r.Context(), roomCode, &event)
 	if err != nil {
-		fmt.Println("could not get response: " + err.Error())
+		log.Error("could not get response: " + err.Error())
 		return nil, false
 	}
 

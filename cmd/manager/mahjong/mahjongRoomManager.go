@@ -253,11 +253,11 @@ func HandleGameWin(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) er
 	}
 	_ = sqlc.New(tx)
 
-	if winForm.IsTsumo {
-		handleTsumo(c, winForm, gameData)
-	} else {
-		handleDirect(c, winForm, gameData)
-	}
+	// if winForm.IsTsumo {
+	// 	handleTsumo(c, winForm, gameData)
+	// } else {
+	// 	handleDirect(c, winForm, gameData)
+	// }
 
 	handleKyoutaku(c, winForm, gameData)
 
@@ -272,7 +272,11 @@ func HandleGameDraw(c echo.Context, drawForm ms.DrawForm, gameData *ms.GameData)
 	}
 	queries := sqlc.New(tx)
 
-	needAdvance := updateDrawGameStateReturnNeedAdvance(drawForm.DrawPlayers, drawForm.Kyoutaku, gameData)
+	needAdvance, err := updateDrawGameStateReturnNeedAdvance(drawForm.DrawPlayers, drawForm.RiichiPlayers, gameData)
+	if err != nil {
+		return err
+	}
+
 	if needAdvance {
 		advanceGameWind(gameData, scoreThreshold(gameData.Room.GameLength))
 	} else {
@@ -298,40 +302,67 @@ func scoreThreshold(gameLength sqlc.MahjongRoomGameLength) int32 {
 	return 30000
 }
 
-func updateDrawGameStateReturnNeedAdvance(rawPlayers []ms.DrawPlayer, kyoutaku int, gameData *ms.GameData) bool {
-	noTenpaiCount := 0
-	noTenpaiMap := make(map[int64]bool)
-
-	gameData.GameState.Kyoutaku += int32(kyoutaku)
-
-	for _, rawPlayer := range rawPlayers {
-		if !rawPlayer.Tenpai {
-			noTenpaiCount++
+func handlePlayerRiichi(riichiPlayers []ms.RiichiPlayer, gameData *ms.GameData) {
+	for i := range gameData.Players {
+		player := &gameData.Players[i]
+		for _, rplayer := range riichiPlayers {
+			if player.ID == rplayer.PlayerId && rplayer.Riichi {
+				player.Score -= int32(1000)
+			}
 		}
+	}
+}
 
-		noTenpaiMap[rawPlayer.PlayerId] = rawPlayer.Tenpai
+func updateDrawGameStateReturnNeedAdvance(rawPlayers []ms.DrawPlayer, riichiPlayers []ms.RiichiPlayer, gameData *ms.GameData) (bool, error) {
+	noTenCount := 0
+	riichiCount := 0
+	noTenMap := make(map[int64]bool)
+
+	for _, p := range riichiPlayers {
+		if p.Riichi {
+			riichiCount++
+		}
 	}
 
-	switch noTenpaiCount {
+	gameData.GameState.Kyoutaku += int32(riichiCount)
+	handlePlayerRiichi(riichiPlayers, gameData)
+
+	for _, rawPlayer := range rawPlayers {
+		if rawPlayer.NoTen {
+			for _, rplayer := range riichiPlayers {
+				if rawPlayer.PlayerId == rplayer.PlayerId && rplayer.Riichi {
+					return false, fmt.Errorf("Invalid draw")
+				}
+			}
+			noTenCount++
+		}
+
+		noTenMap[rawPlayer.PlayerId] = rawPlayer.NoTen
+	}
+
+	switch noTenCount {
 	case 1:
-		for _, player := range gameData.Players {
-			if !noTenpaiMap[player.ID] {
+		for i := range gameData.Players {
+			player := &gameData.Players[i]
+			if !noTenMap[player.ID] {
 				player.Score += 1000
 			} else {
 				player.Score -= 3000
 			}
 		}
 	case 2:
-		for _, player := range gameData.Players {
-			if !noTenpaiMap[player.ID] {
+		for i := range gameData.Players {
+			player := &gameData.Players[i]
+			if !noTenMap[player.ID] {
 				player.Score += 1500
 			} else {
 				player.Score -= 1500
 			}
 		}
 	case 3:
-		for _, player := range gameData.Players {
-			if !noTenpaiMap[player.ID] {
+		for i := range gameData.Players {
+			player := &gameData.Players[i]
+			if !noTenMap[player.ID] {
 				player.Score -= 3000
 			} else {
 				player.Score += 1000
@@ -340,12 +371,12 @@ func updateDrawGameStateReturnNeedAdvance(rawPlayers []ms.DrawPlayer, kyoutaku i
 	}
 
 	for _, player := range gameData.Players {
-		if !noTenpaiMap[player.ID] && (string(player.Wind) == string(gameData.GameState.SeatWind)) {
-			return false
+		if noTenMap[player.ID] && (string(player.Wind) == string(gameData.GameState.SeatWind)) {
+			return true, nil
 		}
 	}
 
-	return true
+	return false, nil
 }
 
 func genCode() string {
@@ -354,17 +385,18 @@ func genCode() string {
 }
 
 func advanceGameWind(gameData *ms.GameData, threshold int32) {
-	gameState := gameData.GameState
+	gameState := &gameData.GameState
 	players := gameData.Players
 	gameLength := gameData.Room.GameLength
 
 	newSeatWind, needUpdateRoundWind := getNextSeatWind(gameState.SeatWind)
+	gameState.SeatWind = newSeatWind
+	gameState.Round = 0
+
 	if !needUpdateRoundWind {
-		gameState.SeatWind = newSeatWind
 		return
 	}
 
-	gameState.Round = 0
 	switch gameState.RoundWind {
 	case sqlc.MahjongGameStateRoundWindEast:
 		if gameLength == sqlc.MahjongRoomGameLengthTonpuu && isAboveEndThreshold(players, threshold) {
@@ -406,96 +438,95 @@ func isAboveEndThreshold(players []sqlc.MahjongPlayer, threshold int32) bool {
 	return false
 }
 
-func handleDirect(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) error {
-	var winner *sqlc.MahjongPlayer
-	var loser *sqlc.MahjongPlayer
-	for _, player := range gameData.Players {
-		if player.ID == winForm.WinnerId {
-			winner = &player
-		}
-		if player.ID == winForm.WinnerId {
-			loser = &player
-		}
-	}
-
-	if winner == nil {
-		return fmt.Errorf("Winner not found")
-	}
-
-	if loser == nil {
-		return fmt.Errorf("Winner not found")
-	}
-
-	scoreMap, err := getScoreMap(winForm.Han, winForm.Fu)
-	if err != nil {
-		return err
-	}
-
-	var score int
-	if string(winner.Wind) == string(gameData.GameState.SeatWind) {
-		score = scoreMap.OyaDirect
-	} else {
-		score = scoreMap.KoDirect
-	}
-
-	if score == 0 {
-		return fmt.Errorf("Invalid score")
-	}
-
-	loser.Score -= (int32(score) + gameData.GameState.Round*300)
-	winner.Score += (int32(score) + gameData.GameState.Round*300)
-
-	return nil
-}
-
-func handleTsumo(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) error {
-	var winner *sqlc.MahjongPlayer
-	for _, player := range gameData.Players {
-		if player.ID == winForm.WinnerId {
-			winner = &player
-			break
-		}
-	}
-
-	if winner == nil {
-		return fmt.Errorf("Winner not found")
-	}
-
-	scoreMap, err := getScoreMap(winForm.Han, winForm.Fu)
-	if err != nil {
-		return err
-	}
-
-	if string(winner.Wind) == string(gameData.GameState.SeatWind) {
-		score := scoreMap.OyaTsumo
-		if score == 0 {
-			return fmt.Errorf("Invalid score")
-		}
-		winner.Score += int32(score*3) + gameData.GameState.Round*100*3
-		for _, player := range gameData.Players {
-			if player.ID != winner.ID {
-				player.Score -= (int32(score) + gameData.GameState.Round*100)
-			}
-		}
-	} else {
-		scoreKo := scoreMap.KoTsumoKo
-		scoreOya := scoreMap.KoTsumoOya
-		if scoreKo == 0 || scoreOya == 0 {
-			return fmt.Errorf("Invalid score")
-		}
-		winner.Score += int32(scoreKo*2) + int32(scoreOya) + gameData.GameState.Round*100*3
-		for _, player := range gameData.Players {
-			if player.ID == winner.ID {
-				player.Score -= (int32(scoreOya) + gameData.GameState.Round*100)
-			} else {
-				player.Score -= (int32(scoreKo) + gameData.GameState.Round*100)
-			}
-		}
-	}
-
-	return nil
-}
-
+//	func handleDirect(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) error {
+//		var winner *sqlc.MahjongPlayer
+//		var loser *sqlc.MahjongPlayer
+//		for _, player := range gameData.Players {
+//			if player.ID == winForm.WinnerId {
+//				winner = &player
+//			}
+//			if player.ID == winForm.WinnerId {
+//				loser = &player
+//			}
+//		}
+//
+//		if winner == nil {
+//			return fmt.Errorf("Winner not found")
+//		}
+//
+//		if loser == nil {
+//			return fmt.Errorf("Winner not found")
+//		}
+//
+//		scoreMap, err := getScoreMap(winForm.Han, winForm.Fu)
+//		if err != nil {
+//			return err
+//		}
+//
+//		var score int
+//		if string(winner.Wind) == string(gameData.GameState.SeatWind) {
+//			score = scoreMap.OyaDirect
+//		} else {
+//			score = scoreMap.KoDirect
+//		}
+//
+//		if score == 0 {
+//			return fmt.Errorf("Invalid score")
+//		}
+//
+//		loser.Score -= (int32(score) + gameData.GameState.Round*300)
+//		winner.Score += (int32(score) + gameData.GameState.Round*300)
+//
+//		return nil
+//	}
+//
+//	func handleTsumo(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) error {
+//		var winner *sqlc.MahjongPlayer
+//		for _, player := range gameData.Players {
+//			if player.ID == winForm.WinnerId {
+//				winner = &player
+//				break
+//			}
+//		}
+//
+//		if winner == nil {
+//			return fmt.Errorf("Winner not found")
+//		}
+//
+//		scoreMap, err := getScoreMap(winForm.Han, winForm.Fu)
+//		if err != nil {
+//			return err
+//		}
+//
+//		if string(winner.Wind) == string(gameData.GameState.SeatWind) {
+//			score := scoreMap.OyaTsumo
+//			if score == 0 {
+//				return fmt.Errorf("Invalid score")
+//			}
+//			winner.Score += int32(score*3) + gameData.GameState.Round*100*3
+//			for _, player := range gameData.Players {
+//				if player.ID != winner.ID {
+//					player.Score -= (int32(score) + gameData.GameState.Round*100)
+//				}
+//			}
+//		} else {
+//			scoreKo := scoreMap.KoTsumoKo
+//			scoreOya := scoreMap.KoTsumoOya
+//			if scoreKo == 0 || scoreOya == 0 {
+//				return fmt.Errorf("Invalid score")
+//			}
+//			winner.Score += int32(scoreKo*2) + int32(scoreOya) + gameData.GameState.Round*100*3
+//			for _, player := range gameData.Players {
+//				if player.ID == winner.ID {
+//					player.Score -= (int32(scoreOya) + gameData.GameState.Round*100)
+//				} else {
+//					player.Score -= (int32(scoreKo) + gameData.GameState.Round*100)
+//				}
+//			}
+//		}
+//
+//		return nil
+//	}
 func handleKyoutaku(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) {
 }
 

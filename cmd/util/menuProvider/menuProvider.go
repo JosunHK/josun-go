@@ -20,6 +20,13 @@ func TranslMenu(ctx context.Context, rawMenu []sqlc.MenuItem) []sqlc.MenuItem {
 
 }
 
+func GetMenuPlease(ctx context.Context, key string) []sqlc.MenuItem {
+	rawMenu := GetRawMenu(ctx, key)
+	rawMenu = append(rawMenu, sqlc.MenuItem{Label: "please_select", Value: ""})
+
+	return TranslMenu(ctx, rawMenu)
+}
+
 func GetMenu(ctx context.Context, key string) []sqlc.MenuItem {
 	rawMenu := GetRawMenu(ctx, key)
 

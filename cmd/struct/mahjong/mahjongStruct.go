@@ -16,7 +16,12 @@ type GameStateUpdated struct {
 
 type DrawPlayer struct {
 	PlayerId int64 `schema:"playerId,required"`
-	Tenpai   bool  `schema:"tenpai,required"`
+	NoTen    bool  `schema:"noTen,required"`
+}
+
+type RiichiPlayer struct {
+	PlayerId int64 `schema:"playerId,required"`
+	Riichi   bool  `schema:"riichi,required"`
 }
 
 type GameData struct {
@@ -26,19 +31,19 @@ type GameData struct {
 }
 
 type WinForm struct {
-	UpdateType string `schema:"updateType,required"`
-	WinnerId   int64  `schema:"winnerId,required"`
-	IsTsumo    bool   `schema:"tsumo,required"`
-	LoserId    int64  `schema:"loserId,required"`
-	Han        int    `schema:"hah,required"`
-	Fu         int    `schema:"fu,required"`
-	RiichiBo   int    `schema:"riichiBo,required"`
+	UpdateType string  `schema:"updateType,required"`
+	WinnerIds  []int64 `schema:"winnerId,required"`
+	IsTsumo    bool    `schema:"tsumo,required"`
+	LoserId    int64   `schema:"loserId,required"`
+	Hans       []int   `schema:"hah,required"`
+	Fus        []int   `schema:"fu,required"`
+	RiichiBo   int     `schema:"riichiBo,required"`
 }
 
 type DrawForm struct {
-	UpdateType  string       `schema:"updateType,required"`
-	Kyoutaku    int          `schema:"kyoutaku,required"`
-	DrawPlayers []DrawPlayer `schema:"drawPlayers,required"`
+	UpdateType    string         `schema:"updateType,required"`
+	DrawPlayers   []DrawPlayer   `schema:"drawPlayers,required"`
+	RiichiPlayers []RiichiPlayer `schema:"riichiPlayers,required"`
 }
 
 type ManualForm struct {

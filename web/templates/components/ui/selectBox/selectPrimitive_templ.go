@@ -31,6 +31,8 @@ type BodyProps struct {
 	Class     string
 	Attrs     templ.Attributes
 	ItemAttrs templ.Attributes
+	Required  bool
+	ExtraInit string
 }
 
 func SelectTriggerIcon(props Props) templ.Component {
@@ -241,7 +243,7 @@ func SelectTrigger(props Props) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-ref=\"button\" x-on:click.stop=\"toggle();\" :aria-expanded=\"open\" :aria-controls=\"$id(&#39;dropdown-button&#39;)\" type=\"button\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-ref=\"button\" x-intersect:leave=\"close($refs.button);\" x-on:mousedown=\"toggle();\" :aria-expanded=\"open\" :aria-controls=\"$id(&#39;dropdown-button&#39;)\" type=\"button\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -384,7 +386,7 @@ func SelectItem(props Props, item sqlc.MenuItem) templ.Component {
             value : '%s',
         }`, item.Label, item.Value))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/selectPrimitive.templ`, Line: 99, Col: 35}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/selectPrimitive.templ`, Line: 102, Col: 35}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 		if templ_7745c5c3_Err != nil {
@@ -397,7 +399,7 @@ func SelectItem(props Props, item sqlc.MenuItem) templ.Component {
 		var templ_7745c5c3_Var20 string
 		templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(item.Label)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/selectPrimitive.templ`, Line: 103, Col: 20}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/selectPrimitive.templ`, Line: 106, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 		if templ_7745c5c3_Err != nil {
@@ -410,7 +412,7 @@ func SelectItem(props Props, item sqlc.MenuItem) templ.Component {
 		var templ_7745c5c3_Var21 string
 		templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(item.Value)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/selectPrimitive.templ`, Line: 104, Col: 20}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/selectPrimitive.templ`, Line: 107, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var21))
 		if templ_7745c5c3_Err != nil {
@@ -583,15 +585,15 @@ func SelectBody(props BodyProps) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var30 string
-		templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("setDefault('%v', '%v');", props.Selected.Label, props.Selected.Value))
+		templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint("setDefault('"+props.Selected.Label+"', '"+props.Selected.Value+"');") + props.ExtraInit)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/selectPrimitive.templ`, Line: 136, Col: 93}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/selectPrimitive.templ`, Line: 139, Col: 110}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var30))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-data=\"{\n                    open: false,\n                    selectedLabel: &#39;&#39;,\n                    selectedValue: &#39;&#39;,\n                    maxLength: 0,\n                    options: new Map(),\n                    disabled: new Map(),\n                    setDefault(label, value){\n                        if (this.selectedLabel === &#39;&#39;) {\n                            this.selectedLabel = label \n                            this.selectedValue = value\n                        }\n                    },\n                    disableOption: function(value){\n                        let opt = this.options.get(value);\n                        this.disabled.set(value, opt);\n                        console.log(&#39;disabling option&#39; + value);\n                        if(this.selectedValue === value){\n                            for (let [key, val] of this.options) {\n                                if(!this.disabled.has(key)){\n                                    this.selectedLabel = val.getAttribute(&#39;label&#39;);\n                                    this.selectedValue = val.getAttribute(&#39;value&#39;);\n                                    break;\n                                }\n                            }\n                            if(this.selectedValue === value){\n                                this.selectedLabel = &#39;&#39;;\n                                this.selectedValue = &#39;&#39;;\n                            }\n                        }\n                    },\n                    clearDisabled: function(){\n                        this.disabled = new Map();\n                    },\n                    toggle() {\n                        if (this.open) {\n                            return this.close()\n                        }\n                        this.$refs.button.focus()\n                        this.open = true\n                    },\n                    setLength(length) {\n                        if (length &gt; this.maxLength) {\n                            (this.maxLength = length)\n                        } \n                    },\n                    close(focusAfter) {\n                        if (! this.open) return\n         \n                        this.open = false\n         \n                        focusAfter &amp;&amp; focusAfter.focus()\n                    },\n                    getTextWidth(text, font) {\n                        var canvas = this.getTextWidth.canvas || (this.getTextWidth.canvas = document.createElement(&#39;canvas&#39;));\n                        var context = canvas.getContext(&#39;2d&#39;);\n                        context.font = font;\n                        var metrics = context.measureText(text);\n                        return metrics.width;\n                    },\n                    getCssStyle(element, prop) {\n                        return window.getComputedStyle(element, null).getPropertyValue(prop);\n                    },\n                    getCanvasFont(el = document.body) {\n                        const fontWeight = this.getCssStyle(el, &#39;font-weight&#39;) || &#39;normal&#39;;\n                        const fontSize = this.getCssStyle(el, &#39;font-size&#39;) || &#39;16px&#39;;\n                        const fontFamily = this.getCssStyle(el, &#39;font-family&#39;) || &#39;Times New Roman&#39;;\n                        return `${fontWeight} ${fontSize} ${fontFamily}`;\n                    },\n                 }\" x-on:keydown.escape.prevent.stop=\"close($refs.button)\" x-on:focusin.window=\"! $refs.panel.contains($event.target) &amp;&amp; close()\" x-id=\"[&#39;dropdown-button&#39;]\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-data=\"{\n                    open: false,\n                    selectedLabel: &#39;&#39;,\n                    selectedValue: &#39;&#39;,\n                    maxLength: 0,\n                    options: new Map(),\n                    disabled: new Map(),\n                    setDefault(label, value){\n                        if (this.selectedLabel === &#39;&#39;) {\n                            this.selectedLabel = label \n                            this.selectedValue = value\n                        }\n                    },\n                    disableOption: function(value){\n                        if (value === &#39;&#39;) {\n                            return;\n                        }\n                        let opt = this.options.get(value);\n                        this.disabled.set(value, opt);\n                        if(this.selectedValue === value){\n                            for (let [key, val] of this.options) {\n                                if(!this.disabled.has(key)){\n                                    this.selectedLabel = val.getAttribute(&#39;label&#39;);\n                                    this.selectedValue = val.getAttribute(&#39;value&#39;);\n                                    break;\n                                }\n                            }\n                            if(this.selectedValue === value){\n                                this.selectedLabel = &#39;&#39;;\n                                this.selectedValue = &#39;&#39;;\n                            }\n                        }\n                    },\n                    clearDisabled: function(){\n                        this.disabled = new Map();\n                    },\n                    toggle() {\n                        if (this.open) {\n                            return this.close()\n                        }\n                        this.$refs.button.focus()\n                        this.open = true\n                    },\n                    setLength(length) {\n                        if (length &gt; this.maxLength) {\n                            (this.maxLength = length)\n                        } \n                    },\n                    close(focusAfter) {\n                        if (! this.open) return\n         \n                        this.open = false\n         \n                        focusAfter &amp;&amp; focusAfter.focus()\n                    },\n                    getTextWidth(text, font) {\n                        var canvas = this.getTextWidth.canvas || (this.getTextWidth.canvas = document.createElement(&#39;canvas&#39;));\n                        var context = canvas.getContext(&#39;2d&#39;);\n                        context.font = font;\n                        var metrics = context.measureText(text);\n                        return metrics.width;\n                    },\n                    getCssStyle(element, prop) {\n                        return window.getComputedStyle(element, null).getPropertyValue(prop);\n                    },\n                    getCanvasFont(el = document.body) {\n                        const fontWeight = this.getCssStyle(el, &#39;font-weight&#39;) || &#39;normal&#39;;\n                        const fontSize = this.getCssStyle(el, &#39;font-size&#39;) || &#39;16px&#39;;\n                        const fontFamily = this.getCssStyle(el, &#39;font-family&#39;) || &#39;Times New Roman&#39;;\n                        return `${fontWeight} ${fontSize} ${fontFamily}`;\n                    },\n                 }\" x-on:keydown.escape.prevent.stop=\"close($refs.button)\" x-on:focusin.window=\"! $refs.panel.contains($event.target) &amp;&amp; close()\" x-id=\"[&#39;dropdown-button&#39;]\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -606,13 +608,23 @@ func SelectBody(props BodyProps) templ.Component {
 		var templ_7745c5c3_Var31 string
 		templ_7745c5c3_Var31, templ_7745c5c3_Err = templ.JoinStringErrs(props.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/selectPrimitive.templ`, Line: 215, Col: 20}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/ui/selectBox/selectPrimitive.templ`, Line: 220, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var31))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-model=\"selectedValue\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-model=\"selectedValue\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if props.Required {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" required")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

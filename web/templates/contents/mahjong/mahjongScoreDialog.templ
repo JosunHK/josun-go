@@ -22,7 +22,8 @@ templ DialogForm(code string) {
 	<form
 		hx-post={ fmt.Sprintf("/mahjong/updateScore/%v", code) }
 		hx-params="not confirm"
-		hx-swap="none"
+        hx-target="#err-msg"
+		hx-on::after-request="window.dispatchEvent(new CustomEvent('close-dialog', { bubbles: true }))"
 	>
 		{ children... }
 	</form>
@@ -34,12 +35,13 @@ templ ScoreDialogLayout() {
 			Class: "w-[400px] drop-shadow-xl",
 		}) {
 			{ children... }
+            <div class="w-full text-center" id="err-msg"></div>
 			<div class="p-2 flex flex-row justify-end w-full ">
 				@button.Button(button.Props{
 					Name:  "confirm",
 					Class: "w-min",
 					Attrs: templ.Attributes{
-						"@click": "dialogToggle($el);",
+						"@close-ddialog.window": "dialogToggle()",
 					},
 					Variant: gocva.Variant{
 						"variant": "default",
@@ -64,7 +66,7 @@ templ DialogTabs() {
 	<div class="w-full h-full flex flex-col p-2">
 		<div>
 			@tabs.TabsList(tabs.Props{
-				Class: "w-full flex flex-row justify-center items-center gap-4",
+				Class: "w-full flex flex-row justify-center items-center gap-4 z-[100]",
 			}) {
 				@tabs.TabsTrigger(tabs.Props{
 					Class: "grow",
@@ -130,10 +132,7 @@ templ DialogContentWin(players []sqlc.MahjongPlayer) {
 			Class: "flex flex-col gap-1",
 			Attrs: templ.Attributes{
 				"x-data": `{
-                        currentOption1: '',
-                        currentOption2: '',
-                        currentOption3: '',
-                        currentLoser : '',
+                        currentOptions: new Set(),
                         isTsumo: false,
                     }`,
 			},
@@ -141,9 +140,9 @@ templ DialogContentWin(players []sqlc.MahjongPlayer) {
 			@KyoutakuSelectwin(players)
 			@winnerSelectMenu(players)
 			@addPlayerToggle() {
-				@winnerSelectExtra2(players)
+				@winnerSelectMenuExtra(1, players)
 				@addPlayerToggle() {
-					@winnerSelectExtra3(players)
+					@winnerSelectMenuExtra(2, players)
 				}
 			}
 		}
@@ -186,28 +185,34 @@ templ addPlayerToggle() {
 	</div>
 }
 
+templ winnerSelectContext(i int) {
+	<div x-data="{playerId : '', han : '', fu: '', }">
+		@input.HiddenXInputArray("winner", i, "playerId", "playerId")
+		@input.HiddenXInputArray("winner", i, "han", "han")
+		@input.HiddenXInputArray("winner", i, "fu", "fu")
+		{ children... }
+	</div>
+}
+
 templ winnerSelectMenu(players []sqlc.MahjongPlayer) {
-	@WinnerSelect(players)
-	@TsumoToggle()
-	@LoserSelect(players)
-	@ScoreSelect()
-}
-
-templ winnerSelectExtra2(players []sqlc.MahjongPlayer) {
-	<div class="flex flex-col gap-1">
-		@WinnerSelectExtra2(players)
+	@winnerSelectContext(0) {
+		@WinnerSelect(players, getPlayerMenu(players))
+		@TsumoToggle()
+		@LoserSelect(players)
 		@ScoreSelect()
-	</div>
+	}
 }
 
-templ winnerSelectExtra3(players []sqlc.MahjongPlayer) {
+templ winnerSelectMenuExtra(i int, players []sqlc.MahjongPlayer) {
 	<div class="flex flex-col gap-1">
-		@WinnerSelectExtra3(players)
-		@ScoreSelect()
+		@winnerSelectContext(i) {
+			@WinnerSelect(players, getPlayerMenuPlease(ctx, players))
+			@ScoreSelect()
+		}
 	</div>
 }
 
-templ WinnerSelectExtra2(players []sqlc.MahjongPlayer) {
+templ WinnerSelect(players []sqlc.MahjongPlayer, menu []sqlc.MenuItem) {
 	<div class="flex flex-row items-center justify-between">
 		@label.Label(label.Props{
 			Variant: gocva.Variant{
@@ -215,42 +220,19 @@ templ WinnerSelectExtra2(players []sqlc.MahjongPlayer) {
 			}}) {
 			{ i18nUtil.T(ctx, "game_winner") }
 		}
-		@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
-			Name: "winnerId",
+		@selectBox.Select(menu, selectBox.BodyProps{
+			ExtraInit: `$watch('selectedValue', (value, oldValue) => {
+                            currentOptions = new Set([...currentOptions].filter(item => item !== oldValue)); 
+                            currentOptions.add(value);
+                        });`,
 			Attrs: templ.Attributes{
-				"x-effect": "currentOption2 = selectedValue;clearDisabled();disableOption(currentOption1);disableOption(currentLoser)",
-			}})
-	</div>
-}
-
-templ WinnerSelectExtra3(players []sqlc.MahjongPlayer) {
-	<div class="flex flex-row items-center justify-between">
-		@label.Label(label.Props{
-			Variant: gocva.Variant{
-				"variant": "default",
-			}}) {
-			{ i18nUtil.T(ctx, "game_winner") }
-		}
-		@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
-			Name: "winnerId",
-			Attrs: templ.Attributes{
-				"x-effect": "currentOption3 = selectedValue; clearDisabled(); disableOption(currentOption1); disableOption(currentOption2); disableOption(currentLoser);",
-			}})
-	</div>
-}
-
-templ WinnerSelect(players []sqlc.MahjongPlayer) {
-	<div class="flex flex-row items-center justify-between">
-		@label.Label(label.Props{
-			Variant: gocva.Variant{
-				"variant": "default",
-			}}) {
-			{ i18nUtil.T(ctx, "game_winner") }
-		}
-		@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
-			Name: "winnerId",
-			Attrs: templ.Attributes{
-				"x-effect": "currentOption1 = selectedValue;",
+				"x-effect": `
+                    playerId = currentOptions;
+                    clearDisabled();
+                    currentOptions.forEach(
+                        option => {selectedValue !== option && disableOption(option)}
+                    );
+                `,
 			}})
 	</div>
 }
@@ -266,10 +248,7 @@ templ KyoutakuSelectwin(players []sqlc.MahjongPlayer) {
 	<div class="grid-cols-2 grid gap-1">
 		for i, player := range players {
 			@toggle.Toggle(toggle.Props{
-				Attrs: templ.Attributes{
-					"x-effect": fmt.Sprintf("toggled = (!currentOption1 === '%v')", player.ID),
-					":class":   fmt.Sprintf("{'pointer-events-none text-muted bg-muted/20' : currentOption1 === '%v'}", player.ID),
-				},
+				Attrs: templ.Attributes{},
 				Variant: gocva.Variant{
 					"variant": "outline-eOrange",
 					"size":    "sm",
@@ -315,10 +294,23 @@ templ LoserSelect(players []sqlc.MahjongPlayer) {
 				}}) {
 				{ i18nUtil.T(ctx, "game_loser") }
 			}
-			@selectBox.Select(getPlayerMenu(players), selectBox.BodyProps{
-				Name: "loserId",
+			@selectBox.Select(getPlayerMenuPlease(ctx, players), selectBox.BodyProps{
+				Name:     "loserId",
+				Required: true,
+				ExtraInit: `$watch('selectedValue', (value, oldValue) => {
+                                currentOptions = new Set([...currentOptions].filter(item => item !== oldValue)); 
+                                currentOptions.add(value);
+                            });`,
 				Attrs: templ.Attributes{
-					"x-effect": "currentLoser = selectedValue; clearDisabled();disableOption(currentOption1)",
+                    ":class": "selectedValue === '' ? 'text-eRed' : ''",
+					"x-effect": `
+                    clearDisabled();
+                    currentOptions.forEach(
+                        option => {
+                            selectedValue !== option && disableOption(option) 
+                        }
+                    );
+                `,
 				},
 			})
 		</div>
@@ -336,8 +328,9 @@ templ ScoreSelect() {
 			{ i18nUtil.T(ctx, "han") }
 		}
 		@selectBox.Select(menuProvider.GetMenu(ctx, "han"), selectBox.BodyProps{
-			Name:  "han",
-			Attrs: templ.Attributes{},
+			Attrs: templ.Attributes{
+				"x-effect": "han = selectedValue",
+			},
 		})
 	</div>
 	<div
@@ -350,8 +343,9 @@ templ ScoreSelect() {
 			{ i18nUtil.T(ctx, "fu") }
 		}
 		@selectBox.Select(menuProvider.GetMenu(ctx, "fu"), selectBox.BodyProps{
-			Name:  "fu",
-			Attrs: templ.Attributes{},
+			Attrs: templ.Attributes{
+				"x-effect": "fu = selectedValue",
+			},
 		})
 	</div>
 }
@@ -430,7 +424,7 @@ templ DrawPlayerSelect(players []sqlc.MahjongPlayer) {
 				},
 			}, false) {
 				@input.HiddenInputArray("drawPlayers", i, "playerId", fmt.Sprintf("%v", player.ID))
-				@input.HiddenXInputArray("drawPlayers", i, "tenpai", "toggled")
+				@input.HiddenXInputArray("drawPlayers", i, "noTen", "toggled")
 				{ player.Name }
 			}
 		}

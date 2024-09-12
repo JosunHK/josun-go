@@ -10,32 +10,32 @@ templ header() {
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			<link rel="stylesheet" href="/static/style.css"/>
-            //others
+			//others
 			<script defer src="/static/countup.js"></script>
-
-            //htmx 
+			//htmx 
 			<script src="/static/htmx-min.js"></script>
 			<script defer src="/static/htmx-sse-ext.js"></script>
-
-            //alpine js
-            <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/anchor@3.x.x/dist/cdn.min.js"></script>
-            <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
-            <script defer src="https://unpkg.com/@alpinejs/morph@3.x.x/dist/cdn.min.js"></script>
-            <script defer src="https://unpkg.com/htmx.org@1.9.12/dist/ext/alpine-morph.js"></script>
+            <script defer src="https://unpkg.com/htmx.org@1.9.12/dist/ext/response-targets.js"></script>
+			//alpine js
+			<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/anchor@3.x.x/dist/cdn.min.js"></script>
+			<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+			<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+			<script defer src="https://unpkg.com/@alpinejs/morph@3.x.x/dist/cdn.min.js"></script>
+			<script defer src="https://unpkg.com/htmx.org@1.9.12/dist/ext/alpine-morph.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.1/dist/cdn.min.js"></script>
 			<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 		</head>
-		<body class="bg-background w-dvw h-dvh flex flex-col">
-            @menubar.Menubar()
-            <div class="mt-[3rem] h-[100% - 3rem]">
-                { children... }
-            </div>
+		<body class="bg-background w-dvw h-dvh flex flex-col overflow-y-auto scrollbar-hide">
+			@menubar.Menubar()
+			<div class="w-full max-w-full relative top-[3rem]">
+				{ children... }
+			</div>
 		</body>
 	</html>
 }
 
 templ Layout(content templ.Component) {
-	@header(){
-	    @content
-    }
+	@header() {
+		@content
+	}
 }

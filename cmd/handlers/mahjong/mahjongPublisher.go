@@ -91,10 +91,10 @@ func UpdateScoreWin(c echo.Context, gameData *mahjongStruct.GameData) error {
 	var winForm mahjongStruct.WinForm
 	err := decoder.Decode(&winForm, c.Request().PostForm)
 	if err != nil {
-		return fmt.Errorf("Failed to decode drawform", err)
+		return fmt.Errorf("Failed to decode win form", err)
 	}
 
-	ids := []int64{winForm.WinnerId}
+	ids := winForm.WinnerIds
 	if !winForm.IsTsumo {
 		ids = append(ids, winForm.LoserId)
 	}
@@ -105,7 +105,7 @@ func UpdateScoreWin(c echo.Context, gameData *mahjongStruct.GameData) error {
 	}
 
 	if err := manager.HandleGameWin(c, winForm, gameData); err != nil {
-		return fmt.Errorf("Failed to handle game draw", err)
+		return fmt.Errorf("Failed to handle game win", err)
 	}
 
 	return nil
@@ -115,7 +115,7 @@ func UpdateScoreDraw(c echo.Context, gameData *mahjongStruct.GameData) error {
 	var drawForm mahjongStruct.DrawForm
 	err := decoder.Decode(&drawForm, c.Request().PostForm)
 	if err != nil {
-		return fmt.Errorf("Failed to decode drawform", err)
+		return fmt.Errorf("Failed to decode draw form", err)
 	}
 
 	ids := []int64{}

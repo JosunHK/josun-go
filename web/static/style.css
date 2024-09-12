@@ -668,10 +668,6 @@ body {
   pointer-events: none;
 }
 
-.visible {
-  visibility: visible;
-}
-
 .static {
   position: static;
 }
@@ -720,8 +716,8 @@ body {
   top: 0.3rem;
 }
 
-.top-\[-100px\] {
-  top: -100px;
+.top-\[3rem\] {
+  top: 3rem;
 }
 
 .z-10 {
@@ -730,6 +726,10 @@ body {
 
 .z-50 {
   z-index: 50;
+}
+
+.z-\[100\] {
+  z-index: 100;
 }
 
 .m-1 {
@@ -758,11 +758,6 @@ body {
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-}
-
-.mx-2 {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
 }
 
 .mb-1 {
@@ -815,10 +810,6 @@ body {
 
 .mt-4 {
   margin-top: 1rem;
-}
-
-.mt-\[3rem\] {
-  margin-top: 3rem;
 }
 
 .block {
@@ -889,10 +880,6 @@ body {
   height: 2.25rem;
 }
 
-.h-\[15rem\] {
-  height: 15rem;
-}
-
 .h-\[1px\] {
   height: 1px;
 }
@@ -903,6 +890,10 @@ body {
 
 .h-\[20px\] {
   height: 20px;
+}
+
+.h-\[25rem\] {
+  height: 25rem;
 }
 
 .h-\[3rem\] {
@@ -936,14 +927,6 @@ body {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[20rem\] {
-  height: 20rem;
-}
-
-.h-\[25rem\] {
-  height: 25rem;
 }
 
 .max-h-\[12rem\] {
@@ -1052,6 +1035,10 @@ body {
   max-width: 90dvw;
 }
 
+.max-w-full {
+  max-width: 100%;
+}
+
 .max-w-lg {
   max-width: 32rem;
 }
@@ -1080,21 +1067,6 @@ body {
 
 .translate-x-5 {
   --tw-translate-x: 1.25rem;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.translate-x-\[-3000px\] {
-  --tw-translate-x: -3000px;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.translate-x-\[-100px\] {
-  --tw-translate-x: -100px;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.translate-x-\[-1000px\] {
-  --tw-translate-x: -1000px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -1363,6 +1335,10 @@ body {
   background-color: hsl(var(--muted-foreground));
 }
 
+.bg-muted\/20 {
+  background-color: hsl(var(--muted) / 0.2);
+}
+
 .bg-muted\/50 {
   background-color: hsl(var(--muted) / 0.5);
 }
@@ -1403,14 +1379,6 @@ body {
   background-color: rgb(39 39 42 / 0.5);
 }
 
-.bg-muted\/20 {
-  background-color: hsl(var(--muted) / 0.2);
-}
-
-.bg-none {
-  background-image: none;
-}
-
 .fill-current {
   fill: currentColor;
 }
@@ -1427,12 +1395,12 @@ body {
   padding: 1rem;
 }
 
-.p-6 {
-  padding: 1.5rem;
-}
-
 .p-5 {
   padding: 1.25rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
 }
 
 .px-0 {
@@ -1503,10 +1471,6 @@ body {
 
 .pt-0 {
   padding-top: 0px;
-}
-
-.pb-5 {
-  padding-bottom: 1.25rem;
 }
 
 .text-left {
@@ -1601,6 +1565,10 @@ body {
   color: hsl(var(--foreground));
 }
 
+.text-muted {
+  color: hsl(var(--muted));
+}
+
 .text-muted-foreground {
   color: hsl(var(--muted-foreground));
 }
@@ -1615,10 +1583,6 @@ body {
 
 .text-primary-foreground {
   color: hsl(var(--primary-foreground));
-}
-
-.text-muted {
-  color: hsl(var(--muted));
 }
 
 .underline-offset-4 {
@@ -1697,16 +1661,12 @@ body {
   outline-color: hsl(var(--destructive));
 }
 
-.outline-muted {
-  outline-color: hsl(var(--muted));
-}
-
-.outline-eBlue {
-  outline-color: hsl(var(--eBlue));
-}
-
 .outline-eOrange {
   outline-color: hsl(var(--eOrange));
+}
+
+.outline-muted {
+  outline-color: hsl(var(--muted));
 }
 
 .ring-0 {
@@ -1730,6 +1690,10 @@ body {
 
 .drop-shadow-xl {
   --tw-drop-shadow: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
@@ -1759,24 +1723,12 @@ body {
   transition-duration: 150ms;
 }
 
-.delay-100 {
-  transition-delay: 100ms;
-}
-
-.delay-500 {
-  transition-delay: 500ms;
-}
-
 .duration-300 {
   transition-duration: 300ms;
 }
 
 .duration-\[30ms\] {
   transition-duration: 30ms;
-}
-
-.duration-700 {
-  transition-duration: 700ms;
 }
 
 .ease-in-out {
@@ -1846,6 +1798,10 @@ body {
   background-color: hsl(var(--eGreen) / 0.8);
 }
 
+.hover\:bg-eOrange\/20:hover {
+  background-color: hsl(var(--eOrange) / 0.2);
+}
+
 .hover\:bg-eRed\/20:hover {
   background-color: hsl(var(--eRed) / 0.2);
 }
@@ -1858,20 +1814,12 @@ body {
   background-color: hsl(var(--muted) / 0.5);
 }
 
-.hover\:bg-eGreen\/50:hover {
-  background-color: hsl(var(--eGreen) / 0.5);
-}
-
-.hover\:bg-eBlue\/20:hover {
-  background-color: hsl(var(--eBlue) / 0.2);
-}
-
-.hover\:bg-eOrange\/20:hover {
-  background-color: hsl(var(--eOrange) / 0.2);
-}
-
 .hover\:text-accent-foreground:hover {
   color: hsl(var(--accent-foreground));
+}
+
+.hover\:text-foreground:hover {
+  color: hsl(var(--foreground));
 }
 
 .hover\:text-muted-foreground:hover {
@@ -1881,14 +1829,6 @@ body {
 .hover\:text-neutral-500:hover {
   --tw-text-opacity: 1;
   color: rgb(115 115 115 / var(--tw-text-opacity));
-}
-
-.hover\:text-eGreen\/50:hover {
-  color: hsl(var(--eGreen) / 0.5);
-}
-
-.hover\:text-foreground:hover {
-  color: hsl(var(--foreground));
 }
 
 .hover\:underline:hover {
@@ -1991,20 +1931,16 @@ body {
   background-color: hsl(var(--eGreen));
 }
 
+.data-\[state\=on\]\:bg-eOrange[data-state="on"] {
+  background-color: hsl(var(--eOrange));
+}
+
 .data-\[state\=on\]\:bg-eRed[data-state="on"] {
   background-color: hsl(var(--eRed));
 }
 
 .data-\[state\=selected\]\:bg-muted[data-state="selected"] {
   background-color: hsl(var(--muted));
-}
-
-.data-\[state\=on\]\:bg-eBlue[data-state="on"] {
-  background-color: hsl(var(--eBlue));
-}
-
-.data-\[state\=on\]\:bg-eOrange[data-state="on"] {
-  background-color: hsl(var(--eOrange));
 }
 
 .data-\[state\=on\]\:text-background[data-state="on"] {

@@ -49,7 +49,7 @@ WHERE id = ? LIMIT 1;
 
 -- name: GetPlayersByRoomId :many
 SELECT * FROM mahjong_player
-WHERE room_id = ? LIMIT 1;
+WHERE room_id = ?;
 
 -- name: GetOwnerById :one
 SELECT * FROM mahjong_room_owner
