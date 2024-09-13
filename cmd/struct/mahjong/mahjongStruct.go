@@ -30,14 +30,18 @@ type GameData struct {
 	Players   []sqlc.MahjongPlayer
 }
 
+type Winner struct {
+	PlayerId int64 `schema:"playerId"`
+	Han      int   `schema:"han"`
+	Fu       int   `schema:"fu"`
+}
+
 type WinForm struct {
-	UpdateType string  `schema:"updateType,required"`
-	WinnerIds  []int64 `schema:"winnerId,required"`
-	IsTsumo    bool    `schema:"tsumo,required"`
-	LoserId    int64   `schema:"loserId,required"`
-	Hans       []int   `schema:"hah,required"`
-	Fus        []int   `schema:"fu,required"`
-	RiichiBo   int     `schema:"riichiBo,required"`
+	UpdateType    string         `schema:"updateType,required"`
+	Winners       []Winner       `schema:"winner"`
+	IsTsumo       bool           `schema:"isTsumo,required"`
+	LoserId       int64          `schema:"loserId"`
+	RiichiPlayers []RiichiPlayer `schema:"riichiPlayers,required"`
 }
 
 type DrawForm struct {

@@ -20,7 +20,7 @@ var cva = gocva.CVA{
 	Variants: gocva.Variants{
 		"variant": {
 			"default":     "bg-background text-foreground",
-			"destructive": "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+			"destructive": "bg-background border-eRed text-eRed dark:border-eRed [&>svg]:text-eRed",
 		},
 	},
 	DefaultVariants: gocva.Variant{

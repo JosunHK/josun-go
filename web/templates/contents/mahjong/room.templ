@@ -1,16 +1,13 @@
 package mahjongTemplates
 
 import (
+	"context"
 	"fmt"
-    "context"
 	mahjongStruct "github.com/JosunHK/josun-go.git/cmd/struct/mahjong"
+	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	templUtil "github.com/JosunHK/josun-go.git/cmd/util/templ"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
-	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
-    i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
-	"github.com/JosunHK/josun-go.git/web/templates/components/ui/dialog"
-	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
 )
 
@@ -41,9 +38,9 @@ func getPlayerMenu(players []sqlc.MahjongPlayer) []sqlc.MenuItem {
 	items := []sqlc.MenuItem{}
 	for _, player := range players {
 		items = append(items, sqlc.MenuItem{
-			Label: player.Name,
-			Value: fmt.Sprintf("%v", player.ID),
-            SortOrder: -1,
+			Label:     player.Name,
+			Value:     fmt.Sprintf("%v", player.ID),
+			SortOrder: -1,
 		})
 
 	}
@@ -51,94 +48,74 @@ func getPlayerMenu(players []sqlc.MahjongPlayer) []sqlc.MenuItem {
 }
 
 func getPlayerMenuPlease(ctx context.Context, players []sqlc.MahjongPlayer) []sqlc.MenuItem {
-    items := append([]sqlc.MenuItem{
-        {
-            Label: i18nUtil.T(ctx, "please_select"),
-            Value: "",
-        },
-    }, getPlayerMenu(players)...)
+	items := append([]sqlc.MenuItem{
+		{
+			Label: i18nUtil.T(ctx, "please_select"),
+			Value: "",
+		},
+	}, getPlayerMenu(players)...)
 
 	return items
 }
 
 templ Room(players []sqlc.MahjongPlayer, code string, gameState sqlc.MahjongGameState) {
-	@dialog.WithDialog(dialog.Props{
-		Class: "w-full h-full flex flex-col mt-1",
-	}) {
-		@dialog.Dialog(dialog.Props{}) {
-			@ScoreDialog(players, code)
-		}
-		<div
-			Class="w-full h-full flex flex-col"
-			x-ref="room"
-			x-data="{
-                    players: new Map(),
-                    delta: 0,
-                    gameState: {},
-                    isShowDelta: false,
-                    focused: false,
-                    updatePlayers: function(newPlayers) {
-                        let oriPlayers = this.players;
-                        newPlayers.forEach((newPlayer) => {
-                            let player = oriPlayers.get(newPlayer.id)
-                            player.score = newPlayer.score
-                        });
-                    },
-                    showDelta: function(eventType, score) {
-                        // prevents when there is a 'enter event' after another 'enter event' without 'leave event'
-                        if (this.focused && (eventType === 'mousedown' || eventType === 'touchstart')) {
-                            return;
-                        }else if (eventType === 'mouseup' || eventType === 'touchend') {
-                            this.focused = false;
-                        }else if (eventType === 'mousedown' || eventType === 'touchstart') {
-                            this.focused = true;
-                        }
-                        this.delta = score;
-                        this.isShowDelta = !this.isShowDelta; 
-                        if (this.isShowDelta !== this.focused) { //should always be in sync
-                            this.isShowDelta = false;
-                            this.focused = false;
-                        }
+	<div
+		Class="w-full h-full flex flex-col"
+		x-ref="room"
+		x-data="{
+                players: new Map(),
+                delta: 0,
+                gameState: {},
+                isShowDelta: false,
+                focused: false,
+                updatePlayers: function(newPlayers) {
+                    let oriPlayers = this.players;
+                    newPlayers.forEach((newPlayer) => {
+                        let player = oriPlayers.get(newPlayer.id)
+                        player.score = newPlayer.score
+                    });
+                },
+                showDelta: function(eventType, score) {
+                    // prevents when there is a 'enter event' after another 'enter event' without 'leave event'
+                    if (this.focused && (eventType === 'mousedown' || eventType === 'touchstart')) {
+                        return;
+                    }else if (eventType === 'mouseup' || eventType === 'touchend') {
+                        this.focused = false;
+                    }else if (eventType === 'mousedown' || eventType === 'touchstart') {
+                        this.focused = true;
                     }
-                }"
-		>
-			@AddButton()
-			@GameStateDisplay(gameState)
-			<div class="h-auto flex justify-center items-center grow">
-				@ScoreDisplay(players)
-			</div>
-			<div
-				hx-ext="sse"
-				sse-connect={ fmt.Sprintf("/mahjong/room/%v/state", code) }
-				sse-swap="data"
-			></div>
+                    this.delta = score;
+                    this.isShowDelta = !this.isShowDelta; 
+                    if (this.isShowDelta !== this.focused) { //should always be in sync
+                        this.isShowDelta = false;
+                        this.focused = false;
+                    }
+                }
+            }"
+	>
+		@DialogBody(players, code)
+		@GameStateDisplay(gameState)
+		<div class="h-auto flex justify-center items-center grow">
+			@ScoreDisplay(players)
 		</div>
-	}
+		<div
+			hx-ext="sse"
+			sse-connect={ fmt.Sprintf("/mahjong/room/%v/state", code) }
+			sse-swap="data"
+		></div>
+	</div>
 }
 
 templ GameStateDisplay(gameState sqlc.MahjongGameState) {
 	<div
-        x-init={ fmt.Sprintf("gameState = %v", templUtil.ToJSONString(gameState)) }
-    >
-        <div x-text="gameState.round_wind"></div>
-        <div x-text="gameState.seat_wind"></div>
-        <div x-text="gameState.round"> </div>
-        <div x-text="gameState.kyoutaku"> </div>
-        <div x-text="gameState.ended"> </div>
+		x-init={ fmt.Sprintf("gameState = %v", templUtil.ToJSONString(gameState)) }
+	>
+		<div x-text="gameState.round_wind"></div>
+		<div x-text="gameState.seat_wind"></div>
+		<div x-text="gameState.round"></div>
+		<div x-text="gameState.kyoutaku"></div>
+		<div x-text="gameState.ended"></div>
 	</div>
-}
-
-templ AddButton() {
-	@button.Button(button.Props{
-		Class: "w-min",
-		Attrs: templ.Attributes{
-			"@click": "dialogToggle()",
-		},
-	}) {
-		@icon.Wrapper(icon.Props{}) {
-			@icon.Plus()
-		}
-	}
 }
 
 templ ScoreDisplay(players []sqlc.MahjongPlayer) {

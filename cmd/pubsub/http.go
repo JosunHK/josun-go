@@ -43,11 +43,12 @@ func NewHandler(e *echo.Echo, eventBus *cqrs.EventBus, sseRouter watermillhttp.S
 func (h Handler) UpdateScore(c echo.Context) error {
 	roomCode := c.Param("code")
 	if roomCode == "" {
-		return errorTemplate.SimpleError("Invalid Request").Render(c.Request().Context(), c.Response().Writer)
+		return errorTemplate.ErrorToast("Invalid Request").Render(c.Request().Context(), c.Response().Writer)
 	}
 
 	if err := mahjong.UpdateScore(c); err != nil {
-		return errorTemplate.SimpleError("Interal Server Error, try again later!").Render(c.Request().Context(), c.Response().Writer)
+		log.Error("UpdateScore error: " + err.Error())
+		return errorTemplate.ErrorToast(err.Error()).Render(c.Request().Context(), c.Response().Writer)
 	}
 
 	event := mahjongStruct.GameUpdated{
@@ -55,7 +56,7 @@ func (h Handler) UpdateScore(c echo.Context) error {
 	}
 
 	if err := h.eventBus.Publish(c.Request().Context(), event); err != nil {
-		return errorTemplate.SimpleError("Interal Server Error, try again later!").Render(c.Request().Context(), c.Response().Writer)
+		return errorTemplate.ErrorToast("Interal Server Error, try again later!").Render(c.Request().Context(), c.Response().Writer)
 	}
 
 	log.Info("UpdateScore for room : " + roomCode)

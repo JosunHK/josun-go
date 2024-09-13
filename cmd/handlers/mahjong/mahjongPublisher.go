@@ -5,8 +5,9 @@ import (
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
 	manager "github.com/JosunHK/josun-go.git/cmd/manager/mahjong"
-	mahjongStruct "github.com/JosunHK/josun-go.git/cmd/struct/mahjong"
+	ms "github.com/JosunHK/josun-go.git/cmd/struct/mahjong"
 	"github.com/JosunHK/josun-go.git/cmd/util/cookie"
+	fp "github.com/JosunHK/josun-go.git/cmd/util/fp"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 
 	"github.com/labstack/echo/v4"
@@ -57,62 +58,64 @@ func validatePlayers(c echo.Context, ids []int64, roomId int64) error {
 	return nil
 }
 
-func validateRoomReturnGameData(c echo.Context, code, updateType string) (mahjongStruct.GameData, error) {
+func validateRoomReturnGameData(c echo.Context, code, updateType string) (ms.GameData, error) {
 	DB := database.DB
 	queries := sqlc.New(DB)
 
 	if code == "" || updateType == "" {
-		return mahjongStruct.GameData{}, fmt.Errorf("Invalid request")
+		return ms.GameData{}, fmt.Errorf("Invalid request")
 	}
 
 	gameData, err := manager.GetGameData(c, code)
 	if err != nil {
-		return mahjongStruct.GameData{}, fmt.Errorf("Room not found")
+		return ms.GameData{}, fmt.Errorf("Room not found")
 	}
 
 	uuid, err := cookie.GetGuestSessionUUID(c)
 	if err != nil {
-		return mahjongStruct.GameData{}, fmt.Errorf("Invalid session")
+		return ms.GameData{}, fmt.Errorf("Invalid session")
 	}
 
 	owner, err := queries.GetOwnerByUUIDorUserId(c.Request().Context(), sqlc.GetOwnerByUUIDorUserIdParams{GuestID: uuid})
 	if err != nil {
-		return mahjongStruct.GameData{}, fmt.Errorf("Owner not found")
+		return ms.GameData{}, fmt.Errorf("Owner not found")
 	}
 
 	if gameData.Room.OwnerID != owner.ID {
-		return mahjongStruct.GameData{}, fmt.Errorf("Unauthorized")
+		return ms.GameData{}, fmt.Errorf("Unauthorized")
 	}
 
 	return gameData, nil
 }
 
-func UpdateScoreWin(c echo.Context, gameData *mahjongStruct.GameData) error {
-	var winForm mahjongStruct.WinForm
+func UpdateScoreWin(c echo.Context, gameData *ms.GameData) error {
+	var winForm ms.WinForm
 	err := decoder.Decode(&winForm, c.Request().PostForm)
 	if err != nil {
-		return fmt.Errorf("Failed to decode win form", err)
+		return fmt.Errorf("Failed to decode win form")
 	}
 
-	ids := winForm.WinnerIds
+	// ids := winForm.plaueplaue
+	ids := fp.Fmap(func(w ms.Winner) int64 { return w.PlayerId }, winForm.Winners)
+	ids = fp.Filter(func(id int64) bool { return id != 0 }, ids)
+
 	if !winForm.IsTsumo {
 		ids = append(ids, winForm.LoserId)
 	}
 
 	if err := validatePlayers(c, ids, gameData.Room.ID); err != nil {
-		err = fmt.Errorf("Invalid player", err)
 		return err
 	}
 
 	if err := manager.HandleGameWin(c, winForm, gameData); err != nil {
-		return fmt.Errorf("Failed to handle game win", err)
+		return err
 	}
 
 	return nil
 }
 
-func UpdateScoreDraw(c echo.Context, gameData *mahjongStruct.GameData) error {
-	var drawForm mahjongStruct.DrawForm
+func UpdateScoreDraw(c echo.Context, gameData *ms.GameData) error {
+	var drawForm ms.DrawForm
 	err := decoder.Decode(&drawForm, c.Request().PostForm)
 	if err != nil {
 		return fmt.Errorf("Failed to decode draw form", err)
@@ -135,11 +138,11 @@ func UpdateScoreDraw(c echo.Context, gameData *mahjongStruct.GameData) error {
 	return nil
 }
 
-func UpdateScoreManual(c echo.Context, gameData *mahjongStruct.GameData) error {
+func UpdateScoreManual(c echo.Context, gameData *ms.GameData) error {
 	DB := database.DB
 	queries := sqlc.New(DB)
 
-	var manualForm mahjongStruct.ManualForm
+	var manualForm ms.ManualForm
 	if err := decoder.Decode(&manualForm, c.Request().PostForm); err != nil {
 		return fmt.Errorf("Failed to decode roomSetting", err)
 	}
@@ -165,6 +168,7 @@ func UpdateScoreManual(c echo.Context, gameData *mahjongStruct.GameData) error {
 		Score: player.Score + int32(manualForm.Score),
 		ID:    player.ID,
 	})
+
 	if err != nil {
 		return fmt.Errorf("Failed to update Player", err)
 	}

@@ -4,6 +4,7 @@ import (
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/alert"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
 	"github.com/gungun974/gocva"
+    i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
 )
 
 templ ErrorAlert(title, desc string) {
@@ -18,10 +19,10 @@ templ ErrorAlert(title, desc string) {
 				@icon.Croissant()
 			}
 			@alert.AlertTitle(alert.Props{}) {
-				{ title }
+                { i18nUtil.T(ctx, title) }
 			}
 			@alert.AlertDescription(alert.Props{}) {
-				{ desc }
+                { i18nUtil.T(ctx, desc) }
 			}
 		}
 	</div>
@@ -29,4 +30,31 @@ templ ErrorAlert(title, desc string) {
 
 templ SimpleError(desc string) {
 	<span class="text-eRed">{ desc }</span>
+}
+
+templ ErrorToast(desc string) {
+    <template x-teleport="body">
+        <div 
+            x-data="{ show:false }"
+            class="fixed bottom-3 flex items-center justify-center z-[150] w-full" 
+            x-show="show"
+            x-init="$nextTick(()=>{
+                    show = true;
+                    setTimeout(() => { show = false }, 5000);
+                })"
+            x-transition.duration.500ms
+        >
+            @alert.Alert(alert.Props{
+                Class:   "w-[300px] text-md",
+                Variant: gocva.Variant{"variant": "destructive"},
+            }) {
+                @icon.Wrapper(icon.Props{}) {
+                    @icon.Croissant()
+                }
+                @alert.AlertDescription(alert.Props{}) {
+                    { i18nUtil.T(ctx, desc) }
+                }
+            }
+        </div>
+    </template>
 }

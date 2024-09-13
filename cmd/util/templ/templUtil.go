@@ -2,7 +2,6 @@ package templUtil
 
 import (
 	"github.com/a-h/templ"
-	log "github.com/sirupsen/logrus"
 )
 
 func ToJSONString(object any) string {
@@ -10,8 +9,6 @@ func ToJSONString(object any) string {
 	if err != nil {
 		JSONStr = "{}"
 	}
-
-	log.Info("JSONStr: ", JSONStr)
 
 	return JSONStr
 }

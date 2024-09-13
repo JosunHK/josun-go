@@ -18,11 +18,40 @@ import (
 	"github.com/gungun974/gocva"
 )
 
+templ DialogBody(players []sqlc.MahjongPlayer, code string) {
+	@dialog.Dialog(dialog.Props{
+        Attrs: templ.Attributes{
+            "x-on:close-dialog.window": "dialogClose()",
+        },
+		Class: "w-full h-full flex flex-col mt-1",
+	}) {
+		@dialog.DialogContent(dialog.Props{}) {
+			@ScoreDialog(players, code)
+		}
+		@dialog.DialogTrigger(dialog.Props{}) {
+			@AddButton()
+		}
+	}
+}
+
+templ AddButton() {
+	@button.Button(button.Props{
+		Class: "w-min",
+        Attrs: templ.Attributes{},
+	}) {
+		@icon.Wrapper(icon.Props{}) {
+			@icon.Plus()
+		}
+	}
+}
+
+
 templ DialogForm(code string) {
 	<form
+        id="score-form"
 		hx-post={ fmt.Sprintf("/mahjong/updateScore/%v", code) }
 		hx-params="not confirm"
-        hx-target="#err-msg"
+		hx-target="#err-msg"
 		hx-on::after-request="window.dispatchEvent(new CustomEvent('close-dialog', { bubbles: true }))"
 	>
 		{ children... }
@@ -35,7 +64,7 @@ templ ScoreDialogLayout() {
 			Class: "w-[400px] drop-shadow-xl",
 		}) {
 			{ children... }
-            <div class="w-full text-center" id="err-msg"></div>
+			<div class="w-full text-center" id="err-msg"></div>
 			<div class="p-2 flex flex-row justify-end w-full ">
 				@button.Button(button.Props{
 					Name:  "confirm",
@@ -139,12 +168,14 @@ templ DialogContentWin(players []sqlc.MahjongPlayer) {
 		}) {
 			@KyoutakuSelectwin(players)
 			@winnerSelectMenu(players)
-			@addPlayerToggle() {
-				@winnerSelectMenuExtra(1, players)
-				@addPlayerToggle() {
-					@winnerSelectMenuExtra(2, players)
-				}
-			}
+            <div x-show="!isTsumo" x-transition>
+                @addPlayerToggle() {
+                    @winnerSelectMenuExtra(1, players)
+                    @addPlayerToggle() {
+                        @winnerSelectMenuExtra(2, players)
+                    }
+                }
+            </div>
 		}
 	}
 }
@@ -186,7 +217,7 @@ templ addPlayerToggle() {
 }
 
 templ winnerSelectContext(i int) {
-	<div x-data="{playerId : '', han : '', fu: '', }">
+	<div x-data="{ playerId : '', han : '', fu: '', }" class="flex flex-col gap-1">
 		@input.HiddenXInputArray("winner", i, "playerId", "playerId")
 		@input.HiddenXInputArray("winner", i, "han", "han")
 		@input.HiddenXInputArray("winner", i, "fu", "fu")
@@ -227,7 +258,7 @@ templ WinnerSelect(players []sqlc.MahjongPlayer, menu []sqlc.MenuItem) {
                         });`,
 			Attrs: templ.Attributes{
 				"x-effect": `
-                    playerId = currentOptions;
+                    playerId = selectedValue;
                     clearDisabled();
                     currentOptions.forEach(
                         option => {selectedValue !== option && disableOption(option)}
@@ -263,7 +294,7 @@ templ KyoutakuSelectwin(players []sqlc.MahjongPlayer) {
 }
 
 templ TsumoToggle() {
-	<div class="flex flex-row items-center justify-between">
+	<div class="flex flex-row items-center justify-between my-1">
 		@label.Label(label.Props{
 			Variant: gocva.Variant{
 				"variant": "default",
@@ -280,41 +311,43 @@ templ TsumoToggle() {
 }
 
 templ LoserSelect(players []sqlc.MahjongPlayer) {
-	<div
-		class="h-10"
-	>
-		<div
-			class="flex flex-row items-center justify-between"
-			x-show="!isTsumo"
-			x-transition.duration.500ms
-		>
-			@label.Label(label.Props{
-				Variant: gocva.Variant{
-					"variant": "default",
-				}}) {
-				{ i18nUtil.T(ctx, "game_loser") }
-			}
-			@selectBox.Select(getPlayerMenuPlease(ctx, players), selectBox.BodyProps{
-				Name:     "loserId",
-				Required: true,
-				ExtraInit: `$watch('selectedValue', (value, oldValue) => {
-                                currentOptions = new Set([...currentOptions].filter(item => item !== oldValue)); 
-                                currentOptions.add(value);
-                            });`,
-				Attrs: templ.Attributes{
-                    ":class": "selectedValue === '' ? 'text-eRed' : ''",
-					"x-effect": `
-                    clearDisabled();
-                    currentOptions.forEach(
-                        option => {
-                            selectedValue !== option && disableOption(option) 
-                        }
-                    );
-                `,
-				},
-			})
-		</div>
-	</div>
+    <fieldset :disabled="isTsumo">
+        <div
+            class="h-10"
+        >
+            <div
+                class="flex flex-row items-center justify-between"
+                x-show="!isTsumo"
+                x-transition.duration.500ms
+            >
+                @label.Label(label.Props{
+                    Variant: gocva.Variant{
+                        "variant": "default",
+                    }}) {
+                    { i18nUtil.T(ctx, "game_loser") }
+                }
+                @selectBox.Select(getPlayerMenuPlease(ctx, players), selectBox.BodyProps{
+                    Name:     "loserId",
+                    Required: true,
+                    ExtraInit: `$watch('selectedValue', (value, oldValue) => {
+                                    currentOptions = new Set([...currentOptions].filter(item => item !== oldValue)); 
+                                    currentOptions.add(value);
+                                });`,
+                    Attrs: templ.Attributes{
+                        ":class": "selectedValue === '' ? 'text-eRed' : ''",
+                        "x-effect": `
+                        clearDisabled();
+                        currentOptions.forEach(
+                            option => {
+                                selectedValue !== option && disableOption(option) 
+                            }
+                        );
+                    `,
+                    },
+                })
+            </div>
+        </div>
+    </fieldset>
 }
 
 templ ScoreSelect() {
