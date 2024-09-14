@@ -175,7 +175,7 @@ func AdjustCard(keashi int, players []sqlc.MahjongPlayer) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex flex-row justify-between items-center p-2\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex flex-row justify-between items-center p-2 pl-8\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -209,7 +209,7 @@ func AdjustCard(keashi int, players []sqlc.MahjongPlayer) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			templ_7745c5c3_Err = input.NumberInput(input.Props{
-				Class: "text-xl mt-1 w-[6rem] border-0 py-1 focus-visible:border-0",
+				Class: "text-xl w-[6rem] border-0 py-1 focus-visible:border-0",
 				Attrs: templ.Attributes{
 					"x-model":   "kaeshi",
 					"maxlength": "6",
@@ -440,7 +440,7 @@ func ResultPlayerCard(i int, player sqlc.MahjongPlayer) templ.Component {
 			return templ_7745c5c3_Err
 		})
 		templ_7745c5c3_Err = card.Card(card.Props{
-			Class: fmt.Sprintf("drop-shadow-md max-w-[90dvw] %s", getPlayerColor(i)),
+			Class: fmt.Sprintf("drop-shadow-md max-w-[90dvw]"),
 			Attrs: templ.Attributes{},
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var14), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {

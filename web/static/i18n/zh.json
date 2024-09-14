@@ -1,1 +1,452 @@
-[{"Key":"hello_world","Default":"K ON","One":"","Many":""},{"Key":"go_watch","Default":"heoi tai","One":"","Many":""},{"Key":"dark_mode","Default":"深色主題","One":"","Many":""},{"Key":"light_mode","Default":"淺色主題","One":"","Many":""},{"Key":"yes","Default":"是","One":"","Many":""},{"Key":"no","Default":"否","One":"","Many":""},{"Key":"english","Default":"英文","One":"","Many":""},{"Key":"chinese","Default":"中文","One":"","Many":""},{"Key":"join_or_create_room","Default":"加入或創建房間","One":"","Many":""},{"Key":"create_new_room","Default":"創建新房間","One":"","Many":""},{"Key":"join","Default":"加入","One":"","Many":""},{"Key":"create_room","Default":"創建房間","One":"","Many":""},{"Key":"three_ma","Default":"三麻","One":"","Many":""},{"Key":"four_ma","Default":"四麻","One":"","Many":""},{"Key":"han_chan","Default":"半莊","One":"","Many":""},{"Key":"east","Default":"東","One":"","Many":""},{"Key":"south","Default":"南","One":"","Many":""},{"Key":"west","Default":"西","One":"","Many":""},{"Key":"north","Default":"北","One":"","Many":""},{"Key":"tonpuu","Default":"東風","One":"","Many":""},{"Key":"game_length","Default":"遊戲長度","One":"","Many":""},{"Key":"player_name","Default":"玩家名稱","One":"","Many":""},{"Key":"start_points","Default":"起始點數","One":"","Many":""},{"Key":"confirm","Default":"確認","One":"","Many":""},{"Key":"1_han","Default":"一飜","One":"","Many":""},{"Key":"2_han","Default":"兩飜","One":"","Many":""},{"Key":"3_han","Default":"三飜","One":"","Many":""},{"Key":"4_han","Default":"四飜","One":"","Many":""},{"Key":"5_han","Default":"五飜","One":"","Many":""},{"Key":"6-7_han","Default":"六 ~ 七飜","One":"","Many":""},{"Key":"8-10_han","Default":"八 ~ 十飜","One":"","Many":""},{"Key":"11-12_han","Default":"十一 ~ 十二飜","One":"","Many":""},{"Key":"13_han","Default":"十三飜","One":"","Many":""},{"Key":"20_fu","Default":"二十符","One":"","Many":""},{"Key":"25_fu","Default":"二十五符","One":"","Many":""},{"Key":"30_fu","Default":"三十符","One":"","Many":""},{"Key":"40_fu","Default":"四十符","One":"","Many":""},{"Key":"50_fu","Default":"五十符","One":"","Many":""},{"Key":"60_fu","Default":"六十符","One":"","Many":""},{"Key":"70_fu","Default":"七十符","One":"","Many":""},{"Key":"80_fu","Default":"八十符","One":"","Many":""},{"Key":"90_fu","Default":"九十符","One":"","Many":""},{"Key":"100_fu","Default":"一百符","One":"","Many":""},{"Key":"110_fu","Default":"一百一十符","One":"","Many":""},{"Key":"game_winner","Default":"和牌者","One":"","Many":""},{"Key":"tsu_mo","Default":"自摸","One":"","Many":""},{"Key":"game_loser","Default":"放銃者","One":"","Many":""},{"Key":"han","Default":"飜","One":"","Many":""},{"Key":"fu","Default":"符","One":"","Many":""},{"Key":"game_win","Default":"和牌","One":"","Many":""},{"Key":"game_draw","Default":"流局","One":"","Many":""},{"Key":"game_manual","Default":"自訂","One":"","Many":""},{"Key":"please_select_player_draw","Default":"未有聽牌的玩家","One":"","Many":""},{"Key":"please_select_player_manual","Default":"手動調整分數","One":"","Many":""},{"Key":"score","Default":"分數","One":"","Many":""},{"Key":"kyoutaku","Default":"供託","One":"","Many":""},{"Key":"please_select_player_riichi","Default":"有立直的玩家","One":"","Many":""},{"Key":"please_select","Default":"請選擇","One":"","Many":""},{"Key":"error_try_again","Default":"發生錯誤，請稍後再試！","One":"","Many":""},{"Key":"east_round","Default":"一局","One":"","Many":""},{"Key":"south_round","Default":"二局","One":"","Many":""},{"Key":"west_round","Default":"三局","One":"","Many":""},{"Key":"north_round","Default":"四局","One":"","Many":""},{"Key":"honba","Default":"本場","One":"","Many":""},{"Key":"room_close_in","Default":"房間即將關閉：","One":"","Many":""},{"Key":"uma","Default":"順位馬","One":"","Many":""},{"Key":"click_to_edit_uma","Default":"可以點擊修改順位馬","One":"","Many":""},{"Key":"tip","Default":"提示","One":"","Many":""},{"Key":"kaeshi","Default":"返點","One":"","Many":""},{"Key":"game_end","Default":"終局","One":"","Many":""}]
+[
+    {
+        "Key": "hello_world",
+        "Default": "K ON",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "go_watch",
+        "Default": "heoi tai",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "dark_mode",
+        "Default": "深色主題",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "light_mode",
+        "Default": "淺色主題",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "yes",
+        "Default": "是",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "no",
+        "Default": "否",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "english",
+        "Default": "英文",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "chinese",
+        "Default": "中文",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "join_or_create_room",
+        "Default": "加入或創建房間",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "create_new_room",
+        "Default": "創建新房間",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "join",
+        "Default": "加入",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "create_room",
+        "Default": "創建房間",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "three_ma",
+        "Default": "三麻",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "four_ma",
+        "Default": "四麻",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "han_chan",
+        "Default": "半莊",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "east",
+        "Default": "東",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "south",
+        "Default": "南",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "west",
+        "Default": "西",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "north",
+        "Default": "北",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "tonpuu",
+        "Default": "東風",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_length",
+        "Default": "遊戲長度",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "player_name",
+        "Default": "玩家名稱",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "start_points",
+        "Default": "起始點數",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "confirm",
+        "Default": "確認",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "1_han",
+        "Default": "一飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "2_han",
+        "Default": "兩飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "3_han",
+        "Default": "三飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "4_han",
+        "Default": "四飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "5_han",
+        "Default": "五飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "6-7_han",
+        "Default": "六 ~ 七飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "8-10_han",
+        "Default": "八 ~ 十飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "11-12_han",
+        "Default": "十一 ~ 十二飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "13_han",
+        "Default": "十三飜(役滿)",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "2_yakuman",
+        "Default": "二倍役滿",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "3_yakuman",
+        "Default": "三倍役滿",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "4_yakuman",
+        "Default": "四倍役滿",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "5_yakuman",
+        "Default": "五倍役滿",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "6_yakuman",
+        "Default": "六倍役滿",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "20_fu",
+        "Default": "二十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "25_fu",
+        "Default": "二十五符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "30_fu",
+        "Default": "三十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "40_fu",
+        "Default": "四十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "50_fu",
+        "Default": "五十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "60_fu",
+        "Default": "六十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "70_fu",
+        "Default": "七十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "80_fu",
+        "Default": "八十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "90_fu",
+        "Default": "九十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "100_fu",
+        "Default": "一百符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "110_fu",
+        "Default": "一百一十符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_winner",
+        "Default": "和牌者",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "tsu_mo",
+        "Default": "自摸",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_loser",
+        "Default": "放銃者",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "han",
+        "Default": "飜",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "fu",
+        "Default": "符",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_win",
+        "Default": "和牌",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_draw",
+        "Default": "流局",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_manual",
+        "Default": "自訂",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "please_select_player_draw",
+        "Default": "未有聽牌的玩家",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "please_select_player_manual",
+        "Default": "手動調整分數",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "score",
+        "Default": "分數",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "kyoutaku",
+        "Default": "供託",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "please_select_player_riichi",
+        "Default": "有立直的玩家",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "please_select",
+        "Default": "請選擇",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "error_try_again",
+        "Default": "發生錯誤，請稍後再試！",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "east_round",
+        "Default": "一局",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "south_round",
+        "Default": "二局",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "west_round",
+        "Default": "三局",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "north_round",
+        "Default": "四局",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "honba",
+        "Default": "本場",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "room_close_in",
+        "Default": "房間即將關閉：",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "uma",
+        "Default": "順位馬",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "click_to_edit_uma",
+        "Default": "可以點擊修改順位馬",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "tip",
+        "Default": "提示",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "kaeshi",
+        "Default": "返點",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_end",
+        "Default": "終局",
+        "One": "",
+        "Many": ""
+    }
+]

@@ -28,7 +28,7 @@ templ RoomCreate() {
 		@separator.Separator(separator.Props{}, "horizontal")
 		<form
 			id="create-form"
-			hx-post="mahjong/room/create"
+			hx-post="/mahjong/room/create"
 			hx-trigger="click from:#create-btn"
 		>
 			@card.Content(card.Props{

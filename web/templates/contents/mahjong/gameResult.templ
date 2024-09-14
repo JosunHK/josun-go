@@ -48,14 +48,14 @@ templ AdjustCard(keashi int, players []sqlc.MahjongPlayer) {
 		Class: "drop-shadow-md max-w-[90dvw]",
 		Attrs: templ.Attributes{},
 	}) {
-	<div class="flex flex-row justify-between items-center p-2">
+	<div class="flex flex-row justify-between items-center p-2 pl-8">
             @label.Label(label.Props{
                 Variant: gocva.Variant{"variant": "title"},
             }) {
                 { i18nUtil.T(ctx, "kaeshi") }
             }
             @input.NumberInput(input.Props{
-                Class: "text-xl mt-1 w-[6rem] border-0 py-1 focus-visible:border-0",
+                Class: "text-xl w-[6rem] border-0 py-1 focus-visible:border-0",
                 Attrs: templ.Attributes{
                     "x-model":   "kaeshi",
                     "maxlength": "6",
@@ -84,7 +84,7 @@ templ UmaSelect(index int) {
 
 templ ResultPlayerCard(i int, player sqlc.MahjongPlayer) {
 	@card.Card(card.Props{
-		Class: fmt.Sprintf("drop-shadow-md max-w-[90dvw] %s", getPlayerColor(i)),
+		Class: fmt.Sprintf("drop-shadow-md max-w-[90dvw]"),
 		Attrs: templ.Attributes{},
 	}) {
 		<div class="flex flex-row justify-between">

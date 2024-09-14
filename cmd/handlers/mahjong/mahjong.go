@@ -66,7 +66,7 @@ func RoomCreate(c echo.Context) (string, error) {
 	queries := sqlc.New(tx)
 
 	type RoomSetting struct {
-		PlayerNames []string                   `schema:"playerNames"`
+		PlayerNames []string                   `schema:"playerNames,required"`
 		GameLength  sqlc.MahjongRoomGameLength `schema:"gameLength,required"`
 		StartPoints int                        `schema:"startPoints,required"`
 	}
@@ -82,13 +82,11 @@ func RoomCreate(c echo.Context) (string, error) {
 		return "", fmt.Errorf("Failed to decode roomSetting", err)
 	}
 
-	if roomSetting.GameLength == sqlc.MahjongRoomGameLengthHanChan {
-		fillOutWithRandomNames(&roomSetting.PlayerNames, 4)
-	}
+	fillOutWithRandomNames(&roomSetting.PlayerNames, 4)
 
-	if roomSetting.GameLength == sqlc.MahjongRoomGameLengthTonpuu {
-		fillOutWithRandomNames(&roomSetting.PlayerNames, 3)
-	}
+	// if roomSetting.GameLength == sqlc.MahjongRoomGameLengthTonpuu {
+	// 	fillOutWithRandomNames(&roomSetting.PlayerNames, 3)
+	// }
 
 	ownerId, err := mgr.GetOrCreateRoomOwner(c, queries)
 	if err != nil {
@@ -114,7 +112,8 @@ func RoomCreate(c echo.Context) (string, error) {
 	}
 
 	for i, name := range roomSetting.PlayerNames {
-		name = name[:min(len(name), 10)]
+		nameRune := []rune(name)
+		name = string(nameRune[:min(10, len(nameRune))])
 		_, err := mgr.CreateMahjongPlayer(c, queries, sqlc.CreateMahjongPlayerParams{
 			RoomID: roomId,
 			Name:   name,
