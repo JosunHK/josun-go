@@ -274,7 +274,7 @@ func NumberInput(props Props) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-on:input=\"function($event){\n            $event.target.value = $event.target.value.replace(/[^0-9.-]/, &#39;&#39;);\n        }\" class=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-on:input=\"function($event){\n            $event.target.value = $event.target.value.replace(/[^0-9.+-]/, &#39;&#39;);\n        }\" class=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

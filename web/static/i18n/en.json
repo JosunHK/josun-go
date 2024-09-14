@@ -1,1 +1,422 @@
-[{"Key":"hello_world","Default":"Clannad","One":"","Many":""},{"Key":"go_watch","Default":"Go watch","One":"","Many":""},{"Key":"dark_mode","Default":"Dark Mode","One":"","Many":""},{"Key":"light_mode","Default":"Light Mode","One":"","Many":""},{"Key":"yes","Default":"Yes","One":"","Many":""},{"Key":"no","Default":"No","One":"","Many":""},{"Key":"english","Default":"English","One":"","Many":""},{"Key":"chinese","Default":"Chinese","One":"","Many":""},{"Key":"join_or_create_room","Default":"Join or Create Room","One":"","Many":""},{"Key":"create_new_room","Default":"Create New Room","One":"","Many":""},{"Key":"join","Default":"Join","One":"","Many":""},{"Key":"create_room","Default":"Create Room","One":"","Many":""},{"Key":"three_ma","Default":"3P","One":"","Many":""},{"Key":"four_ma","Default":"4P","One":"","Many":""},{"Key":"han_chan","Default":"Han Chan","One":"","Many":""},{"Key":"east","Default":"East","One":"","Many":""},{"Key":"south","Default":"South","One":"","Many":""},{"Key":"west","Default":"West","One":"","Many":""},{"Key":"north","Default":"North","One":"","Many":""},{"Key":"tonpuu","Default":"Tonpuu","One":"","Many":""},{"Key":"game_length","Default":"Game Length","One":"","Many":""},{"Key":"player_name","Default":"Player Name","One":"","Many":""},{"Key":"start_points","Default":"Starting Points","One":"","Many":""},{"Key":"confirm","Default":"Confirm","One":"","Many":""},{"Key":"1_han","Default":"1 Han","One":"","Many":""},{"Key":"2_han","Default":"2 Han","One":"","Many":""},{"Key":"3_han","Default":"3 Han","One":"","Many":""},{"Key":"4_han","Default":"4 Han","One":"","Many":""},{"Key":"5_han","Default":"5 Han","One":"","Many":""},{"Key":"6-7_han","Default":"6 ~ 7 Han","One":"","Many":""},{"Key":"8-10_han","Default":"8 ~ 10 Han","One":"","Many":""},{"Key":"11-12_han","Default":"11 ~ 12 Han","One":"","Many":""},{"Key":"13_han","Default":"13 Han","One":"","Many":""},{"Key":"20_fu","Default":"20 Fu","One":"","Many":""},{"Key":"25_fu","Default":"25 Fu","One":"","Many":""},{"Key":"30_fu","Default":"30 Fu","One":"","Many":""},{"Key":"40_fu","Default":"40 Fu","One":"","Many":""},{"Key":"50_fu","Default":"50 Fu","One":"","Many":""},{"Key":"60_fu","Default":"60 Fu","One":"","Many":""},{"Key":"70_fu","Default":"70 Fu","One":"","Many":""},{"Key":"80_fu","Default":"80 Fu","One":"","Many":""},{"Key":"90_fu","Default":"90 Fu","One":"","Many":""},{"Key":"100_fu","Default":"100 Fu","One":"","Many":""},{"Key":"110_fu","Default":"110 Fu","One":"","Many":""},{"Key":"game_winner","Default":"Winner","One":"","Many":""},{"Key":"tsu_mo","Default":"Tsu Mo","One":"","Many":""},{"Key":"game_loser","Default":"Loser","One":"","Many":""},{"Key":"han","Default":"Han","One":"","Many":""},{"Key":"fu","Default":"Fu","One":"","Many":""},{"Key":"game_win","Default":"Win","One":"","Many":""},{"Key":"game_draw","Default":"Draw","One":"","Many":""},{"Key":"game_manual","Default":"Custom","One":"","Many":""},{"Key":"please_select_player_draw","Default":"Players who did not Tenpai","One":"","Many":""},{"Key":"please_select_player_manual","Default":"Custom Score Adjustment","One":"","Many":""},{"Key":"score","Default":"Score","One":"","Many":""},{"Key":"kyoutaku","Default":"Kyoutaku","One":"","Many":""},{"Key":"please_select","Default":"Please Select","One":"","Many":""},{"Key":"error_try_again","Default":"Error occured, Please try again later!","One":"","Many":""},{"Key":"please_select_player_riichi","Default":"Player who Riichi'd","One":"","Many":""}]
+[
+    {
+        "Key": "hello_world",
+        "Default": "Clannad",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "go_watch",
+        "Default": "Go watch",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "dark_mode",
+        "Default": "Dark Mode",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "light_mode",
+        "Default": "Light Mode",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "yes",
+        "Default": "Yes",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "no",
+        "Default": "No",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "english",
+        "Default": "English",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "chinese",
+        "Default": "Chinese",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "join_or_create_room",
+        "Default": "Join or Create Room",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "create_new_room",
+        "Default": "Create New Room",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "join",
+        "Default": "Join",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "create_room",
+        "Default": "Create Room",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "three_ma",
+        "Default": "3P",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "four_ma",
+        "Default": "4P",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "han_chan",
+        "Default": "Han Chan",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "east",
+        "Default": "East",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "south",
+        "Default": "South",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "west",
+        "Default": "West",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "north",
+        "Default": "North",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "tonpuu",
+        "Default": "Tonpuu",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_length",
+        "Default": "Game Length",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "player_name",
+        "Default": "Player Name",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "start_points",
+        "Default": "Starting Points",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "confirm",
+        "Default": "Confirm",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "1_han",
+        "Default": "1 Han",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "2_han",
+        "Default": "2 Han",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "3_han",
+        "Default": "3 Han",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "4_han",
+        "Default": "4 Han",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "5_han",
+        "Default": "5 Han",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "6-7_han",
+        "Default": "6 ~ 7 Han",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "8-10_han",
+        "Default": "8 ~ 10 Han",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "11-12_han",
+        "Default": "11 ~ 12 Han",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "13_han",
+        "Default": "13 Han",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "20_fu",
+        "Default": "20 Fu",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "25_fu",
+        "Default": "25 Fu",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "30_fu",
+        "Default": "30 Fu",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "40_fu",
+        "Default": "40 Fu",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "50_fu",
+        "Default": "50 Fu",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "60_fu",
+        "Default": "60 Fu",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "70_fu",
+        "Default": "70 Fu",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "80_fu",
+        "Default": "80 Fu",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "90_fu",
+        "Default": "90 Fu",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "100_fu",
+        "Default": "100 Fu",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "110_fu",
+        "Default": "110 Fu",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_winner",
+        "Default": "Winner",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "tsu_mo",
+        "Default": "Tsu Mo",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_loser",
+        "Default": "Loser",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "han",
+        "Default": "Han",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "fu",
+        "Default": "Fu",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_win",
+        "Default": "Win",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_draw",
+        "Default": "Draw",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_manual",
+        "Default": "Custom",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "please_select_player_draw",
+        "Default": "Players who did not Tenpai",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "please_select_player_manual",
+        "Default": "Custom Score Adjustment",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "score",
+        "Default": "Score",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "kyoutaku",
+        "Default": "Kyoutaku",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "please_select",
+        "Default": "Please Select",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "error_try_again",
+        "Default": "Error occured, Please try again later!",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "please_select_player_riichi",
+        "Default": "Player who Riichi'd",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "honba",
+        "Default": " ",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "room_close_in",
+        "Default": "Room will close in :",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "uma",
+        "Default": "Uma",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "tip",
+        "Default": "Tip",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "click_to_edit_uma",
+        "Default": "You can click to edit Uma",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "kaeshi",
+        "Default": "Keashi",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "game_end",
+        "Default": "Game Result",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "east_round",
+        "Default": " Hand 1",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "south_round",
+        "Default": " Hand 2",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "west_round",
+        "Default": " Hand 3",
+        "One": "",
+        "Many": ""
+    },
+    {
+        "Key": "north_round",
+        "Default": " Hand 4",
+        "One": "",
+        "Many": ""
+    }
+]

@@ -1,0 +1,67 @@
+package alert
+
+import (
+	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
+	"github.com/gungun974/gocva"
+)
+
+templ Toast(desc string) {
+	<template x-teleport="body">
+		<div
+			x-data="{ show:false }"
+			class="fixed bottom-3 flex items-center justify-center z-[150] w-full"
+			x-show="show"
+            @click="show = false"
+			x-init="$nextTick(()=>{
+                    show = true;
+                    setTimeout(() => { show = false }, 5000);
+                })"
+			x-transition.duration.500ms
+		>
+			@Alert(Props{
+				Class:   "w-[300px] text-md",
+				Variant: gocva.Variant{"variant": "default"},
+			}) {
+				@AlertDescription(Props{}) {
+					{ i18nUtil.T(ctx, desc) }
+				}
+			}
+		</div>
+	</template>
+}
+
+templ ToastTip(desc string) {
+	<template x-teleport="body">
+		<div
+			x-data="{ show:false }"
+			class="fixed bottom-3 flex items-center justify-center z-[150] w-full"
+			x-show="show"
+            @click="show = false"
+			x-init="$nextTick(()=>{
+                    show = true;
+                    setTimeout(() => { show = false }, 5000);
+                })"
+			x-transition.duration.500ms
+		>
+			@Alert(Props{
+				Class:   "w-[300px] text-md",
+				Variant: gocva.Variant{"variant": "default"},
+			}) {
+                <div class="flex flex-row justify-start items-center gap-2 mb-2">
+                    @icon.Wrapper(icon.Props{
+                            Class: "w-4 h-4",
+                        }) {
+                        @icon.Lightbulb()
+                    }
+                    @AlertTitle(Props{}) {
+                        { i18nUtil.T(ctx, "tip") }
+                    }
+                </div>
+				@AlertDescription(Props{}) {
+					{ i18nUtil.T(ctx, desc) }
+				}
+			}
+		</div>
+	</template>
+}

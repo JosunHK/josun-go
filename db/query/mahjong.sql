@@ -78,6 +78,7 @@ SELECT * FROM mahjong_game_state
 WHERE EXISTS (
     SELECT * FROM mahjong_room 
     WHERE room_code = ? 
+    AND active = TRUE
     AND mahjong_game_state.id = mahjong_room.game_state_id
 ) LIMIT 1;
 
@@ -86,6 +87,7 @@ SELECT * FROM mahjong_player
 WHERE EXISTS (
     SELECT * FROM mahjong_room
     WHERE room_code = ?
+    AND active = TRUE
     AND mahjong_player.room_id = mahjong_room.id
 );
 
@@ -107,3 +109,7 @@ SET round_wind = ?,
     ended = ?
 WHERE id = ?;
 
+-- name: EndGameByCode :exec
+UPDATE mahjong_room
+SET active = false
+WHERE room_code = ?;

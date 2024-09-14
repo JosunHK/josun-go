@@ -1,4 +1,4 @@
-package mahjongManager
+package mahjongManagermahjongmanager
 
 import (
 	"context"
@@ -46,6 +46,30 @@ func CreateGameState(c echo.Context, queries *sqlc.Queries) (int64, error) {
 	}
 
 	return result.LastInsertId()
+}
+
+func IsOwner(c echo.Context, code string) (bool, error) {
+	roomOwnerParams, err := CreateMahjongRoomOwnerParams(c)
+	if err != nil {
+		return false, fmt.Errorf("Unable to create params for room owner", err)
+	}
+
+	queries := sqlc.New(database.DB)
+	user, err := queries.GetOwnerByUUIDorUserId(c.Request().Context(), sqlc.GetOwnerByUUIDorUserIdParams{
+		GuestID: roomOwnerParams.GuestID,
+		UserID:  roomOwnerParams.UserID,
+	})
+
+	if err != nil {
+		return false, fmt.Errorf("Unable to get owner", err)
+	}
+
+	room, err := GetRoomByCode(c.Request().Context(), code)
+	if err != nil {
+		return false, fmt.Errorf("Unable to get room", err)
+	}
+
+	return user.ID == room.OwnerID, nil
 }
 
 func GetOrCreateRoomOwner(c echo.Context, queries *sqlc.Queries) (int64, error) {
@@ -121,7 +145,7 @@ func CreateMahjongRoomOwnerParams(c echo.Context) (sqlc.CreateMahjongRoomOwnerPa
 	}
 
 	params := sqlc.CreateMahjongRoomOwnerParams{
-		UserID:  0,
+		UserID:  -1,
 		GuestID: guestID,
 	}
 
@@ -314,6 +338,13 @@ func HandleGameWin(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) er
 		return err
 	}
 
+	if gameData.GameState.Ended {
+		err = endGame(c, gameData.Room.RoomCode)
+		if err != nil {
+			return err
+		}
+	}
+
 	return tx.Commit()
 }
 
@@ -336,7 +367,23 @@ func HandleGameDraw(c echo.Context, drawForm ms.DrawForm, gameData *ms.GameData)
 		gameData.GameState.Round += 1
 	}
 
-	err = UpdateGameState(c.Request().Context(), queries, gameData.GameState)
+	if gameData.GameState.Ended {
+		if gameData.GameState.Kyoutaku > 0 {
+			topPlayer := &gameData.Players[0] //in case of same score should be east player
+			for i, player := range gameData.Players {
+				if player.Score > topPlayer.Score {
+					topPlayer = &gameData.Players[i]
+				}
+			}
+			gameData.GameState.Kyoutaku = 0
+			topPlayer.Score += gameData.GameState.Kyoutaku * 1000
+		}
+
+		err = endGame(c, gameData.Room.RoomCode)
+		if err != nil {
+			return err
+		}
+	}
 
 	for _, player := range gameData.Players {
 		err = UpdatePlayerScore(c.Request().Context(), queries, player.ID, player.Score)
@@ -344,6 +391,8 @@ func HandleGameDraw(c echo.Context, drawForm ms.DrawForm, gameData *ms.GameData)
 			return err
 		}
 	}
+
+	err = UpdateGameState(c.Request().Context(), queries, gameData.GameState)
 
 	return tx.Commit()
 }
@@ -688,4 +737,10 @@ func GetInitGameState(c context.Context, code string) (ms.GameStateUpdated, erro
 		GameState: gameData.GameState,
 		Players:   gameData.Players,
 	}, nil
+}
+
+func endGame(c echo.Context, code string) error {
+	queries := sqlc.New(database.DB)
+	err := queries.EndGameByCode(c.Request().Context(), code)
+	return err
 }

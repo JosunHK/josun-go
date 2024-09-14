@@ -150,7 +150,7 @@ func RoomCreate() templ.Component {
 			return templ_7745c5c3_Err
 		})
 		templ_7745c5c3_Err = card.Card(card.Props{
-			Class: "w-[1000px]",
+			Class: "sm:w-[350px] 2xl:w-[1000px]",
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -230,7 +230,7 @@ func RoomOptions() templ.Component {
 			templ_7745c5c3_Var10 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"grid grid-cols-4 gap-2\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"grid sm:grid-cols-2 2xl:grid-cols-4 gap-2\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -444,6 +444,9 @@ func NameInput(num int) templ.Component {
 		templ_7745c5c3_Err = input.Input(input.Props{
 			Name: fmt.Sprintf("playerNames"),
 			Type: "text",
+			Attrs: templ.Attributes{
+				"maxlength": "10",
+			},
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

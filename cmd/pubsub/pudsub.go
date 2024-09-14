@@ -170,6 +170,7 @@ func GetGameStateEventByCode(c context.Context, code string) (mahjongStruct.Game
 	}
 
 	return mahjongStruct.GameStateUpdated{
+		RoomID:    room.ID,
 		RoomCode:  code,
 		GameState: gameState,
 		Players:   players,

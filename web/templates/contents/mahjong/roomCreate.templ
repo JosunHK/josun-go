@@ -16,7 +16,7 @@ import (
 
 templ RoomCreate() {
 	@card.Card(card.Props{
-		Class: "w-[1000px]",
+		Class: "sm:w-[350px] 2xl:w-[1000px]",
 	}) {
 		@card.Header(card.Props{}) {
 			@card.Title(card.Props{
@@ -54,7 +54,7 @@ templ Submitbutton() {
 }
 
 templ RoomOptions() {
-	<div class="grid grid-cols-4 gap-2">
+	<div class="grid sm:grid-cols-2 2xl:grid-cols-4 gap-2">
 		for i := 1; i <= 4; i++ {
 			@NameInput(i)
 		}
@@ -103,6 +103,9 @@ templ NameInput(num int) {
 		@input.Input(input.Props{
 			Name: fmt.Sprintf("playerNames"),
 			Type: "text",
+            Attrs: templ.Attributes{
+                "maxlength": "10",
+            },
 		})
 	</div>
 }

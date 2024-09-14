@@ -7,6 +7,7 @@ import (
 	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	templUtil "github.com/JosunHK/josun-go.git/cmd/util/templ"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/alert"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
@@ -17,15 +18,15 @@ import (
 func getPlayerColor(i int) string {
 	switch i {
 	case 0:
-		return "border-l-eRed"
+		return "text-eRed"
 	case 1:
-		return "border-l-eOrange"
+		return "text-eOrange"
 	case 2:
-		return "border-l-eYellow"
+		return "text-eYellow"
 	case 3:
-		return "border-l-eGreen"
+		return "text-eGreen"
 	default:
-		return "border-l-eRed"
+		return "text-eRed"
 	}
 }
 
@@ -76,7 +77,7 @@ func getPlayerMenuPlease(ctx context.Context, players []sqlc.MahjongPlayer) []sq
 	return items
 }
 
-templ Room(players []sqlc.MahjongPlayer, code string, gameState sqlc.MahjongGameState) {
+templ Room(players []sqlc.MahjongPlayer, code string, gameState sqlc.MahjongGameState, isOwner bool) {
 	<div
 		Class="w-full h-full flex flex-col"
 		x-ref="room"
@@ -112,14 +113,16 @@ templ Room(players []sqlc.MahjongPlayer, code string, gameState sqlc.MahjongGame
             }"
 	>
 		<div class="h-auto flex flex-col justify-center items-center grow">
-			<div class="flex flex-row justify-between w-[350px] items-center px-4 pt-7 pb-2 max-w-[90dvw]">
+			<div class="flex flex-row justify-between w-[350px] items-center pt-7 pb-2 max-w-[90dvw]">
 				<div
 					class="grow"
 					hx-ext="sse"
 					sse-connect={ fmt.Sprintf("/mahjong/room/%v/state", code) }
 					sse-swap="data"
 				></div>
-				@DialogBody(players, code)
+				if isOwner {
+					@DialogBody(players, code)
+				}
 			</div>
 			@ScoreDisplay(players)
 			@RoomCodeDisplay(code)
@@ -129,18 +132,18 @@ templ Room(players []sqlc.MahjongPlayer, code string, gameState sqlc.MahjongGame
 
 templ GameStateDisplay(gameState sqlc.MahjongGameState) {
 	@label.Label(label.Props{
-		Class: "text-[1.5rem] pl-4 text-muted-foreground text-ellipsis text-nowrap overflow-hidden font-wind fade-in flex flex-row justify-between items-center grow",
+		Class: "text-[1.5rem] text-muted-foreground text-ellipsis text-nowrap overflow-hidden font-wind fade-in flex flex-row justify-between items-center grow",
 	}) {
 		{ i18nUtil.T(ctx, string(gameState.RoundWind)) + getRoundTitle(ctx, string(gameState.SeatWind)) }
 		if gameState.Round > 0 {
-			{ " " + i18nUtil.TN(ctx, int(gameState.Round)) + i18nUtil.T(ctx, "honba") }
+			{ " - " + i18nUtil.TN(ctx, int(gameState.Round)) + i18nUtil.T(ctx, "honba") }
 		}
-		@icon.Wrapper(icon.Props{
-			Class: "text-[6px] w-[25px]",
-		}) {
-			@icon.RiichiBo()
-		}
-		<div class="mr-4">
+		<div class="mr-4 flex flex-row justify-center items-center gap-4">
+            @icon.Wrapper(icon.Props{
+                Class: "text-[6px] w-[25px]",
+            }) {
+                @icon.RiichiBo()
+            }
 			{ fmt.Sprint("X", gameState.Kyoutaku) }
 		</div>
 	}
@@ -158,7 +161,7 @@ templ ScoreDisplay(players []sqlc.MahjongPlayer) {
 
 templ playerCard(i int, player sqlc.MahjongPlayer) {
 	@card.Card(card.Props{
-		Class: fmt.Sprintf("drop-shadow-md border-l-8 max-w-[90dvw] %s", getPlayerColor(i)),
+		Class: "drop-shadow-md max-w-[90dvw]",
 		Attrs: templ.Attributes{
 			"x-data":      getCardData(player),
 			"@mousedown":  "showDelta($event.type, player.score)",
@@ -175,9 +178,9 @@ templ playerCard(i int, player sqlc.MahjongPlayer) {
 				{ player.Name }
 			}
 			@label.Label(label.Props{
-				Class: "text-[2rem] pr-4 text-ellipsis text-nowrap overflow-hidden font-wind",
+				Class: "text-[2rem] pr-4 text-ellipsis text-nowrap overflow-hidden font-wind transition-colors duration-400",
 				Attrs: templ.Attributes{
-					":class": fmt.Sprint("gameState.seat_wind === '", string(player.Wind), "' ? 'text-eBlue' : 'text-muted-foreground'"),
+					":class": fmt.Sprint("gameState.seat_wind === '", string(player.Wind), "' ? 'text-eOrange' : 'text-muted-foreground'"),
 				},
 			}) {
 				{ i18nUtil.T(ctx, string(player.Wind)) }
@@ -224,6 +227,15 @@ templ Update(event mahjongStruct.GameStateUpdated) {
             gameState = %v
         })`, templUtil.ToJSONString(event.Players), templUtil.ToJSONString(event.GameState)) }
 	></x-script>
+	if event.GameState.Ended {
+	    @alert.Toast(i18nUtil.T(ctx, "room_close_in") + " 5s")
+		<x-script
+			x-init={ fmt.Sprintf(`setTimeout(() => {
+                window.location.href = '/mahjong/result/%v'
+            }, 5000)`, event.RoomID) }
+		>
+		</x-script>
+	}
 }
 
 templ RoomCodeDisplay(code string) {

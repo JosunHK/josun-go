@@ -1,0 +1,127 @@
+package mahjongTemplates
+
+import (
+	"fmt"
+	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
+	sqlc "github.com/JosunHK/josun-go.git/db/generated"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/alert"
+	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
+	label "github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
+	gocva "github.com/gungun974/gocva"
+)
+
+var defaultUma = []int{20, 10, -10, -20}
+
+templ GameResult(players []sqlc.MahjongPlayer, kaeshi int) {
+	<div Class="w-full h-full flex flex-col">
+		<div class="h-auto flex flex-col justify-center items-center grow">
+            @label.Label(label.Props{
+                Class:"w-full font-wind mb-4",
+                Variant: gocva.Variant{"variant": "bigtitle"},
+            }) {
+                { i18nUtil.T(ctx, "game_end") }
+            }
+			@ResultDisplay(players, kaeshi)
+		</div>
+	</div>
+	@alert.ToastTip(i18nUtil.T(ctx, "click_to_edit_uma"))
+}
+
+templ ResultDisplay(players []sqlc.MahjongPlayer, kaeshi int) {
+	<div
+		x-data={ fmt.Sprintf(`{
+                kaeshi: %d 
+            }`, kaeshi) }
+		class="px-4 flex flex-col gap-4"
+	>
+		for i, player := range players {
+			@ResultPlayerCard(i, player)
+		}
+		@AdjustCard(kaeshi, players)
+	</div>
+}
+
+templ AdjustCard(keashi int, players []sqlc.MahjongPlayer) {
+	@card.Card(card.Props{
+		Class: "drop-shadow-md max-w-[90dvw]",
+		Attrs: templ.Attributes{},
+	}) {
+	<div class="flex flex-row justify-between items-center p-2">
+            @label.Label(label.Props{
+                Variant: gocva.Variant{"variant": "title"},
+            }) {
+                { i18nUtil.T(ctx, "kaeshi") }
+            }
+            @input.NumberInput(input.Props{
+                Class: "text-xl mt-1 w-[6rem] border-0 py-1 focus-visible:border-0",
+                Attrs: templ.Attributes{
+                    "x-model":   "kaeshi",
+                    "maxlength": "6",
+                },
+            })
+	</div>
+    }
+}
+
+templ UmaSelect(index int) {
+	<div class="flex flex-row items-center justify-center text-[2rem] text-muted">
+		{ "(" }
+		@input.NumberInput(input.Props{
+			Class: "w-[5.25rem] text-xl mt-1 text-[2rem] border-0 py-1 text-muted focus-visible:border-0",
+			Attrs: templ.Attributes{
+				"x-data":         fmt.Sprintf("{ umaInput: %d }", defaultUma[index]),
+				"x-model":        "umaInput",
+				"x-init":         "umaInput = umaInput.toString().startsWith('-') ? umaInput : umaInput.toString().startsWith('+') ? umaInput : '+' + umaInput; umaDelta = parseInt(umaInput)",
+				"@click.outside": "umaInput = umaInput.toString().startsWith('-') ? umaInput : umaInput.toString().startsWith('+') ? umaInput : '+' + umaInput; umaDelta = parseInt(umaInput)",
+				"maxlength":      "3",
+			},
+		})
+		{ ")" }
+	</div>
+}
+
+templ ResultPlayerCard(i int, player sqlc.MahjongPlayer) {
+	@card.Card(card.Props{
+		Class: fmt.Sprintf("drop-shadow-md max-w-[90dvw] %s", getPlayerColor(i)),
+		Attrs: templ.Attributes{},
+	}) {
+		<div class="flex flex-row justify-between">
+			@label.Label(label.Props{
+				Class: "text-[2rem] pl-4 text-muted-foreground text-ellipsis text-nowrap overflow-hidden flex flex-row items-center justify-center",
+				Attrs: templ.Attributes{},
+			}) {
+				if i == 0 {
+					@icon.Wrapper(icon.Props{
+						Class: "w-10 h-10 [&>svg]:text-eYellow pr-2 flex items-center justify-center",
+					}) {
+						@icon.Crown()
+					}
+				}
+				<span>{ player.Name }</span>
+			}
+		</div>
+		<div
+			class="flex flex-row gap-4 items-center"
+			x-data={ fmt.Sprintf(`{ 
+                    score: %d,
+                    isFirst : %t,
+                    uma : 0,
+                    umaDelta : 0, 
+                    counter : new countUp.CountUp('player-%d', 0, {duration: 0.75, decimalPlaces: 1}),
+                }`,player.Score, i == 0, i) }
+		>
+			@label.Label(label.Props{
+				Class: "text-[3.5rem] pl-4 text-ellipsis overflow-hidden",
+				Attrs: templ.Attributes{
+					"id":       fmt.Sprintf("player-%d", i),
+					"x-init":   "counter.start();counter.update(uma)",
+					":class":   "uma < 0 ? 'text-muted-foreground' : ''",
+					"x-effect": "uma = (score - kaeshi)/1000 + (isFirst? 20 : 0) + umaDelta; counter.update(uma)",
+				},
+			})
+			@UmaSelect(i)
+		</div>
+	}
+}

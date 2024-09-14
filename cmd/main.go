@@ -77,7 +77,7 @@ func main() {
 	))
 
 	e.Static("/static", "web/static")
-	e.GET("/", middleware.StaticPages(layout.Layout, playgroundTemplates.Playground()))
+	e.GET("/playground", middleware.StaticPages(layout.Layout, playgroundTemplates.Playground()))
 	go pubsub.StartEventsRouter(context.Background(), routers)
 	go pubsub.StartSSERouter(context.Background(), routers)
 

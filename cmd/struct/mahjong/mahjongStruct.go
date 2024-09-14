@@ -9,7 +9,8 @@ type GameUpdated struct {
 }
 
 type GameStateUpdated struct {
-	RoomCode  string                `json:"room_id"`
+	RoomCode  string                `json:"room_code"`
+	RoomID    int64                 `json:"room_id"`
 	GameState sqlc.MahjongGameState `json:"game_state"`
 	Players   []sqlc.MahjongPlayer  `json:"players"`
 }

@@ -3,9 +3,12 @@ package mahjong
 import (
 	"fmt"
 	"math/rand"
+	"slices"
+	"strconv"
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
 	mgr "github.com/JosunHK/josun-go.git/cmd/manager/mahjong"
+	fp "github.com/JosunHK/josun-go.git/cmd/util/fp"
 	responseUtil "github.com/JosunHK/josun-go.git/cmd/util/response"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
 	errorTemplate "github.com/JosunHK/josun-go.git/web/templates/contents/errorAlert"
@@ -41,7 +44,12 @@ func Room(c echo.Context) templ.Component {
 		return errorTemplate.ErrorAlert("Room Not Found", "The room you are looking for does not exist.")
 	}
 
-	return mahjongTemplates.Room(players, code, gameState)
+	isOwner, err := mgr.IsOwner(c, code)
+	if err != nil {
+		isOwner = false // default to false
+	}
+
+	return mahjongTemplates.Room(players, code, gameState, isOwner)
 }
 
 func RoomCreate(c echo.Context) (string, error) {
@@ -106,6 +114,7 @@ func RoomCreate(c echo.Context) (string, error) {
 	}
 
 	for i, name := range roomSetting.PlayerNames {
+		name = name[:min(len(name), 10)]
 		_, err := mgr.CreateMahjongPlayer(c, queries, sqlc.CreateMahjongPlayerParams{
 			RoomID: roomId,
 			Name:   name,
@@ -133,4 +142,43 @@ func fillOutWithRandomNames(names *[]string, count int) {
 		randomName := randomNames[rand.Intn(len(randomNames))]
 		*names = append(*names, randomName)
 	}
+}
+
+func GameResult(c echo.Context) templ.Component {
+	DB := database.DB
+	queries := sqlc.New(DB)
+
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		return errorTemplate.ErrorAlert("Invalid Room ID", "The room ID you provided is invalid.")
+	}
+
+	players, err := queries.GetPlayersByRoomId(c.Request().Context(), id)
+	if err != nil {
+		return errorTemplate.ErrorAlert("Room Not Found", "The room you are looking for does not exist.")
+	}
+
+	sortResults(players)
+
+	return mahjongTemplates.GameResult(players, 30000)
+}
+
+func sortResults(players []sqlc.MahjongPlayer) {
+	sortfunc := func(i, j sqlc.MahjongPlayer) int {
+		if i.Score > j.Score {
+			return -1
+		}
+		if i.Score < j.Score {
+			return 1
+		}
+		if i.Score == j.Score { // e.g east is < south
+			if fp.IndexOf(string(i.Wind), mgr.WIND_LIST[:]) < fp.IndexOf(string(i.Wind), mgr.WIND_LIST[:]) {
+				return -1
+			} else {
+				return 1
+			}
+		}
+		return 0
+	}
+	slices.SortFunc(players, sortfunc)
 }
