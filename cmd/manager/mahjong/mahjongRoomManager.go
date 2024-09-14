@@ -1,6 +1,7 @@
 package mahjongManager
 
 import (
+	"context"
 	"fmt"
 	"math/rand/v2"
 
@@ -74,6 +75,10 @@ func GetOrCreateRoomOwner(c echo.Context, queries *sqlc.Queries) (int64, error) 
 }
 
 func GetGameData(c echo.Context, code string) (ms.GameData, error) {
+	return GetGameDataWithContext(c.Request().Context(), code)
+}
+
+func GetGameDataWithContext(c context.Context, code string) (ms.GameData, error) {
 	room, err := GetRoomByCode(c, code)
 	if err != nil {
 		return ms.GameData{}, err
@@ -148,10 +153,10 @@ func GetRandomRoomCode(c echo.Context) string {
 	return code
 }
 
-func GetPlayersByRoomCode(c echo.Context, code string) ([]sqlc.MahjongPlayer, error) {
+func GetPlayersByRoomCode(c context.Context, code string) ([]sqlc.MahjongPlayer, error) {
 	queries := sqlc.New(database.DB)
 
-	players, err := queries.GetPlayersByRoomCode(c.Request().Context(), code)
+	players, err := queries.GetPlayersByRoomCode(c, code)
 	if err != nil {
 		return []sqlc.MahjongPlayer{}, fmt.Errorf("Unable to get game state with code", err)
 	}
@@ -159,10 +164,10 @@ func GetPlayersByRoomCode(c echo.Context, code string) ([]sqlc.MahjongPlayer, er
 	return players, nil
 }
 
-func GetGameStateByRoomCode(c echo.Context, code string) (sqlc.MahjongGameState, error) {
+func GetGameStateByRoomCode(c context.Context, code string) (sqlc.MahjongGameState, error) {
 	queries := sqlc.New(database.DB)
 
-	state, err := queries.GetGameStateByRoomCode(c.Request().Context(), code)
+	state, err := queries.GetGameStateByRoomCode(c, code)
 	if err != nil {
 		return sqlc.MahjongGameState{}, fmt.Errorf("Unable to get game state with code", err)
 	}
@@ -181,10 +186,10 @@ func GetRoomById(c echo.Context, Id int64) (sqlc.MahjongRoom, error) {
 	return room, nil
 }
 
-func GetRoomByCode(c echo.Context, code string) (sqlc.MahjongRoom, error) {
+func GetRoomByCode(c context.Context, code string) (sqlc.MahjongRoom, error) {
 	queries := sqlc.New(database.DB)
 
-	room, err := queries.GetRoomByCode(c.Request().Context(), code)
+	room, err := queries.GetRoomByCode(c, code)
 	if err != nil {
 		return sqlc.MahjongRoom{}, fmt.Errorf("Unable to get room with code", err)
 	}
@@ -192,10 +197,10 @@ func GetRoomByCode(c echo.Context, code string) (sqlc.MahjongRoom, error) {
 	return room, nil
 }
 
-func GetPlayerById(c echo.Context, id int64) (sqlc.MahjongPlayer, error) {
+func GetPlayerById(c context.Context, id int64) (sqlc.MahjongPlayer, error) {
 	queries := sqlc.New(database.DB)
 
-	player, err := queries.GetPlayerById(c.Request().Context(), id)
+	player, err := queries.GetPlayerById(c, id)
 	if err != nil {
 		return sqlc.MahjongPlayer{}, fmt.Errorf("Unable to get room with code", err)
 	}
@@ -219,12 +224,23 @@ func GetWindByIndex(index int) sqlc.MahjongPlayerWind {
 
 }
 
-func UpdatePlayerScore(c echo.Context, queries *sqlc.Queries, id int64, score int32) error {
+func UpdatePlayerScore(c context.Context, queries *sqlc.Queries, id int64, score int32) error {
 	if queries == nil {
 		queries = sqlc.New(database.DB)
 	}
 
-	err := queries.UpdatePlayerScore(c.Request().Context(), sqlc.UpdatePlayerScoreParams{
+	oriPlayer, err := queries.GetPlayerById(c, id)
+	if err != nil {
+		return fmt.Errorf("Player does not exist", err)
+	}
+
+	_, err = queries.CreateActionLog(c, sqlc.CreateActionLogParams{
+		RoomID:     oriPlayer.RoomID,
+		PlayerID:   id,
+		ScoreDelta: score - oriPlayer.Score,
+	})
+
+	err = queries.UpdatePlayerScore(c, sqlc.UpdatePlayerScoreParams{
 		ID:    id,
 		Score: score,
 	})
@@ -236,7 +252,7 @@ func UpdatePlayerScore(c echo.Context, queries *sqlc.Queries, id int64, score in
 	return nil
 }
 
-func UpdateGameState(c echo.Context, queries *sqlc.Queries, gameState sqlc.MahjongGameState) error {
+func UpdateGameState(c context.Context, queries *sqlc.Queries, gameState sqlc.MahjongGameState) error {
 	if queries == nil {
 		queries = sqlc.New(database.DB)
 	}
@@ -250,7 +266,7 @@ func UpdateGameState(c echo.Context, queries *sqlc.Queries, gameState sqlc.Mahjo
 		ID:        gameState.ID,
 	}
 
-	err := queries.UpdateGameState(c.Request().Context(), params)
+	err := queries.UpdateGameState(c, params)
 	if err != nil {
 		return fmt.Errorf("Unable to update game state", err)
 	}
@@ -278,6 +294,8 @@ func HandleGameWin(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) er
 		}
 	}
 
+	handlePlayerRiichi(winForm.RiichiPlayers, gameData)
+
 	if err := handleKyoutaku(c, winForm, gameData); err != nil {
 		if err != nil {
 			return err
@@ -285,13 +303,13 @@ func HandleGameWin(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) er
 	}
 
 	for _, player := range gameData.Players {
-		err = UpdatePlayerScore(c, nil, player.ID, player.Score)
+		err = UpdatePlayerScore(c.Request().Context(), nil, player.ID, player.Score)
 		if err != nil {
 			return err
 		}
 	}
 
-	err = UpdateGameState(c, nil, gameData.GameState)
+	err = UpdateGameState(c.Request().Context(), nil, gameData.GameState)
 	if err != nil {
 		return err
 	}
@@ -318,10 +336,10 @@ func HandleGameDraw(c echo.Context, drawForm ms.DrawForm, gameData *ms.GameData)
 		gameData.GameState.Round += 1
 	}
 
-	err = UpdateGameState(c, queries, gameData.GameState)
+	err = UpdateGameState(c.Request().Context(), queries, gameData.GameState)
 
 	for _, player := range gameData.Players {
-		err = UpdatePlayerScore(c, queries, player.ID, player.Score)
+		err = UpdatePlayerScore(c.Request().Context(), queries, player.ID, player.Score)
 		if err != nil {
 			return err
 		}
@@ -574,8 +592,11 @@ func handleTsumo(c echo.Context, winForm ms.WinForm, gameData *ms.GameData) erro
 			return fmt.Errorf("Invalid score")
 		}
 
-		rWinner.Score += int32(scoreKo*2) + int32(scoreOya) + gameData.GameState.Round*100*3
+		rWinner.Score += (int32(scoreKo)*2 + int32(scoreOya) + gameData.GameState.Round*100*3)
 		for i, player := range gameData.Players {
+			if player.ID == rWinner.ID {
+				continue
+			}
 			if string(player.Wind) == string(gameData.GameState.SeatWind) {
 				gameData.Players[i].Score -= (int32(scoreOya) + gameData.GameState.Round*100)
 			} else {
@@ -654,4 +675,17 @@ func getScoreMap(han, fu int) (ms.Score, error) {
 	}
 
 	return ms.ScoreMap[han][fu], nil
+}
+
+func GetInitGameState(c context.Context, code string) (ms.GameStateUpdated, error) {
+	gameData, err := GetGameDataWithContext(c, code)
+	if err != nil {
+		return ms.GameStateUpdated{}, err
+	}
+
+	return ms.GameStateUpdated{
+		RoomCode:  code,
+		GameState: gameData.GameState,
+		Players:   gameData.Players,
+	}, nil
 }

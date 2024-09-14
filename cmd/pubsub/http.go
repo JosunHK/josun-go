@@ -9,6 +9,7 @@ import (
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
 	"github.com/JosunHK/josun-go.git/cmd/handlers/mahjong"
+	mgr "github.com/JosunHK/josun-go.git/cmd/manager/mahjong"
 	mahjongStruct "github.com/JosunHK/josun-go.git/cmd/struct/mahjong"
 	errorTemplate "github.com/JosunHK/josun-go.git/web/templates/contents/errorAlert"
 	mahjongTemplates "github.com/JosunHK/josun-go.git/web/templates/contents/mahjong"
@@ -75,8 +76,14 @@ func (s *Streamer) InitialStreamResponse(w http.ResponseWriter, r *http.Request)
 		w.Write([]byte("invalid room ID"))
 		return nil, false
 	}
+	event, err := mgr.GetInitGameState(r.Context(), roomCode)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
+		return nil, false
+	}
 
-	resp, err := s.getResponse(r.Context(), roomCode, nil)
+	resp, err := s.getResponse(r.Context(), roomCode, &event)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))

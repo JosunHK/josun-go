@@ -277,7 +277,7 @@ func ScoreDialogLayout() templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <div class=\"w-full text-center\" id=\"err-msg\"></div><div class=\"p-2 flex flex-row justify-end w-full \">")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <div class=\"w-full text-center\" id=\"err-msg\"></div><div class=\"p-2 flex flex-row justify-end w-full absolute bottom-0\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -324,7 +324,7 @@ func ScoreDialogLayout() templ.Component {
 				return templ_7745c5c3_Err
 			})
 			templ_7745c5c3_Err = card.Card(card.Props{
-				Class: "w-[400px] drop-shadow-xl",
+				Class: "w-[350px] h-[550px] drop-shadow-xl realtive",
 			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var12), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err

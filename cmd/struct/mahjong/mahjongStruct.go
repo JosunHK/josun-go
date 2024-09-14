@@ -76,11 +76,11 @@ var ScoreMap = map[int]map[int]Score{
 		80:  Score{OyaTsumo: 1300, KoTsumoKo: 700, KoTsumoOya: 1300, OyaDirect: 3900, KoDirect: 2600},
 		90:  Score{OyaTsumo: 1500, KoTsumoKo: 800, KoTsumoOya: 1500, OyaDirect: 4400, KoDirect: 2900},
 		100: Score{OyaTsumo: 1600, KoTsumoKo: 800, KoTsumoOya: 1600, OyaDirect: 4800, KoDirect: 3200},
-		110: Score{OyaTsumo: 0, KoTsumoKo: 0, KoTsumoOya: 300, OyaDirect: 5300, KoDirect: 3600},
+		110: Score{OyaTsumo: 1800, KoTsumoKo: 900, KoTsumoOya: 1800, OyaDirect: 5300, KoDirect: 3600},
 	},
 	2: {
 		20:  Score{OyaTsumo: 700, KoTsumoKo: 400, KoTsumoOya: 700, OyaDirect: 0, KoDirect: 0},
-		25:  Score{OyaTsumo: 0, KoTsumoKo: 0, KoTsumoOya: 0, OyaDirect: 1600, KoDirect: 2400},
+		25:  Score{OyaTsumo: 800, KoTsumoKo: 400, KoTsumoOya: 800, OyaDirect: 2400, KoDirect: 1600},
 		30:  Score{OyaTsumo: 1000, KoTsumoKo: 500, KoTsumoOya: 1000, OyaDirect: 2900, KoDirect: 2000},
 		40:  Score{OyaTsumo: 1300, KoTsumoKo: 700, KoTsumoOya: 1300, OyaDirect: 3900, KoDirect: 2600},
 		50:  Score{OyaTsumo: 1600, KoTsumoKo: 800, KoTsumoOya: 1600, OyaDirect: 4800, KoDirect: 3200},
@@ -89,7 +89,7 @@ var ScoreMap = map[int]map[int]Score{
 		80:  Score{OyaTsumo: 1300, KoTsumoKo: 1300, KoTsumoOya: 2600, OyaDirect: 7700, KoDirect: 5200},
 		90:  Score{OyaTsumo: 1500, KoTsumoKo: 1500, KoTsumoOya: 2900, OyaDirect: 8700, KoDirect: 5800},
 		100: Score{OyaTsumo: 1600, KoTsumoKo: 1600, KoTsumoOya: 3200, OyaDirect: 9600, KoDirect: 6400},
-		110: Score{OyaTsumo: 0, KoTsumoKo: 1800, KoTsumoOya: 3600, OyaDirect: 10600, KoDirect: 7100},
+		110: Score{OyaTsumo: 3600, KoTsumoKo: 1800, KoTsumoOya: 3600, OyaDirect: 10600, KoDirect: 7100},
 	},
 	3: {
 		20:  Score{OyaTsumo: 1300, KoTsumoKo: 700, KoTsumoOya: 1300, OyaDirect: 0, KoDirect: 0},

@@ -1,6 +1,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import url('https://fonts.googleapis.com/css2?family=LXGW+WenKai+Mono+TC:wght@300;400;700&display=swap');
 
 @layer base {
     :root {
@@ -76,7 +77,6 @@
 }
 
 @layer base {
-
     * {
         @apply border-border;
     }
@@ -118,5 +118,10 @@
     ::-webkit-scrollbar-thumb {
       background: hsl(var(--eGreen));
       border-radius:8px;
+    }
+
+    .hx-fade-out.htmx-swapping {
+      opacity: 0;
+      transition: opacity 500ms ease-out;
     }
 }

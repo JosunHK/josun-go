@@ -8,6 +8,15 @@ INSERT INTO mahjong_room(
     ?, ?, ?, ?
 );
 
+-- name: CreateActionLog :execresult
+INSERT INTO mahjong_action_log(
+    room_id,
+    player_id,
+    score_delta
+) VALUES (
+    ?, ?, ?
+);
+
 -- name: CreateMahjongRoomOwner :execresult
 INSERT INTO mahjong_room_owner(
     user_id,
@@ -97,3 +106,4 @@ SET round_wind = ?,
     kyoutaku = ?,
     ended = ?
 WHERE id = ?;
+

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/JosunHK/josun-go.git/cmd/database"
@@ -68,7 +69,12 @@ func main() {
 	e := echo.New()
 	e.Use(eMiddleware.Recover())
 	e.Use(middleware.Logger)
-	e.Pre(eMiddleware.RemoveTrailingSlash())
+	e.Use(middleware.WithLocale)
+	e.Pre(eMiddleware.RemoveTrailingSlashWithConfig(
+		eMiddleware.TrailingSlashConfig{
+			RedirectCode: http.StatusMovedPermanently,
+		},
+	))
 
 	e.Static("/static", "web/static")
 	e.GET("/", middleware.StaticPages(layout.Layout, playgroundTemplates.Playground()))

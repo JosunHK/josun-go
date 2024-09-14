@@ -5,9 +5,9 @@ import twmerge "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
 var M = twmerge.Merge
 
 type Props struct {
-	Class        string
-	Attrs        templ.Attributes
-	Title        string
+	Class string
+	Attrs templ.Attributes
+	Title string
 }
 
 templ DialogContent(props Props) {
@@ -19,11 +19,11 @@ templ DialogContent(props Props) {
 		>
 			<div class="h-full w-full flex justify-center items-center">
 				<div
-					class="h-min w-min"
+					class="relative h-min w-min"
 					x-on:click.outside="dialogClose($el);"
-                    { props.Attrs... }
+					{ props.Attrs... }
 				>
-					{ children... }
+                    { children... }
 				</div>
 			</div>
 		</div>
@@ -31,16 +31,18 @@ templ DialogContent(props Props) {
 }
 
 templ DialogTrigger(props Props) {
-    <div
-        x-on:click="dialogToggle();"
-        { props.Attrs... }
-    >
-        {children...}
-    </div>
+	<div
+		class={ props.Class }
+		x-on:click="dialogToggle();"
+		{ props.Attrs... }
+	>
+		{ children... }
+	</div>
 }
 
 templ Dialog(props Props) {
-	<div x-data="{
+	<div
+		x-data="{
             open: false,
             dialogToggle() {
                 if (this.open) {
@@ -57,8 +59,8 @@ templ Dialog(props Props) {
                 focusAfter && focusAfter.focus()
             },
         }"
-        { props.Attrs... }
+		{ props.Attrs... }
 	>
-        {children...}
+		{ children... }
 	</div>
 }

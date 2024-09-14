@@ -15,6 +15,16 @@ import (
 
 type Transl func(s string) string
 
+type NumTransl func(num int) string
+
+// just up to 20 no other use cases anyways
+var ZH_NUM_MAP = map[int]string{0: "零", 1: "一", 2: "二", 3: "三", 4: "四", 5: "五", 6: "六", 7: "七", 8: "八", 9: "九", 10: "十", 11: "十一", 12: "十二", 13: "十三", 14: "十四", 15: "十五", 16: "十六", 17: "十七", 18: "十八", 19: "十九", 20: "二十"}
+
+var NUM_TRANSL_MAP = map[string]NumTransl{
+	"en": defaultNumTransl,
+	"zh": ChineseNumTransl,
+}
+
 const LOCALE_SETTING_ID = "locale"
 
 var I18n *goeasyi18n.I18n
@@ -166,4 +176,44 @@ func DeleteItem(locale, key string) error {
 	}
 
 	return nil
+}
+
+func TN(ctx context.Context, num int) string {
+	locale := getLocaleFromContext(ctx)
+	fn := NUM_TRANSL_MAP[locale]
+	if fn == nil {
+		return defaultNumTransl(num)
+	}
+	return fn(num)
+}
+
+func ChineseNumTransl(num int) string {
+	numCharSet := []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"}
+	unitCharSet := []string{"", "十", "百", "千", "萬", "億", "兆"}
+	n := []int{}
+	for ; num > 0; num /= 10 {
+		n = append(n, num%10)
+		log.Debug("n: ", n)
+	}
+
+	res := ""
+	for i := 0; i < len(n); i++ {
+		if n[i] == 0 {
+			if i != 0 && len(n) > i+1 && n[i+1] != 0 {
+				res = numCharSet[0] + res
+			}
+		} else {
+			if i == 1 {
+				res = unitCharSet[i] + res
+			} else {
+				res = numCharSet[n[i]] + unitCharSet[i] + res
+			}
+		}
+	}
+
+	return res
+}
+
+func defaultNumTransl(num int) string {
+	return fmt.Sprintf("%d", num)
 }

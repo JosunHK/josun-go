@@ -7,7 +7,10 @@ import (
 	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	templUtil "github.com/JosunHK/josun-go.git/cmd/util/templ"
 	sqlc "github.com/JosunHK/josun-go.git/db/generated"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/icon"
+	"github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
 	"github.com/JosunHK/josun-go.git/web/templates/components/ui/label"
 )
 
@@ -23,6 +26,21 @@ func getPlayerColor(i int) string {
 		return "border-l-eGreen"
 	default:
 		return "border-l-eRed"
+	}
+}
+
+func getRoundTitle(ctx context.Context, round string) string {
+	switch round {
+	case "east":
+		return i18nUtil.T(ctx, "east_round")
+	case "south":
+		return i18nUtil.T(ctx, "south_round")
+	case "west":
+		return i18nUtil.T(ctx, "west_round")
+	case "north":
+		return i18nUtil.T(ctx, "north_round")
+	default:
+		return i18nUtil.T(ctx, "east_round")
 	}
 }
 
@@ -93,29 +111,39 @@ templ Room(players []sqlc.MahjongPlayer, code string, gameState sqlc.MahjongGame
                 }
             }"
 	>
-		@DialogBody(players, code)
-		@GameStateDisplay(gameState)
-		<div class="h-auto flex justify-center items-center grow">
+		<div class="h-auto flex flex-col justify-center items-center grow">
+			<div class="flex flex-row justify-between w-[350px] items-center px-4 pt-7 pb-2 max-w-[90dvw]">
+				<div
+					class="grow"
+					hx-ext="sse"
+					sse-connect={ fmt.Sprintf("/mahjong/room/%v/state", code) }
+					sse-swap="data"
+				></div>
+				@DialogBody(players, code)
+			</div>
 			@ScoreDisplay(players)
+			@RoomCodeDisplay(code)
 		</div>
-		<div
-			hx-ext="sse"
-			sse-connect={ fmt.Sprintf("/mahjong/room/%v/state", code) }
-			sse-swap="data"
-		></div>
 	</div>
 }
 
 templ GameStateDisplay(gameState sqlc.MahjongGameState) {
-	<div
-		x-init={ fmt.Sprintf("gameState = %v", templUtil.ToJSONString(gameState)) }
-	>
-		<div x-text="gameState.round_wind"></div>
-		<div x-text="gameState.seat_wind"></div>
-		<div x-text="gameState.round"></div>
-		<div x-text="gameState.kyoutaku"></div>
-		<div x-text="gameState.ended"></div>
-	</div>
+	@label.Label(label.Props{
+		Class: "text-[1.5rem] pl-4 text-muted-foreground text-ellipsis text-nowrap overflow-hidden font-wind fade-in flex flex-row justify-between items-center grow",
+	}) {
+		{ i18nUtil.T(ctx, string(gameState.RoundWind)) + getRoundTitle(ctx, string(gameState.SeatWind)) }
+		if gameState.Round > 0 {
+			{ " " + i18nUtil.TN(ctx, int(gameState.Round)) + i18nUtil.T(ctx, "honba") }
+		}
+		@icon.Wrapper(icon.Props{
+			Class: "text-[6px] w-[25px]",
+		}) {
+			@icon.RiichiBo()
+		}
+		<div class="mr-4">
+			{ fmt.Sprint("X", gameState.Kyoutaku) }
+		</div>
+	}
 }
 
 templ ScoreDisplay(players []sqlc.MahjongPlayer) {
@@ -139,12 +167,22 @@ templ playerCard(i int, player sqlc.MahjongPlayer) {
 			"@touchend":   "showDelta($event.type, player.score)",
 		},
 	}) {
-		@label.Label(label.Props{
-			Class: "text-[2rem] pl-4 text-muted-foreground text-ellipsis text-nowrap overflow-hidden",
-			Attrs: templ.Attributes{},
-		}) {
-			{ player.Name }
-		}
+		<div class="flex flex-row justify-between">
+			@label.Label(label.Props{
+				Class: "text-[2rem] pl-4 text-muted-foreground text-ellipsis text-nowrap overflow-hidden",
+				Attrs: templ.Attributes{},
+			}) {
+				{ player.Name }
+			}
+			@label.Label(label.Props{
+				Class: "text-[2rem] pr-4 text-ellipsis text-nowrap overflow-hidden font-wind",
+				Attrs: templ.Attributes{
+					":class": fmt.Sprint("gameState.seat_wind === '", string(player.Wind), "' ? 'text-eBlue' : 'text-muted-foreground'"),
+				},
+			}) {
+				{ i18nUtil.T(ctx, string(player.Wind)) }
+			}
+		</div>
 		@label.Label(label.Props{
 			Class: "text-[3.5rem] pl-4 text-ellipsis overflow-hidden",
 			Attrs: templ.Attributes{
@@ -179,12 +217,51 @@ templ playerCard(i int, player sqlc.MahjongPlayer) {
 }
 
 templ Update(event mahjongStruct.GameStateUpdated) {
+	@GameStateDisplay(event.GameState)
 	<x-script
 		x-init={ fmt.Sprintf(`$nextTick(() => {
             updatePlayers(%v),
             gameState = %v
         })`, templUtil.ToJSONString(event.Players), templUtil.ToJSONString(event.GameState)) }
 	></x-script>
+}
+
+templ RoomCodeDisplay(code string) {
+	<div class="flex flex-row justify-between w-[350px] items-center px-4 pt-7 pb-2 max-w-[90dvw]">
+		<div class="flex flex-row justify-between items-center pl-6">
+			for _, char := range code {
+				@input.InputRaw(input.Props{
+					Class: "w-[3rem] h-[3rem] text-center text-xl border font-bold rounded-none first-of-type:rounded-l-md first-of-type:border-l last-of-type:rounded-r-md pointer-events-none",
+					Attrs: templ.Attributes{
+						"disabled": "true",
+					},
+					Value: string(char),
+				})
+			}
+		</div>
+		@button.Button(button.Props{
+			Class: "ml-4",
+			Attrs: templ.Attributes{
+				"x-data":     "{ clicked: false }",
+				"x-on:click": fmt.Sprint("navigator.clipboard.writeText('", code, "');clicked = true;setTimeout(() => {clicked = false}, 5000)"),
+			},
+		}) {
+			@icon.Wrapper(icon.Props{
+				Attrs: templ.Attributes{
+					"x-show": "!clicked",
+				},
+			}) {
+				@icon.Copy()
+			}
+			@icon.Wrapper(icon.Props{
+				Attrs: templ.Attributes{
+					"x-show": "clicked",
+				},
+			}) {
+				@icon.Check()
+			}
+		}
+	</div>
 }
 
 //empty div just for handling init sse connection

@@ -1,9 +1,11 @@
 package middleware
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/JosunHK/josun-go.git/cmd/util/cookie"
+	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
 	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
 
@@ -80,4 +82,27 @@ func Logger(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 		return err
 	}
+}
+
+func WithLocale(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		c.SetRequest(c.Request().WithContext(overrideContextWithLocale(c)))
+		err := next(c)
+		if err != nil {
+			log.Error(err)
+		}
+		return err
+	}
+}
+
+func overrideContextWithLocale(c echo.Context) context.Context {
+	var locale string
+	cookie, err := c.Cookie(i18nUtil.LOCALE_SETTING_ID)
+	if err != nil {
+		locale = "en"
+	} else {
+		locale = cookie.Value
+	}
+
+	return context.WithValue(c.Request().Context(), i18nUtil.LOCALE_SETTING_ID, locale)
 }
