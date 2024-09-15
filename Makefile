@@ -26,7 +26,6 @@ dev:
 build:
 	make tailwind-build
 	go install github.com/a-h/templ/cmd/templ@latest
-	make templ-generate
 	make sqlc-generate
 	go build -ldflags "-X main.Environment=production" -o ./bin ./cmd/main.go
 
