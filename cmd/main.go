@@ -71,7 +71,6 @@ func main() {
 		panic(err)
 	}
 
-	//static files
 	e := echo.New()
 	e.Use(eMiddleware.Recover())
 	e.Use(middleware.Logger)
@@ -83,7 +82,10 @@ func main() {
 		},
 	))
 
+	//static files
 	e.Static("/static", "web/static")
+	e.File("/favicon.ico", "web/static/favicon.ico")
+
 	e.GET("/playground", middleware.StaticPages(layout.Layout, playgroundTemplates.Playground()))
 	go pubsub.StartEventsRouter(context.Background(), routers)
 	go pubsub.StartSSERouter(context.Background(), routers)
