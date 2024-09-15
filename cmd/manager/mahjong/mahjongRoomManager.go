@@ -88,7 +88,7 @@ func GetOrCreateRoomOwner(c echo.Context, queries *sqlc.Queries) (int64, error) 
 
 	user, err := queries.GetOwnerByUUIDorUserId(c.Request().Context(), sqlc.GetOwnerByUUIDorUserIdParams{
 		GuestID: roomOwnerParams.GuestID,
-		UserID:  roomOwnerParams.UserID,
+		UserID:  -1,
 	})
 	if err == nil {
 		return user.ID, nil
