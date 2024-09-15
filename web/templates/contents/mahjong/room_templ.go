@@ -714,7 +714,7 @@ func RoomCodeDisplay(code string) templ.Component {
 			Class: "ml-4",
 			Attrs: templ.Attributes{
 				"x-data":     "{ clicked: false }",
-				"x-on:click": fmt.Sprint("navigator.clipboard.writeText('Le Fishe Au Lava : lefisheaulava.org/mahjong/room/", code, "');clicked = true;setTimeout(() => {clicked = false}, 5000)"),
+				"x-on:click": fmt.Sprint("navigator.clipboard.writeText('Le Fishe Au Lava : https://lefisheaulava.org/mahjong/room/", code, "');clicked = true;setTimeout(() => {clicked = false}, 5000)"),
 			},
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var25), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
