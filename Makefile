@@ -25,6 +25,7 @@ dev:
 .PHONY: build
 build:
 	go env -w GOPATH=$${HOME}/go
+	export PATH="$PATH:$HOME/go/bin"
 	make tailwind-build
 	go install github.com/a-h/templ/cmd/templ@latest
 	go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
