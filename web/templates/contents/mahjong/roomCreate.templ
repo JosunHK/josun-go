@@ -16,7 +16,7 @@ import (
 
 templ RoomCreate() {
 	@card.Card(card.Props{
-		Class: "sm:w-[350px] 2xl:w-[1000px]",
+		Class: "sm:w-[350px] 2xl:w-[1000px] hx-fade-in",
 	}) {
 		@card.Header(card.Props{}) {
 			@card.Title(card.Props{
@@ -32,7 +32,7 @@ templ RoomCreate() {
 			hx-trigger="click from:#create-btn"
 		>
 			@card.Content(card.Props{
-				Class: "flex flex-col ",
+				Class: "flex flex-col",
 			}) {
 				@RoomOptions()
 			}

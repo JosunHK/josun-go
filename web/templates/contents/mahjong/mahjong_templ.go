@@ -10,7 +10,6 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
-	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
 	button "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	input "github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
@@ -40,15 +39,7 @@ func RoomSelect() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"w-full h-full flex flex-col\"><div class=\"w-full h-min justify-end hidden\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = settings.DarkModeToggle().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"h-auto flex justify-center items-center grow\" id=\"card-content\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"w-full h-full flex flex-col\"><div class=\"h-auto flex justify-center items-center grow hx-fade-out\" id=\"card-content\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -124,7 +115,7 @@ func RoomSelectCard() templ.Component {
 					var templ_7745c5c3_Var6 string
 					templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "join_or_create_room"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 31, Col: 44}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 27, Col: 44}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 					if templ_7745c5c3_Err != nil {
@@ -195,7 +186,7 @@ func RoomSelectCard() templ.Component {
 						var templ_7745c5c3_Var10 string
 						templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "create_new_room"))
 						if templ_7745c5c3_Err != nil {
-							return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 52, Col: 41}
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 49, Col: 41}
 						}
 						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 						if templ_7745c5c3_Err != nil {
@@ -219,6 +210,7 @@ func RoomSelectCard() templ.Component {
 						"hx-get":     "/mahjong/room/create",
 						"hx-target":  "#card-content",
 						"hx-trigger": "click",
+						"hx-swap":    "swap:0.25s settle:0.25s",
 					},
 					Variant: gocva.Variant{"variant": "secondary"},
 				}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var8), templ_7745c5c3_Buffer)
@@ -260,7 +252,7 @@ func RoomSelectCard() templ.Component {
 					var templ_7745c5c3_Var12 string
 					templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, "join"))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 77, Col: 30}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/mahjong.templ`, Line: 74, Col: 30}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 					if templ_7745c5c3_Err != nil {

@@ -2,7 +2,6 @@ package mahjongTemplates
 
 import (
 	i18nUtil "github.com/JosunHK/josun-go.git/cmd/util/i18n"
-	"github.com/JosunHK/josun-go.git/web/templates/components/common/settings"
 	button "github.com/JosunHK/josun-go.git/web/templates/components/ui/button"
 	card "github.com/JosunHK/josun-go.git/web/templates/components/ui/card"
 	input "github.com/JosunHK/josun-go.git/web/templates/components/ui/input"
@@ -13,10 +12,7 @@ import (
 
 templ RoomSelect() {
 	<div class="w-full h-full flex flex-col">
-		<div class="w-full h-min justify-end hidden">
-			@settings.DarkModeToggle()
-		</div>
-		<div class="h-auto flex justify-center items-center grow" id="card-content">
+		<div class="h-auto flex justify-center items-center grow hx-fade-out" id="card-content">
 			@RoomSelectCard()
 		</div>
 	</div>
@@ -41,6 +37,7 @@ templ RoomSelectCard() {
 					"hx-get":     "/mahjong/room/create",
 					"hx-target":  "#card-content",
 					"hx-trigger": "click",
+                    "hx-swap":"swap:0.25s settle:0.25s",
 				},
 				Variant: gocva.Variant{"variant": "secondary"},
 			}) {

@@ -431,3 +431,521 @@ time="2024-09-15T18:37:25+08:00" level=info msg="sending InitStreamResponse"
 time="2024-09-15T18:37:38+08:00" level=info msg="sending InitStreamResponse"
 time="2024-09-15T18:37:39+08:00" level=error msg="code=404, message=Not Found"
 time="2024-09-15T18:38:39+08:00" level=info msg="sending InitStreamResponse"
+[watermill] 2024/09/15 18:41:51.511698 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:41:51.511872 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:41:51.511903 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:41:51.511950 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:41:51.512039 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMCKWQZY8AB042JDN6CKEN 
+[watermill] 2024/09/15 18:41:51.512041 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMCKWQ60H24D6MS62JN6ND 
+[watermill] 2024/09/15 18:41:51.547559 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:41:51.549673 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:42:47.443249 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:42:47.443615 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:42:47.443754 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:42:47.443910 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:42:47.443993 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMEAGK5B1SFAHVN3BGZ91E 
+[watermill] 2024/09/15 18:42:47.443924 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMEAGKHBSMCBZGGFW2VX6W 
+[watermill] 2024/09/15 18:42:47.462072 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:42:47.462585 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:44:34.355559 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:44:34.355708 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:44:34.355734 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:44:34.355804 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMHJXKBATGGD3QBXVPT73A 
+[watermill] 2024/09/15 18:44:34.355832 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:44:34.355900 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMHJXKHZA4BZHVG01X21X4 
+[watermill] 2024/09/15 18:44:34.388953 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:44:34.393659 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:44:50.791120 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:44:50.791281 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:44:50.791337 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:44:50.791362 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:44:50.791449 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMJ2Z719FB1T135B1PV8F2 
+[watermill] 2024/09/15 18:44:50.791450 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMJ2Z76E0X2E9DZ16TF19Z 
+[watermill] 2024/09/15 18:44:50.829857 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:44:50.830829 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:44:54.958711 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:44:54.958945 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:44:54.959038 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:44:54.959074 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:44:54.959170 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMJ71E494WWYF03D4N5NET 
+[watermill] 2024/09/15 18:44:54.959214 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMJ71EF05CTA9ZP4M8BRTS 
+[watermill] 2024/09/15 18:44:54.976853 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:44:54.977031 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:45:34.345848 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:45:34.345994 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:45:34.346025 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:45:34.346081 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:45:34.346137 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMKDG94PHS6K3FKCKVDEQG 
+[watermill] 2024/09/15 18:45:34.346169 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMKDG92YH6AKFXXBWY2RV5 
+[watermill] 2024/09/15 18:45:34.378739 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:45:34.378875 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:46:18.659247 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:46:18.659471 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:46:18.659503 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:46:18.659602 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:46:18.659616 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMMRS3Q82646K3SSVCAGPS 
+[watermill] 2024/09/15 18:46:18.659727 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMMRS3V2MH99BNGSWC2AFJ 
+[watermill] 2024/09/15 18:46:18.677433 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:46:18.677900 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:46:32.431565 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:46:32.431701 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:46:32.431730 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:46:32.431833 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMN67FS57NN92MV48VRQK7 
+[watermill] 2024/09/15 18:46:32.431883 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:46:32.431975 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMN67F726XPM1PFF4RBHSH 
+[watermill] 2024/09/15 18:46:32.467434 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:46:32.467609 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:46:56.704735 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:46:56.704920 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:46:56.704965 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:46:56.705024 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:46:56.705099 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMNXY01NCD910NFTSP0AMB 
+[watermill] 2024/09/15 18:46:56.705113 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMNXY0J0R1A0Y3B51A6FAF 
+[watermill] 2024/09/15 18:46:56.727057 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:46:56.727657 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:47:09.035751 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:47:09.035898 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:47:09.035950 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:47:09.035968 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:47:09.036080 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMP9ZB782CSFS63V23M1K2 
+[watermill] 2024/09/15 18:47:09.036094 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMP9ZBK9VAY4E3MWN8KYPT 
+[watermill] 2024/09/15 18:47:09.057693 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:47:09.057882 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:47:31.580870 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:47:31.581028 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:47:31.581134 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:47:31.581235 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:47:31.581308 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMPZZWKDGEDRXM2WWXF2CJ 
+[watermill] 2024/09/15 18:47:31.581249 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMPZZWV37B346AJNGZSRBN 
+[watermill] 2024/09/15 18:47:31.596398 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:47:31.597073 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:47:58.267763 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:47:58.267896 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:47:58.267939 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:47:58.267973 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:47:58.268041 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMQT1VJAMNENY9WZZZG9D8 
+[watermill] 2024/09/15 18:47:58.268041 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMQT1V5ZGHRRWHR6TT0W8P 
+[watermill] 2024/09/15 18:47:58.301725 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:47:58.302440 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:48:42.635191 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:48:42.635333 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:48:42.635372 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:48:42.635411 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:48:42.635484 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMS5CBTEVXGAJ2ATNST4FG 
+[watermill] 2024/09/15 18:48:42.635497 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMS5CBCHAPQYJVTMQ0DCK4 
+[watermill] 2024/09/15 18:48:42.647386 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:48:42.649065 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:48:50.571249 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:48:50.571388 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:48:50.571425 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:48:50.571476 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:48:50.571560 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMSD4B6S51SVJQ79CH07FP 
+[watermill] 2024/09/15 18:48:50.571569 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMSD4BRZDNB55GGYHGNS1W 
+[watermill] 2024/09/15 18:48:50.594605 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:48:50.594665 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:49:14.848099 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:49:14.848354 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:49:14.848407 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:49:14.848506 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:49:14.848561 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMT4V00YNSYNVMM44G1E83 
+[watermill] 2024/09/15 18:49:14.848586 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMT4V0VK5HPCQ0TD8DY60M 
+[watermill] 2024/09/15 18:49:14.869850 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:49:14.869878 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 
+time="2024-09-15T18:49:41+08:00" level=info msg="sending InitStreamResponse"
+time="2024-09-15T18:49:42+08:00" level=error msg="code=404, message=Not Found"
+time="2024-09-15T18:49:42+08:00" level=error msg="code=404, message=Not Found"
+time="2024-09-15T18:49:44+08:00" level=error msg="code=404, message=Not Found"
+time="2024-09-15T18:49:49+08:00" level=error msg="code=404, message=Not Found"
+time="2024-09-15T18:49:54+08:00" level=error msg="code=404, message=Not Found"
+[watermill] 2024/09/15 18:50:06.129933 router.go:268: 	level=INFO  msg="Adding handler" handler_name=UpdateGame topic=mahjongStruct.GameUpdated 
+[watermill] 2024/09/15 18:50:06.130073 router.go:268: 	level=INFO  msg="Adding handler" handler_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:50:06.130111 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:50:06.130175 router.go:402: 	level=INFO  msg="Running router handlers" count=1 
+[watermill] 2024/09/15 18:50:06.130240 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMVPXHKNSS1QQ6WQ9TYJR1 
+[watermill] 2024/09/15 18:50:06.130242 schema.go:28: 	level=INFO  msg="Initializing subscriber schema" query="[CREATE TABLE IF NOT EXISTS `watermill_mahjongStruct.GameStateUpdated` (
+`offset` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`uuid` VARCHAR(36) NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`payload` JSON DEFAULT NULL,
+`metadata` JSON DEFAULT NULL
+);  
+				CREATE TABLE IF NOT EXISTS `watermill_offsets_mahjongStruct.GameStateUpdated` (
+				consumer_group VARCHAR(255) NOT NULL,
+				offset_acked BIGINT,
+				offset_consumed BIGINT NOT NULL,
+				PRIMARY KEY(consumer_group)
+			) ]" subscriber_id=01J7TMVPXJDYNVFFTSJJBC8HK1 
+[watermill] 2024/09/15 18:50:06.146741 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=fanout-mahjongStruct.GameStateUpdated topic=mahjongStruct.GameStateUpdated 
+[watermill] 2024/09/15 18:50:06.147611 router.go:606: 	level=INFO  msg="Starting handler" subscriber_name=UpdateGame topic=mahjongStruct.GameUpdated 

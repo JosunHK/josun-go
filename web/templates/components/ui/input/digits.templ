@@ -73,6 +73,7 @@ templ Digits(props DigitsProps, digits int) {
                         Attrs: templ.Attributes{
                             "type":                   "tel",
                             "maxlength":              "1",
+                            "inputMode":              "numeric",
                             "x-on:input":             "handleInput($event, index)",
                             "x-on:click":             "resetCaret($el)",
                             "x-on:paste":             "handlePaste($event)",

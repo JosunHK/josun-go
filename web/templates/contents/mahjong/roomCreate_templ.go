@@ -133,7 +133,7 @@ func RoomCreate() templ.Component {
 				return templ_7745c5c3_Err
 			})
 			templ_7745c5c3_Err = card.Content(card.Props{
-				Class: "flex flex-col ",
+				Class: "flex flex-col",
 			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var6), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -153,7 +153,7 @@ func RoomCreate() templ.Component {
 			return templ_7745c5c3_Err
 		})
 		templ_7745c5c3_Err = card.Card(card.Props{
-			Class: "sm:w-[350px] 2xl:w-[1000px]",
+			Class: "sm:w-[350px] 2xl:w-[1000px] hx-fade-in",
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
