@@ -27,7 +27,7 @@ build:
 	make tailwind-build
 	make templ-generate
 	make sqlc-generate
-	go build -ldflags "-X main.Environment=production" -o ./bin/$(APP_NAME) ./cmd/$(APP_NAME)/main.go
+	go build -ldflags "-X main.Environment=production" -o ./bin ./cmd/main.go
 
 .PHONY: vet
 vet:
