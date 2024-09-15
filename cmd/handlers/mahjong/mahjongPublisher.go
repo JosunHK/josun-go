@@ -76,7 +76,7 @@ func validateRoomReturnGameData(c echo.Context, code, updateType string) (ms.Gam
 		return ms.GameData{}, fmt.Errorf("Invalid session")
 	}
 
-	owner, err := queries.GetOwnerByUUIDorUserId(c.Request().Context(), sqlc.GetOwnerByUUIDorUserIdParams{GuestID: uuid})
+	owner, err := queries.GetOwnerByUUIDorUserId(c.Request().Context(), sqlc.GetOwnerByUUIDorUserIdParams{UserID: -1, GuestID: uuid})
 	if err != nil {
 		return ms.GameData{}, fmt.Errorf("Owner not found")
 	}

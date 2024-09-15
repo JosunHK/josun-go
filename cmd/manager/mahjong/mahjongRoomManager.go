@@ -54,6 +54,10 @@ func IsOwner(c echo.Context, code string) (bool, error) {
 		return false, fmt.Errorf("Unable to create params for room owner", err)
 	}
 
+	if roomOwnerParams.UserID == 0 {
+		roomOwnerParams.UserID = -1
+	}
+
 	queries := sqlc.New(database.DB)
 	user, err := queries.GetOwnerByUUIDorUserId(c.Request().Context(), sqlc.GetOwnerByUUIDorUserIdParams{
 		GuestID: roomOwnerParams.GuestID,
@@ -145,7 +149,7 @@ func CreateMahjongRoomOwnerParams(c echo.Context) (sqlc.CreateMahjongRoomOwnerPa
 	}
 
 	params := sqlc.CreateMahjongRoomOwnerParams{
-		UserID:  -1,
+		UserID:  0,
 		GuestID: guestID,
 	}
 
