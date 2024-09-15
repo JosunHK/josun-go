@@ -26,7 +26,7 @@ dev:
 build:
 	make tailwind-build
 	go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
-	make sqlc-generate
+	sqlc generate
 	go build -ldflags "-X main.Environment=production" -o ./bin ./cmd/main.go
 
 .PHONY: vet
