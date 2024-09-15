@@ -26,18 +26,23 @@ import (
 )
 
 func init() {
-	file, err := os.OpenFile("./logs/app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-	if err == nil {
-		log.SetOutput(file)
-		log.SetLevel(log.DebugLevel)
-	} else {
-		log.Info("Failed to log to file, using default stderr")
-	}
-
-	err = godotenv.Load()
+	err := godotenv.Load()
 	if err != nil {
 		fmt.Println(err)
-		return
+	}
+
+	BUILD := os.Getenv("BUILD")
+	if BUILD == "dev" {
+		file, err := os.OpenFile("./logs/app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+		if err == nil {
+			log.SetOutput(file)
+			log.SetLevel(log.DebugLevel)
+		} else {
+			log.Info("Failed to log to file, using default stderr")
+		}
+	} else {
+		log.SetOutput(os.Stdout)
+		log.SetLevel(log.DebugLevel)
 	}
 
 	//merger for tailwind
@@ -70,6 +75,7 @@ func main() {
 	e := echo.New()
 	e.Use(eMiddleware.Recover())
 	e.Use(middleware.Logger)
+	e.Use(eMiddleware.Logger())
 	e.Use(middleware.WithLocale)
 	e.Pre(eMiddleware.RemoveTrailingSlashWithConfig(
 		eMiddleware.TrailingSlashConfig{
