@@ -4,7 +4,7 @@ tailwind-watch:
 
 .PHONY: tailwind-build
 tailwind-build:
-	./tailwindcss -i ./web/static/input.css -o ./web/static/style.min.css --minify
+	./tailwindcss -i ./web/static/input.css -o ./web/static/style.css --minify
 
 .PHONY: templ-generate
 templ-generate:
