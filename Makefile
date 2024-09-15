@@ -16,7 +16,7 @@ templ-watch:
 
 .PHONY: sqlc-generate
 sqlc-watch:
-	sqlc generate 
+	sqlc generate
 
 .PHONY: dev
 dev:
@@ -25,7 +25,7 @@ dev:
 .PHONY: build
 build:
 	make tailwind-build
-	go install github.com/a-h/templ/cmd/templ@latest
+	go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
 	make sqlc-generate
 	go build -ldflags "-X main.Environment=production" -o ./bin ./cmd/main.go
 
