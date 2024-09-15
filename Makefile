@@ -27,11 +27,13 @@ build:
 	go env -w GOPATH=$${HOME}/go
 	export PATH=$${PATH}:`go env GOPATH`/bin
 	make tailwind-build
-	go install github.com/a-h/templ/cmd/templ@latest
-	go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
 	`go env GOPATH`/bin/templ generate
 	`go env GOPATH`/bin/sqlc generate
-	go build -ldflags "-X main.Environment=production" -o ./bin ./cmd/main.go
+	go build -ldflags "-X main.Environment=production" -o ./bin/ ./cmd/main.go
+
+.PHONY: start
+start:
+	./bin/main
 
 .PHONY: vet
 vet:
