@@ -49,6 +49,7 @@ const MYSQL_PARAMS = "?parseTime=true&loc=Local"
 
 func main() {
 	PORT := os.Getenv("PORT")
+	PORT = ":" + PORT
 	if err := database.InitDB(os.Getenv("DB_CREDENTIALS") + MYSQL_PARAMS); err != nil {
 		log.Panic(err)
 		return
