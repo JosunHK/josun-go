@@ -1,7 +1,6 @@
 bin
 tmp
 *.db
-tailwindcss
 *.env
 *.exe
 *.deb
