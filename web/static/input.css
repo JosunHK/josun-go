@@ -125,7 +125,11 @@
       transition: opacity 250ms ease-out;
     }
 
-    .hx-fade-in.htmx-swapping {
+    .hx-fade-in.htmx-added {
+      opacity: 0;
+    }
+
+    .hx-fade-in{
       opacity: 1;
       transition: opacity 250ms ease-out;
     }
