@@ -92,7 +92,7 @@ WHERE EXISTS (
 );
 
 -- name: GetPlayerCountByRoomId :one
-SELECT COUNT(*) FROM MAHJONG_PLAYER 
+SELECT COUNT(*) FROM mahjong_player
 WHERE id IN (sqlc.slice(ids)) AND room_id = ?;
 
 -- name: UpdatePlayerScore :exec

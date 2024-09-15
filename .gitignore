@@ -5,4 +5,5 @@ tmp
 *.exe
 *.deb
 db/generated/
-*.logs
+*.log
+/logs
