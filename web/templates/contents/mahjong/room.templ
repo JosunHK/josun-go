@@ -255,7 +255,7 @@ templ RoomCodeDisplay(code string) {
 			Class: "ml-4",
 			Attrs: templ.Attributes{
 				"x-data":     "{ clicked: false }",
-				"x-on:click": fmt.Sprint("navigator.clipboard.writeText('", code, "');clicked = true;setTimeout(() => {clicked = false}, 5000)"),
+				"x-on:click": fmt.Sprint("navigator.clipboard.writeText('Le Fishe Au Lava : lefisheaulava.org/mahjong/room/", code, "');clicked = true;setTimeout(() => {clicked = false}, 5000)"),
 			},
 		}) {
 			@icon.Wrapper(icon.Props{

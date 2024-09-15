@@ -99,7 +99,7 @@ func overrideContextWithLocale(c echo.Context) context.Context {
 	var locale string
 	cookie, err := c.Cookie(i18nUtil.LOCALE_SETTING_ID)
 	if err != nil {
-		locale = "en"
+		locale = "zh"
 	} else {
 		locale = cookie.Value
 	}

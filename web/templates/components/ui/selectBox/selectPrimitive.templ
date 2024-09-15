@@ -48,7 +48,7 @@ templ SelectIcon(props Props) {
 templ SelectDisplay(props Props) {
 	<div
 		x-text="selectedLabel"
-		:style="`width: calc(${maxLength}px`"
+		:style="`width: calc(${maxLength}px + 10px)`"
 		class={ M("flex items-center", props.Class) }
 		{ props.Attrs... }
 	></div>
@@ -102,7 +102,7 @@ templ SelectItem(props Props, item sqlc.MenuItem) {
         }`, item.Label, item.Value) }
 		x-init="options.set(value,$el);setLength(getTextWidth(label, getCanvasFont($el)));setDefault(label, value);"
 		@click.stop="toggle(); selectedLabel = label; selectedValue = value; $dispatch('item-clicked')"
-		:style="`width: calc(${maxLength}px + 40px)`"
+		:style="`width: calc(${maxLength}px + 50px)`"
 		label={ item.Label }
 		value={ item.Value }
 		class={ M("relative flex cursor-default select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", props.Class) }

@@ -187,7 +187,7 @@ func SelectDisplay(props Props) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div x-text=\"selectedLabel\" :style=\"`width: calc(${maxLength}px`\" class=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div x-text=\"selectedLabel\" :style=\"`width: calc(${maxLength}px + 10px)`\" class=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -410,7 +410,7 @@ func SelectItem(props Props, item sqlc.MenuItem) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-init=\"options.set(value,$el);setLength(getTextWidth(label, getCanvasFont($el)));setDefault(label, value);\" @click.stop=\"toggle(); selectedLabel = label; selectedValue = value; $dispatch(&#39;item-clicked&#39;)\" :style=\"`width: calc(${maxLength}px + 40px)`\" label=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-init=\"options.set(value,$el);setLength(getTextWidth(label, getCanvasFont($el)));setDefault(label, value);\" @click.stop=\"toggle(); selectedLabel = label; selectedValue = value; $dispatch(&#39;item-clicked&#39;)\" :style=\"`width: calc(${maxLength}px + 50px)`\" label=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
