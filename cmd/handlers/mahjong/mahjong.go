@@ -113,7 +113,7 @@ func RoomCreate(c echo.Context) (string, error) {
 
 	for i, name := range roomSetting.PlayerNames {
 		nameRune := []rune(name)
-		name = string(nameRune[:min(10, len(nameRune))])
+		name = string(nameRune[:min(20, len(nameRune))])
 		_, err := mgr.CreateMahjongPlayer(c, queries, sqlc.CreateMahjongPlayerParams{
 			RoomID: roomId,
 			Name:   name,

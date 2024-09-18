@@ -106,14 +106,14 @@ func Room(players []sqlc.MahjongPlayer, code string, gameState sqlc.MahjongGameS
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div Class=\"w-full h-full flex flex-col\" x-ref=\"room\" x-data=\"{\n                players: new Map(),\n                delta: 0,\n                gameState: {},\n                isShowDelta: false,\n                focused: false,\n                updatePlayers: function(newPlayers) {\n                    let oriPlayers = this.players;\n                    newPlayers.forEach((newPlayer) =&gt; {\n                        let player = oriPlayers.get(newPlayer.id)\n                        player.score = newPlayer.score\n                    });\n                },\n                showDelta: function(eventType, score) {\n                    // prevents when there is a &#39;enter event&#39; after another &#39;enter event&#39; without &#39;leave event&#39;\n                    if (this.focused &amp;&amp; (eventType === &#39;mousedown&#39; || eventType === &#39;touchstart&#39;)) {\n                        return;\n                    }else if (eventType === &#39;mouseup&#39; || eventType === &#39;touchend&#39;) {\n                        this.focused = false;\n                    }else if (eventType === &#39;mousedown&#39; || eventType === &#39;touchstart&#39;) {\n                        this.focused = true;\n                    }\n                    this.delta = score;\n                    this.isShowDelta = !this.isShowDelta; \n                    if (this.isShowDelta !== this.focused) { //should always be in sync\n                        this.isShowDelta = false;\n                        this.focused = false;\n                    }\n                }\n            }\"><div class=\"h-auto flex flex-col justify-center items-center grow\"><div class=\"flex flex-row justify-between w-[350px] items-center pt-7 pb-2 max-w-[90dvw]\"><div class=\"grow\" hx-ext=\"sse\" sse-connect=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div Class=\"w-full h-full flex flex-col\" x-ref=\"room\" x-data=\"{\n                players: new Map(),\n                delta: 0,\n                gameState: {},\n                isShowDelta: false,\n                focused: false,\n                updatePlayers: function(newPlayers) {\n                    let oriPlayers = this.players;\n                    newPlayers.forEach((newPlayer) =&gt; {\n                        let player = oriPlayers.get(newPlayer.id)\n                        player.score = newPlayer.score\n                    });\n                },\n                showDelta: function(eventType, score) {\n                    // prevents when there is a &#39;enter event&#39; after another &#39;enter event&#39; without &#39;leave event&#39;\n                    if (this.focused &amp;&amp; (eventType === &#39;mousedown&#39; || eventType === &#39;touchstart&#39;)) {\n                        return;\n                    }else if (eventType === &#39;mouseup&#39; || eventType === &#39;touchend&#39;) {\n                        this.focused = false;\n                    }else if (eventType === &#39;mousedown&#39; || eventType === &#39;touchstart&#39;) {\n                        this.focused = true;\n                    }\n                    this.delta = score;\n                    this.isShowDelta = !this.isShowDelta; \n                    if (this.isShowDelta !== this.focused) { //should always be in sync\n                        this.isShowDelta = false;\n                        this.focused = false;\n                    }\n                },\n                relativePlayerWindMap: new Map([\n                    [&#39;east&#39;, new Map([ [&#39;east&#39;, &#39;東&#39;], [&#39;south&#39;, &#39;南&#39;], [&#39;west&#39;, &#39;西&#39;], [&#39;north&#39;, &#39;北&#39;], ])],\n                    [&#39;south&#39;, new Map([ [&#39;east&#39;, &#39;北&#39;], [&#39;south&#39;, &#39;東&#39;], [&#39;west&#39;, &#39;南&#39;], [&#39;north&#39;, &#39;西&#39;], ])],\n                    [&#39;west&#39;, new Map([ [&#39;east&#39;, &#39;西&#39;], [&#39;south&#39;, &#39;北&#39;], [&#39;west&#39;, &#39;東&#39;], [&#39;north&#39;, &#39;南&#39;], ])],\n                    [&#39;north&#39;, new Map([ [&#39;east&#39;, &#39;南&#39;], [&#39;south&#39;, &#39;西&#39;], [&#39;west&#39;, &#39;北&#39;], [&#39;north&#39;, &#39;東&#39;], ])],\n                ]),\n            }\"><div class=\"h-auto flex flex-col justify-center items-center grow\"><div class=\"flex flex-row justify-between w-[350px] items-center pt-7 pb-2 max-w-[90dvw]\"><div class=\"grow\" hx-ext=\"sse\" sse-connect=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("/mahjong/room/%v/state", code))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 120, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 126, Col: 62}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -185,7 +185,7 @@ func GameStateDisplay(gameState sqlc.MahjongGameState) templ.Component {
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, string(gameState.RoundWind)) + getRoundTitle(ctx, string(gameState.SeatWind)))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 137, Col: 97}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 143, Col: 97}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -199,7 +199,7 @@ func GameStateDisplay(gameState sqlc.MahjongGameState) templ.Component {
 				var templ_7745c5c3_Var6 string
 				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(" - " + i18nUtil.TN(ctx, int(gameState.Round)) + i18nUtil.T(ctx, "honba"))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 139, Col: 78}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 145, Col: 78}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 				if templ_7745c5c3_Err != nil {
@@ -237,7 +237,7 @@ func GameStateDisplay(gameState sqlc.MahjongGameState) templ.Component {
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint("X", gameState.Kyoutaku))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 147, Col: 40}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 153, Col: 40}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -350,7 +350,7 @@ func playerCard(i int, player sqlc.MahjongPlayer) templ.Component {
 				var templ_7745c5c3_Var13 string
 				templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(player.Name)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 178, Col: 17}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 184, Col: 17}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 				if templ_7745c5c3_Err != nil {
@@ -362,6 +362,22 @@ func playerCard(i int, player sqlc.MahjongPlayer) templ.Component {
 				Class: "text-[2rem] pl-4 text-muted-foreground text-ellipsis text-nowrap overflow-hidden",
 				Attrs: templ.Attributes{},
 			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var12), templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = label.Label(label.Props{
+				Class: "text-[2rem] pr-4 text-ellipsis text-nowrap overflow-hidden font-wind transition-colors duration-400",
+				Attrs: templ.Attributes{
+					"x-data":   "{ player_wind : ''}",
+					"x-effect": fmt.Sprint("player_wind = gameState.seat_wind && relativePlayerWindMap.get(gameState.seat_wind).get('", string(player.Wind), "')"),
+					":class":   "player_wind === '東' ? 'text-eOrange' : 'text-muted-foreground'",
+					"x-text":   "player_wind",
+				},
+			}).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -377,52 +393,16 @@ func playerCard(i int, player sqlc.MahjongPlayer) templ.Component {
 					}()
 				}
 				ctx = templ.InitializeContext(ctx)
-				var templ_7745c5c3_Var15 string
-				templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(i18nUtil.T(ctx, string(player.Wind)))
-				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 186, Col: 42}
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				return templ_7745c5c3_Err
-			})
-			templ_7745c5c3_Err = label.Label(label.Props{
-				Class: "text-[2rem] pr-4 text-ellipsis text-nowrap overflow-hidden font-wind transition-colors duration-400",
-				Attrs: templ.Attributes{
-					":class": fmt.Sprint("gameState.seat_wind === '", string(player.Wind), "' ? 'text-eOrange' : 'text-muted-foreground'"),
-				},
-			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var14), templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Var16 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
-				templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
-				templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
-				if !templ_7745c5c3_IsBuffer {
-					defer func() {
-						templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
-						if templ_7745c5c3_Err == nil {
-							templ_7745c5c3_Err = templ_7745c5c3_BufErr
-						}
-					}()
-				}
-				ctx = templ.InitializeContext(ctx)
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var17 string
-				templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("player-%d", player.ID))
+				var templ_7745c5c3_Var15 string
+				templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("player-%d", player.ID))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 200, Col: 44}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 207, Col: 44}
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -430,12 +410,12 @@ func playerCard(i int, player sqlc.MahjongPlayer) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var18 string
-				templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs("counter.start();counter.update(player.score);players.set(player.id, player)")
+				var templ_7745c5c3_Var16 string
+				templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs("counter.start();counter.update(player.score);players.set(player.id, player)")
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 201, Col: 90}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 208, Col: 90}
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -443,12 +423,12 @@ func playerCard(i int, player sqlc.MahjongPlayer) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var19 string
-				templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs("counter.update(player.score)")
+				var templ_7745c5c3_Var17 string
+				templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs("counter.update(player.score)")
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 202, Col: 45}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 209, Col: 45}
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -467,7 +447,7 @@ func playerCard(i int, player sqlc.MahjongPlayer) templ.Component {
 					"x-transition:enter-end":   "opacity-100",
 					":class":                   "{ 'text-eRed' : player.score < 0 }",
 				},
-			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var16), templ_7745c5c3_Buffer)
+			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var14), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -475,7 +455,7 @@ func playerCard(i int, player sqlc.MahjongPlayer) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var20 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+			templ_7745c5c3_Var18 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 				templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 				templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
 				if !templ_7745c5c3_IsBuffer {
@@ -502,7 +482,7 @@ func playerCard(i int, player sqlc.MahjongPlayer) templ.Component {
 					"x-transition:enter-end":   "opacity-100",
 					":class":                   "player.score - delta > 0 ? 'text-eRed' : player.score - delta < 0 ? 'text-eGreen' : '' ",
 				},
-			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var20), templ_7745c5c3_Buffer)
+			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var18), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -541,9 +521,9 @@ func Update(event mahjongStruct.GameStateUpdated) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var21 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var21 == nil {
-			templ_7745c5c3_Var21 = templ.NopComponent
+		templ_7745c5c3_Var19 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var19 == nil {
+			templ_7745c5c3_Var19 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = GameStateDisplay(event.GameState).Render(ctx, templ_7745c5c3_Buffer)
@@ -554,15 +534,15 @@ func Update(event mahjongStruct.GameStateUpdated) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var22 string
-		templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf(`$nextTick(() => {
+		var templ_7745c5c3_Var20 string
+		templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf(`$nextTick(() => {
             updatePlayers(%v),
             gameState = %v
         })`, templUtil.ToJSONString(event.Players), templUtil.ToJSONString(event.GameState)))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 228, Col: 92}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 235, Col: 92}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -579,14 +559,14 @@ func Update(event mahjongStruct.GameStateUpdated) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var23 string
-			templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf(`setTimeout(() => {
+			var templ_7745c5c3_Var21 string
+			templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf(`setTimeout(() => {
                 window.location.href = '/mahjong/result/%v'
             }, 5000)`, event.RoomID))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 235, Col: 36}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/contents/mahjong/room.templ`, Line: 242, Col: 36}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var21))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -615,9 +595,9 @@ func RoomCodeDisplay(code string) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var24 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var24 == nil {
-			templ_7745c5c3_Var24 = templ.NopComponent
+		templ_7745c5c3_Var22 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var22 == nil {
+			templ_7745c5c3_Var22 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex flex-row justify-between w-[350px] items-center px-4 pt-7 pb-2 max-w-[90dvw]\"><div class=\"flex flex-row justify-between items-center pl-6\">")
@@ -640,7 +620,7 @@ func RoomCodeDisplay(code string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Var25 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_Var23 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
 			if !templ_7745c5c3_IsBuffer {
@@ -652,7 +632,7 @@ func RoomCodeDisplay(code string) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Var26 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+			templ_7745c5c3_Var24 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 				templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 				templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
 				if !templ_7745c5c3_IsBuffer {
@@ -674,7 +654,7 @@ func RoomCodeDisplay(code string) templ.Component {
 				Attrs: templ.Attributes{
 					"x-show": "!clicked",
 				},
-			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var26), templ_7745c5c3_Buffer)
+			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var24), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -682,7 +662,7 @@ func RoomCodeDisplay(code string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var27 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+			templ_7745c5c3_Var25 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 				templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 				templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
 				if !templ_7745c5c3_IsBuffer {
@@ -704,7 +684,7 @@ func RoomCodeDisplay(code string) templ.Component {
 				Attrs: templ.Attributes{
 					"x-show": "clicked",
 				},
-			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var27), templ_7745c5c3_Buffer)
+			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var25), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -716,7 +696,7 @@ func RoomCodeDisplay(code string) templ.Component {
 				"x-data":     "{ clicked: false }",
 				"x-on:click": fmt.Sprint("navigator.clipboard.writeText('Le Fishe Au Lava : https://lefisheaulava.org/mahjong/room/", code, "');clicked = true;setTimeout(() => {clicked = false}, 5000)"),
 			},
-		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var25), templ_7745c5c3_Buffer)
+		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var23), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -745,9 +725,9 @@ func InitRes() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var28 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var28 == nil {
-			templ_7745c5c3_Var28 = templ.NopComponent
+		templ_7745c5c3_Var26 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var26 == nil {
+			templ_7745c5c3_Var26 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<x-script></x-script>")

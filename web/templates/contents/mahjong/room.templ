@@ -109,7 +109,13 @@ templ Room(players []sqlc.MahjongPlayer, code string, gameState sqlc.MahjongGame
                         this.isShowDelta = false;
                         this.focused = false;
                     }
-                }
+                },
+                relativePlayerWindMap: new Map([
+                    ['east', new Map([ ['east', '東'], ['south', '南'], ['west', '西'], ['north', '北'], ])],
+                    ['south', new Map([ ['east', '北'], ['south', '東'], ['west', '南'], ['north', '西'], ])],
+                    ['west', new Map([ ['east', '西'], ['south', '北'], ['west', '東'], ['north', '南'], ])],
+                    ['north', new Map([ ['east', '南'], ['south', '西'], ['west', '北'], ['north', '東'], ])],
+                ]),
             }"
 	>
 		<div class="h-auto flex flex-col justify-center items-center grow">
@@ -180,12 +186,13 @@ templ playerCard(i int, player sqlc.MahjongPlayer) {
 			@label.Label(label.Props{
 				Class: "text-[2rem] pr-4 text-ellipsis text-nowrap overflow-hidden font-wind transition-colors duration-400",
 				Attrs: templ.Attributes{
-					":class": fmt.Sprint("gameState.seat_wind === '", string(player.Wind), "' ? 'text-eOrange' : 'text-muted-foreground'"),
+                    "x-data": "{ player_wind : ''}",
+                    "x-effect": fmt.Sprint("player_wind = gameState.seat_wind && relativePlayerWindMap.get(gameState.seat_wind).get('", string(player.Wind), "')"),
+					":class": "player_wind === '東' ? 'text-eOrange' : 'text-muted-foreground'",
+                    "x-text": "player_wind",
 				},
-			}) {
-				{ i18nUtil.T(ctx, string(player.Wind)) }
-			}
-		</div>
+			}) 
+            </div>
 		@label.Label(label.Props{
 			Class: "text-[3.5rem] pl-4 text-ellipsis overflow-hidden",
 			Attrs: templ.Attributes{

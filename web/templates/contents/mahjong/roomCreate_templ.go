@@ -463,7 +463,7 @@ func NameInput(num int) templ.Component {
 			Name: fmt.Sprintf("playerNames"),
 			Type: "text",
 			Attrs: templ.Attributes{
-				"maxlength": "10",
+				"maxlength": "20",
 			},
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
