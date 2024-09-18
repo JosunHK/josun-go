@@ -409,14 +409,17 @@ func scoreThreshold(gameLength sqlc.MahjongRoomGameLength) int32 {
 }
 
 func handlePlayerRiichi(riichiPlayers []ms.RiichiPlayer, gameData *ms.GameData) {
+	riichiPlayerCount := 0
 	for i := range gameData.Players {
 		player := &gameData.Players[i]
 		for _, rplayer := range riichiPlayers {
 			if player.ID == rplayer.PlayerId && rplayer.Riichi {
 				player.Score -= int32(1000)
+				riichiPlayerCount++
 			}
 		}
 	}
+	gameData.GameState.Kyoutaku += int32(riichiPlayerCount)
 }
 
 func updateDrawGameStateReturnNeedAdvance(rawPlayers []ms.DrawPlayer, riichiPlayers []ms.RiichiPlayer, gameData *ms.GameData) (bool, error) {
@@ -430,7 +433,6 @@ func updateDrawGameStateReturnNeedAdvance(rawPlayers []ms.DrawPlayer, riichiPlay
 		}
 	}
 
-	gameData.GameState.Kyoutaku += int32(riichiCount)
 	handlePlayerRiichi(riichiPlayers, gameData)
 
 	for _, rawPlayer := range rawPlayers {
