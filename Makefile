@@ -27,6 +27,9 @@ build:
 	go env -w GOPATH=$${HOME}/go
 	export PATH=$${PATH}:`go env GOPATH`/bin
 	make tailwind-build
+	go get github.com/sirupsen/logrus@v1.9.3
+	go get golang.org/x/crypto/acme/autocert@v0.48.0
+	go get github.com/labstack/echo/v4@v4.12.0
 	go install github.com/a-h/templ/cmd/templ@v0.2.747
 	go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
 	`go env GOPATH`/bin/templ generate
